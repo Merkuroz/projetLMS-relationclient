@@ -185,7 +185,16 @@
   .step-bar{height:8px;border-radius:999px;background:var(--border);overflow:hidden;margin:.9rem 0 1rem}
   .step-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--enedis-blue),var(--enedis-green));transition:width .4s ease}
 
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;position:relative;--fill:0%}
+  .grid::before{
+    content:"";position:absolute;left:-33px;top:12px;bottom:12px;width:4px;
+    border-radius:999px;background:var(--border);
+  }
+  .grid::after{
+    content:"";position:absolute;left:-33px;top:12px;width:4px;
+    border-radius:999px;background:linear-gradient(180deg,var(--enedis-green),var(--enedis-blue));
+    height:var(--fill);max-height:calc(100% - 24px);transition:height .4s ease;
+  }
   .card{
     position:relative;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);
     padding:1rem 1.1rem;box-shadow:var(--shadow-soft);transition:transform .2s,border-color .2s,box-shadow .2s;
@@ -316,6 +325,7 @@
     .step::before{display:none}
     .step-num{position:static;flex:none}
     .step-head{align-items:center}
+    .grid::before,.grid::after{display:none}
   }
 </style>
 </head>
@@ -723,6 +733,12 @@
           ? "Étape terminée — poursuivez votre parcours :"
           : (p > 0 ? "Étape en cours, terminez vos modules puis poursuivez :" : "Une fois cette étape terminée, poursuivez votre parcours :");
       }
+      stepEl.querySelectorAll(".grid").forEach(function(gridEl){
+        var gBoxes = Array.prototype.slice.call(gridEl.querySelectorAll('.card input[type="checkbox"]')).filter(boxActive);
+        if(!gBoxes.length){ gridEl.style.setProperty("--fill","0%"); return; }
+        var gDone = gBoxes.filter(function(b){ return state.checks[b.id]; }).length;
+        gridEl.style.setProperty("--fill", Math.round(gDone / gBoxes.length * 100) + "%");
+      });
       if(complete && !prevDone[stepEl.dataset.step] && !firstRefresh) celebrate(stepEl.querySelector("h2").textContent.replace(/\s*À venir|\s*En cours|\s*Terminée/g, "").trim());
       prevDone[stepEl.dataset.step] = complete;
       var nav = document.querySelector('[data-nav="' + stepEl.dataset.step + '"]');
