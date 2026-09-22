@@ -1,4 +1,46 @@
 <!doctype html>
+<!--
+  ============================================================
+  PARCOURS NOUVEL ARRIVANT ENEDIS — GUIDE DE MISE A JOUR
+  ============================================================
+  Ce fichier se lit de haut en bas en 5 grandes sections,
+  delimitees par des bannieres de commentaire :
+
+    SECTION 1 : STYLES (couleurs, mise en page, animations)
+    SECTION 2 : EN-TETE ET LEGENDE
+    SECTION 3 : NAVIGATION ET CHOIX DU PARCOURS (etape 4)
+    SECTION 4 : LES QUATRE ETAPES DU PARCOURS
+    SECTION 5 : SCRIPT (automatisation — ne rien modifier
+                sauf si vous savez ce que vous faites)
+
+  COMMENT AJOUTER UN MODULE DE FORMATION ?
+  Recopiez une carte existante dans le bloc souhaite, puis
+  modifiez le titre et l'etiquette. Modele de carte simple :
+
+    <div class="card">
+      <p class="card-title">Titre de la formation</p>
+      <div class="card-tags"><span class="tag t-el">E-learning</span></div>
+    </div>
+
+  Avec un lien d'acces, ajoutez a la fin de la carte :
+
+    <a class="card-link" target="_blank" rel="noopener"
+       href="ADRESSE-DE-LA-FORMATION">Ouvrir la formation ↗</a>
+
+  ETIQUETTES DISPONIBLES (variable "tag") :
+    t-cv Classe virtuelle | t-pres Presentiel | t-el E-learning
+    t-video Video | t-doc Document a lire | t-manager Rdv manager
+    t-libre Libre-service | t-insc Sur inscription | t-imd Immersion
+    t-val Validation / Quiz
+
+  COMMENT AJOUTER UN BLOC DANS UNE ETAPE ?
+  Recopiez un bloc "div class=block" existant et renumerotez
+  la pastille (block-num), par exemple 1.7 apres 1.6.
+
+  REGLE D'OR : ne supprimez jamais les balises d'ouverture
+  <div> sans leur balise de fermeture </div> associee.
+  ============================================================
+-->
 <html lang="fr">
 <head>
 <meta charset="UTF-8" />
@@ -6,6 +48,13 @@
 <meta name="description" content="Parcours de professionnalisation nouvel arrivant Enedis – Socle Marché de Masse. Suivi de progression pour les apprenants." />
 <title>Parcours nouvel arrivant Enedis</title>
 <style>
+/* ============================================================
+   SECTION 1 : STYLES
+   1a. Couleurs   1b. Animations   1c. Mise en page generale
+   1d. Blocs et cartes   1e. Divers
+   ============================================================ */
+
+  /* ---------- 1a. Couleurs et variables ---------- */
   :root{
     --enedis-blue:#1423DC;
     --enedis-blue-dark:#0E188F;
@@ -27,6 +76,19 @@
     font-size:16px;
   }
   *{box-sizing:border-box}
+
+  /* ---------- 1b. Animations ---------- */
+  @keyframes fade-up{
+    0%{opacity:0;transform:translateY(18px)}
+    100%{opacity:1;transform:translateY(0)}
+  }
+  @keyframes pop-in{
+    0%{transform:scale(.85);opacity:0}
+    60%{transform:scale(1.04)}
+    100%{transform:scale(1);opacity:1}
+  }
+
+  /* ---------- 1c. Mise en page generale ---------- */
   html{scroll-behavior:smooth}
   body{
     margin:0;
@@ -45,6 +107,7 @@
   header.hero{
     background:var(--enedis-blue);
     color:#fff;padding:2.2rem 1.2rem 3rem;
+    animation:fade-up .6s ease both;
   }
   .hero-inner{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
   .brand{display:flex;align-items:center;gap:.9rem}
@@ -109,7 +172,9 @@
     position:absolute;left:0;top:0;
     width:54px;height:54px;border-radius:50%;display:grid;place-items:center;
     font-size:1.4rem;font-weight:800;color:#fff;background:var(--enedis-blue);
+    transition:transform .2s ease,background .2s ease;
   }
+  .step:hover .step-num{transform:scale(1.08)}
   .step h2{margin:0;font-size:1.35rem;color:var(--enedis-blue)}
   .step-goal{margin:.4rem 0 0;color:var(--text-muted);font-size:.95rem}
 
@@ -119,7 +184,10 @@
   .block{
     background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);
     padding:1rem 1.1rem 1.1rem;margin:0 0 1.1rem;box-shadow:var(--shadow-soft);
+    transition:border-color .2s ease;
   }
+  .block:hover{border-color:var(--enedis-blue-soft)}
+  .block:hover .block-num{animation:pop-in .35s ease}
   .block-head{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin:0 0 .9rem}
   .block-num{
     flex:none;display:inline-grid;place-items:center;min-width:2.7rem;padding:.2rem .5rem;
@@ -130,8 +198,10 @@
   .card{
     position:relative;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);
     padding:1rem 1.1rem;box-shadow:var(--shadow-soft);
+    transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
   }
-  .card:hover{border-color:var(--enedis-blue);box-shadow:var(--shadow)}
+  .card:hover{transform:translateY(-4px);border-color:var(--enedis-blue);box-shadow:var(--shadow)}
+  .card-link{transition:gap .2s ease}
   .card-title{margin:0 0 .5rem;font-size:1rem}
   .card-tags{display:flex;flex-wrap:wrap;gap:.35rem}
   .card-note{margin:.5rem 0 0;font-size:.85rem;color:var(--text-muted)}
@@ -242,6 +312,10 @@
 </style>
 </head>
 <body id="top">
+
+<!-- ============================================================
+     SECTION 2 : EN-TETE ET LEGENDE
+     ============================================================ -->
 <a class="skip-link" href="#etape-1">Aller au contenu du parcours</a>
 
 <header class="hero">
@@ -279,6 +353,9 @@
   </div>
 </section>
 
+<!-- ============================================================
+     SECTION 3 : NAVIGATION ET CHOIX DU PARCOURS (etape 4)
+     ============================================================ -->
 <nav class="steps" aria-label="Accès rapide aux étapes">
   <a href="#etape-1">Étape 1 · Accueil</a>
   <a href="#etape-2">Étape 2 · Techniques</a>
@@ -288,6 +365,12 @@
 </nav>
 
 <main id="parcours">
+
+<!-- ============================================================
+     SECTION 4 : LES QUATRE ETAPES DU PARCOURS
+     Chaque etape contient des blocs numerotes (div class="block"),
+     chaque bloc contient une grille de cartes (div class="grid").
+     ============================================================ -->
 
   <!-- ================= ETAPE 1 ================= -->
   <section class="step" id="etape-1" data-step="s1" aria-labelledby="h-s1">
@@ -773,6 +856,13 @@
 <button type="button" id="btn-top" aria-label="Revenir en haut de la page">↑</button>
 <div id="toast" role="status" aria-live="polite"></div>
 
+<!-- ============================================================
+     SECTION 5 : SCRIPT (automatisation)
+     Role : memoriser le parcours choisi (A ou B), afficher ou
+     masquer les sous-parcours, faire apparaitre les blocs au
+     defilement et gerer le bouton de retour en haut de page.
+     Ne modifiez cette section que si vous maitrisez le JavaScript.
+     ============================================================ -->
 <script>
 (function(){
   "use strict";
@@ -824,7 +914,7 @@
         if(en.isIntersecting){ en.target.classList.add("visible"); io.unobserve(en.target); }
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll(".card, .step-head, .legend-box, .chooser-grid, .tip, .objectifs").forEach(function(el){
+    document.querySelectorAll(".card, .step-head, .legend-box, .chooser-grid, .tip, .objectifs, .block, .next-step").forEach(function(el){
       el.classList.add("reveal"); io.observe(el);
     });
   }
