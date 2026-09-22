@@ -37,6 +37,15 @@
   Recopiez un bloc "div class=block" existant et renumerotez
   la pastille (block-num), par exemple 1.7 apres 1.6.
 
+  BON A SAVOIR :
+  - La barre de navigation en haut de page est generee
+    automatiquement a partir du libelle court de chaque etape
+    (attribut data-nav de la balise section). Pour changer un
+    libelle, modifiez data-nav ; rien d'autre a faire.
+  - Chaque carte d'activite recoit automatiquement un lien
+    vers le catalogue des formations, sauf les cartes
+    "Rdv manager" et celles qui ont deja un lien dedie.
+
   REGLE D'OR : ne supprimez jamais les balises d'ouverture
   <div> sans leur balise de fermeture </div> associee.
   ============================================================
@@ -121,10 +130,6 @@
   .hero-inner > *{animation:slide-in-left .55s ease both}
   .hero-inner > *:nth-child(2){animation-delay:.12s}
   .brand{display:flex;align-items:center;gap:.9rem}
-  .brand svg{flex:none}
-  .brand svg path{animation:draw-line 1.6s ease both}
-  @keyframes draw-line{from{stroke-dashoffset:120}to{stroke-dashoffset:0}}
-  .brand svg path{stroke-dasharray:120}
   .hero h1{font-size:clamp(1.35rem,3.2vw,2.1rem);margin:0;letter-spacing:-.01em;color:#fff}
   .hero p{margin:.2rem 0 0;color:#DDE3FF;font-size:.95rem}
 
@@ -167,6 +172,12 @@
   .t-insc{background:#EDEBFD;color:#3F2FA0;border-color:#7A6BD6}
   .t-imd{background:#FFF6CE;color:#6B5200;border-color:#D6B400}
   .t-val{background:var(--enedis-blue);color:#fff;border-color:var(--enedis-blue-dark)}
+  .assist-box{
+    background:#fff;border:1px solid var(--border);border-radius:var(--radius);
+    padding:1rem 1.2rem;margin-top:.8rem;
+  }
+  .assist-box p{margin:0;font-size:.92rem}
+  .assist-box .card-link{margin-top:0}
 
   /* ---------- Nav étapes ---------- */
   nav.steps{max-width:1100px;margin:1.4rem auto 0;padding:0 1.2rem;display:flex;gap:.6rem;flex-wrap:wrap}
@@ -349,11 +360,6 @@
 <header class="hero">
   <div class="hero-inner">
     <div class="brand">
-      <svg width="46" height="46" viewBox="0 0 46 46" role="img" aria-label="Logo Enedis">
-        <rect width="46" height="46" rx="10" fill="#fff"/>
-        <path d="M12 24h8l3-8 4 14 3-8h4" fill="none" stroke="#1423DC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="34" cy="14" r="4" fill="#96CD32"/>
-      </svg>
       <div>
         <h1>Parcours nouvel arrivant — Socle Marché de Masse</h1>
         <p>Enedis · Parcours de professionnalisation à l'entrée en poste — espace apprenant</p>
@@ -379,17 +385,15 @@
     </div>
     <p style="margin:.7rem 0 0;font-size:.88rem"><a class="card-link" href="https://experience-enedis.syfadis.com/Catalog" target="_blank" rel="noopener">Accéder au catalogue des formations Enedis ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></p>
   </div>
+  <div class="assist-box">
+    <p><strong>Assistance informatique :</strong> 09 70 83 03 03 ou sur <a class="card-link" href="https://mysi.enedis.fr/" target="_blank" rel="noopener">mysi.enedis.fr ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></p>
+  </div>
 </section>
 
 <!-- ============================================================
      SECTION 3 : NAVIGATION ET CHOIX DU PARCOURS (etape 4)
      ============================================================ -->
 <nav class="steps" aria-label="Accès rapide aux étapes">
-  <a href="#etape-1">Étape 1 · Accueil</a>
-  <a href="#etape-2">Étape 2 · Techniques</a>
-  <a href="#etape-3">Étape 3 · Relation Clients</a>
-  <a href="#etape-4" data-navtrack="A">Étape 4 · Parcours A — CRC ACH C5 et AD</a>
-  <a href="#etape-4" data-navtrack="B">Étape 4 · Parcours B — Raccordement Petits Producteurs</a>
 </nav>
 
 <main id="parcours">
@@ -401,7 +405,7 @@
      ============================================================ -->
 
   <!-- ================= ETAPE 1 ================= -->
-  <section class="step" id="etape-1" data-step="s1" aria-labelledby="h-s1">
+  <section class="step" id="etape-1" data-step="s1" data-nav="Accueil" aria-labelledby="h-s1">
     <div class="step-head">
       <div class="step-num" aria-hidden="true">1</div>
       <div>
@@ -498,7 +502,7 @@
   </section>
 
   <!-- ================= ETAPE 2 ================= -->
-  <section class="step" id="etape-2" data-step="s2" aria-labelledby="h-s2">
+  <section class="step" id="etape-2" data-step="s2" data-nav="Techniques" aria-labelledby="h-s2">
     <div class="step-head">
       <div class="step-num" aria-hidden="true">2</div>
       <div>
@@ -572,7 +576,7 @@
   </section>
 
   <!-- ================= ETAPE 3 ================= -->
-  <section class="step" id="etape-3" data-step="s3" aria-labelledby="h-s3">
+  <section class="step" id="etape-3" data-step="s3" data-nav="Relation Clients" aria-labelledby="h-s3">
     <div class="step-head">
       <div class="step-num" aria-hidden="true">3</div>
       <div>
@@ -922,6 +926,46 @@
     clearTimeout(t._timer);
     t._timer = setTimeout(function(){ t.classList.remove("show"); }, 2600);
   }
+
+  /* Generation automatique de la navigation a partir des etapes */
+  var nav = document.querySelector("nav.steps");
+  document.querySelectorAll("main .step").forEach(function(stepEl){
+    var num = stepEl.dataset.step.replace("s", "");
+    if(stepEl.dataset.nav){
+      var a = document.createElement("a");
+      a.href = "#" + stepEl.id;
+      a.textContent = "Étape " + num + " · " + stepEl.dataset.nav;
+      nav.appendChild(a);
+    } else {
+      stepEl.querySelectorAll(".subtrack").forEach(function(sub){
+        var t = sub.dataset.track;
+        var name = sub.querySelector("h3").textContent.trim().replace(/^Parcours [AB] — /, "");
+        var a2 = document.createElement("a");
+        a2.href = "#" + stepEl.id;
+        a2.setAttribute("data-navtrack", t);
+        a2.textContent = "Étape " + num + " · Parcours " + t + " — " + name;
+        nav.appendChild(a2);
+      });
+    }
+  });
+
+  /* Lien catalogue prepare sur chaque activite, sauf les Rdv manager */
+  var CATALOG_URL = "https://experience-enedis.syfadis.com/Catalog";
+  document.querySelectorAll(".card").forEach(function(card){
+    if(card.querySelector("a.card-link")) return;
+    if(card.querySelector(".tag.t-manager")) return;
+    var a = document.createElement("a");
+    a.className = "card-link";
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.href = CATALOG_URL;
+    a.textContent = "Accéder au catalogue ↗";
+    var sr = document.createElement("span");
+    sr.className = "sr-only";
+    sr.textContent = " (nouvelle fenêtre)";
+    a.appendChild(sr);
+    card.appendChild(a);
+  });
 
   /* Apparition progressive des cartes au défilement */
   if(!reduceMotion && "IntersectionObserver" in window){
