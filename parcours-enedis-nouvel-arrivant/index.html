@@ -9,6 +9,7 @@
   :root{
     --enedis-blue:#1423DC;
     --enedis-blue-dark:#0E188F;
+    --enedis-blue-deep:#080D52;
     --enedis-blue-soft:#E3E7FD;
     --enedis-green:#96CD32;
     --enedis-green-dark:#3F6B00;
@@ -20,8 +21,28 @@
     --focus:#0E188F;
     --ok:#1B7F3B;
     --radius:16px;
-    --shadow:0 6px 18px rgba(20,35,220,.10);
+    --radius-lg:22px;
+    --shadow:0 10px 30px rgba(20,35,220,.12);
+    --shadow-soft:0 4px 14px rgba(20,35,220,.08);
     font-size:16px;
+  }
+  @keyframes aurora{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  @keyframes floaty{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-7px)}
+  }
+  @keyframes shimmer{
+    0%{background-position:-200% 0}
+    100%{background-position:200% 0}
+  }
+  @keyframes pop{
+    0%{transform:scale(1)}
+    45%{transform:scale(1.12)}
+    100%{transform:scale(1)}
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -40,36 +61,66 @@
 
   /* ---------- Header ---------- */
   header.hero{
-    background:linear-gradient(135deg,var(--enedis-blue) 0%,var(--enedis-blue-dark) 100%);
-    color:#fff;padding:1.6rem 1.2rem 4.6rem;
+    position:relative;overflow:hidden;
+    background:linear-gradient(120deg,var(--enedis-blue-deep) 0%,var(--enedis-blue) 45%,#2B3BF2 70%,var(--enedis-blue-dark) 100%);
+    background-size:220% 220%;
+    animation:aurora 18s ease-in-out infinite;
+    color:#fff;padding:2.2rem 1.2rem 6rem;
   }
-  .hero-inner{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between}
-  .brand{display:flex;align-items:center;gap:.8rem}
-  .brand svg{flex:none}
-  .hero h1{font-size:clamp(1.3rem,3vw,1.9rem);margin:0}
+  header.hero::before{
+    content:"";position:absolute;inset:-40%;
+    background:radial-gradient(38rem 38rem at 18% 25%,rgba(150,205,50,.22),transparent 60%),
+               radial-gradient(30rem 30rem at 85% 80%,rgba(255,255,255,.14),transparent 60%);
+    pointer-events:none;
+  }
+  header.hero::after{
+    content:"";position:absolute;left:0;right:0;bottom:-2px;height:52px;
+    background:#F7F9FF;
+    -webkit-mask:radial-gradient(140% 100% at 50% 100%,transparent 78%,#000 79%);
+    mask:radial-gradient(140% 100% at 50% 100%,transparent 78%,#000 79%);
+  }
+  .hero-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+  .brand{display:flex;align-items:center;gap:.9rem}
+  .brand svg{flex:none;filter:drop-shadow(0 4px 10px rgba(8,13,82,.35));animation:floaty 6s ease-in-out infinite}
+  .hero h1{font-size:clamp(1.35rem,3.2vw,2.1rem);margin:0;letter-spacing:-.01em;
+    background:linear-gradient(90deg,#fff 30%,#D9E2FF 50%,#fff 70%);
+    background-size:200% 100%;
+    animation:shimmer 8s linear infinite;
+    -webkit-background-clip:text;background-clip:text;
+  }
+  .hero h1{color:#fff}
+  @supports (-webkit-background-clip:text){
+    .hero h1{color:transparent}
+  }
   .hero p{margin:.2rem 0 0;color:#DDE3FF;font-size:.95rem}
 
   /* ---------- Progress bar ---------- */
-  .progress-dock{max-width:1100px;margin:-3rem auto 0;padding:0 1.2rem;position:relative;z-index:5}
+  .progress-dock{max-width:1100px;margin:-3.4rem auto 0;padding:0 1.2rem;position:relative;z-index:5}
   .progress-card{
-    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
-    padding:1.1rem 1.4rem;display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;justify-content:space-between;
+    background:rgba(255,255,255,.88);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+    border:1px solid rgba(214,220,245,.7);
+    border-radius:var(--radius-lg);box-shadow:var(--shadow);
+    padding:1.2rem 1.5rem;display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;justify-content:space-between;
   }
   .progress-info{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
-  .ring{--p:0;position:relative;width:74px;height:74px;border-radius:50%;
-    background:conic-gradient(var(--enedis-blue) calc(var(--p)*1%),var(--border) 0);
-    display:grid;place-items:center;transition:--p .4s}
-  .ring::before{content:"";position:absolute;width:58px;height:58px;border-radius:50%;background:#fff}
+  .ring{--p:0;position:relative;width:78px;height:78px;border-radius:50%;
+    background:conic-gradient(var(--enedis-blue) calc(var(--p)*1%),var(--enedis-green) calc(var(--p)*1%),var(--border) 0);
+    display:grid;place-items:center;filter:drop-shadow(0 3px 8px rgba(20,35,220,.25));
+  }  .ring::before{content:"";position:absolute;width:62px;height:62px;border-radius:50%;background:#fff;left:8px;top:8px}
   .ring span{position:relative;font-weight:800;color:var(--enedis-blue);font-size:1rem}
+  .ring.pop{animation:pop .45s ease}
   .progress-text strong{display:block;font-size:1.05rem}
   .progress-text small{color:var(--text-muted)}
   .progress-actions{display:flex;gap:.6rem;flex-wrap:wrap}
   .btn{
     border:2px solid var(--enedis-blue);background:#fff;color:var(--enedis-blue);
     padding:.55rem 1.1rem;border-radius:999px;font-weight:700;cursor:pointer;font-size:.9rem;
+    transition:transform .15s ease,box-shadow .15s ease,background .15s ease;
   }
-  .btn:hover{background:var(--enedis-blue-soft)}
-  .btn-primary{background:var(--enedis-blue);color:#fff}
+  .btn:hover{background:var(--enedis-blue-soft);transform:translateY(-1px);box-shadow:var(--shadow-soft)}
+  .btn:active{transform:translateY(0)}
+  .btn-primary{background:var(--enedis-blue);color:#fff;box-shadow:0 4px 14px rgba(20,35,220,.35)}
   .btn-primary:hover{background:var(--enedis-blue-dark)}
 
   /* ---------- Legend ---------- */
@@ -80,7 +131,9 @@
   .tag{
     display:inline-flex;align-items:center;gap:.35rem;font-size:.75rem;font-weight:700;
     padding:.25rem .7rem;border-radius:999px;border:1.5px solid transparent;
+    transition:transform .15s ease;
   }
+  .tag:hover{transform:scale(1.05)}
   .tag::before{content:"";width:9px;height:9px;border-radius:50%;background:currentColor}
   .t-cv{background:#EAF0FF;color:var(--enedis-blue);border-color:var(--enedis-blue)}
   .t-pres{background:#FFF3D6;color:#7A5200;border-color:#C99700}
@@ -98,8 +151,9 @@
   nav.steps a{
     text-decoration:none;background:#fff;border:2px solid var(--border);color:var(--text);
     padding:.55rem 1rem;border-radius:999px;font-weight:700;font-size:.9rem;cursor:pointer;
+    transition:border-color .15s,transform .15s,box-shadow .15s;
   }
-  nav.steps a:hover{border-color:var(--enedis-blue)}
+  nav.steps a:hover{border-color:var(--enedis-blue);transform:translateY(-2px);box-shadow:var(--shadow-soft)}
   nav.steps a .step-pct{margin-left:.4rem;color:var(--enedis-blue)}
 
   main{max-width:1100px;margin:0 auto;padding:0 1.2rem 3rem}
@@ -108,8 +162,10 @@
   .step{margin-top:1.6rem;scroll-margin-top:1rem}
   .step-head{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
   .step-num{
-    flex:none;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;
+    flex:none;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;
     font-size:1.4rem;font-weight:800;color:#fff;background:var(--enedis-blue);
+    background-image:linear-gradient(135deg,#2B3BF2,var(--enedis-blue) 60%,var(--enedis-blue-dark));
+    box-shadow:0 6px 16px rgba(20,35,220,.35);
   }
   .step.done .step-num{background:var(--ok)}
   .step h2{margin:0;font-size:1.35rem;color:var(--enedis-blue)}
@@ -119,15 +175,24 @@
 
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
   .card{
-    background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);
-    padding:1rem 1.1rem;box-shadow:0 2px 6px rgba(20,35,220,.06);transition:transform .2s,border-color .2s;
+    position:relative;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);
+    padding:1rem 1.1rem;box-shadow:var(--shadow-soft);transition:transform .2s,border-color .2s,box-shadow .2s;
+    overflow:hidden;
   }
-  .card:hover{transform:translateY(-2px);border-color:var(--enedis-blue)}
+  .card::after{
+    content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--enedis-blue),var(--enedis-green));
+    opacity:0;transition:opacity .2s;
+  }
+  .card:hover{transform:translateY(-3px);border-color:var(--enedis-blue);box-shadow:var(--shadow)}
+  .card:hover::after,.card.checked::after{opacity:1}
   .card label.chk{display:flex;gap:.7rem;align-items:flex-start;cursor:pointer;font-weight:600}
   .card input[type="checkbox"]{
     width:1.35rem;height:1.35rem;flex:none;margin-top:.15rem;accent-color:var(--enedis-blue);cursor:pointer;
+    transition:transform .15s ease;
   }
-  .card.checked{border-color:var(--ok);background:#F4FBF6}
+  .card input[type="checkbox"]:hover{transform:scale(1.15)}
+  .card.checked{border-color:var(--ok);background:linear-gradient(180deg,#F4FBF6,#fff)}
   .card.checked .card-title{text-decoration:line-through;color:var(--text-muted)}
   .card-title{margin:0 0 .5rem;font-size:1rem}
   .card-tags{display:flex;flex-wrap:wrap;gap:.35rem}
@@ -203,7 +268,8 @@
   /* ---------- Toast ---------- */
   #toast{
     position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%) translateY(120%);
-    background:var(--enedis-blue);color:#fff;padding:.7rem 1.4rem;border-radius:999px;
+    background:linear-gradient(120deg,var(--enedis-blue),var(--enedis-blue-dark));
+    color:#fff;padding:.7rem 1.5rem;border-radius:999px;
     font-weight:700;box-shadow:var(--shadow);transition:transform .3s;z-index:50;
   }
   #toast.show{transform:translateX(-50%) translateY(0)}
@@ -545,7 +611,11 @@
     box.addEventListener("change", function(){
       if(box.checked) state.checks[box.id] = true; else delete state.checks[box.id];
       save(); refresh();
-      if(box.checked) toast("Bravo ! Étape franchie : " + (title ? title.textContent.trim() : "module validé"));
+      if(box.checked){
+        var ring = document.getElementById("ring");
+        ring.classList.remove("pop"); void ring.offsetWidth; ring.classList.add("pop");
+        toast("Bravo ! Étape franchie : " + (title ? title.textContent.trim() : "module validé"));
+      }
     });
   });
 
