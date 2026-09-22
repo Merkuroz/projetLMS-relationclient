@@ -298,28 +298,12 @@
   </div>
 </section>
 
-    <fieldset class="chooser" id="choix-parcours">
-      <legend>Choisissez votre parcours métier de l'étape 4 (en accord avec votre manager)</legend>
-      <div class="chooser-grid">
-        <button type="button" class="choice" id="track-A" aria-pressed="false">
-          <span class="choice-title">Parcours A — Chargé de Relations Clients ACH C5 et AD</span>
-          <span class="choice-desc">Affaires de correction de factures C5 (ACF), prestations et interventions C5, relevé et facturation C5, fiches F120 à F920, prise en charge des demandes clients (ligne AD + L1).</span>
-          <span class="pick" aria-hidden="false"></span>
-        </button>
-        <button type="button" class="choice" id="track-B" aria-pressed="false">
-          <span class="choice-title">Parcours B — CRC Gestion et Raccordement Petits Producteurs</span>
-          <span class="choice-desc">Raccordement Petits Producteurs (avec et sans travaux), CAE, CACSI, Contrat Unique en injection, obligations d'achat, gestion des contrats et impayés P4.</span>
-          <span class="pick" aria-hidden="false"></span>
-        </button>
-      </div>
-      <p class="chooser-note" id="chooser-note" role="status">Aucun parcours sélectionné — l'étape 4 sera activée après le choix effectué avec votre manager.</p>
-    </fieldset>
-
 <nav class="steps" aria-label="Accès rapide aux étapes">
   <a href="#etape-1">Étape 1 · Accueil</a>
   <a href="#etape-2">Étape 2 · Techniques</a>
   <a href="#etape-3">Étape 3 · Relation Clients</a>
-  <a href="#etape-4">Étape 4 · Métier</a>
+  <a href="#etape-4" data-navtrack="A">Parcours A · CRC ACH C5 et AD</a>
+  <a href="#etape-4" data-navtrack="B">Parcours B · Raccordement Petits Producteurs</a>
 </nav>
 
 <main id="parcours">
@@ -613,8 +597,25 @@
 
     <details class="help">
       <summary>Comment utiliser cette étape ?</summary>
-      <p>Choisissez, avec votre manager, le parcours correspondant à votre poste à l'aide des boutons de choix situés <a class="card-link" href="#choix-parcours">en haut de la page</a> : seul le parcours sélectionné est affiché et pris en compte dans votre progression. Un changement de parcours conserve vos acquisitions déjà cochées.</p>
+      <p>Choisissez, avec votre manager, le parcours correspondant à votre poste : seul le parcours sélectionné est affiché et pris en compte dans votre progression. Un changement de parcours conserve vos acquisitions déjà cochées.</p>
     </details>
+
+    <fieldset class="chooser" id="choix-parcours">
+      <legend>Choisissez votre parcours métier (en accord avec votre manager)</legend>
+      <div class="chooser-grid">
+        <button type="button" class="choice" id="track-A" aria-pressed="false">
+          <span class="choice-title">Parcours A — Chargé de Relations Clients ACH C5 et AD</span>
+          <span class="choice-desc">Affaires de correction de factures C5 (ACF), prestations et interventions C5, relevé et facturation C5, fiches F120 à F920, prise en charge des demandes clients (ligne AD + L1).</span>
+          <span class="pick" aria-hidden="false"></span>
+        </button>
+        <button type="button" class="choice" id="track-B" aria-pressed="false">
+          <span class="choice-title">Parcours B — CRC Gestion et Raccordement Petits Producteurs</span>
+          <span class="choice-desc">Raccordement Petits Producteurs (avec et sans travaux), CAE, CACSI, Contrat Unique en injection, obligations d'achat, gestion des contrats et impayés P4.</span>
+          <span class="pick" aria-hidden="false"></span>
+        </button>
+      </div>
+      <p class="chooser-note" id="chooser-note" role="status">Aucun parcours sélectionné — l'étape 4 sera activée après le choix effectué avec votre manager.</p>
+    </fieldset>
 
     <!-- 4A CRC ACH C5 et AD -->
     <div class="subtrack" data-track="A">
@@ -974,6 +975,10 @@
       state.track = t; save(); refresh();
       var tName = document.querySelector('.subtrack[data-track="' + t + '"] h3').textContent.trim();
       toast("Parcours sélectionné : " + tName);
+    });
+    var navLink = document.querySelector('nav.steps a[data-navtrack="' + t + '"]');
+    navLink.addEventListener("click", function(){
+      state.track = t; save(); refresh();
     });
   });
 
