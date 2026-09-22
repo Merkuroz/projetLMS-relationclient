@@ -241,11 +241,6 @@
     background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="%231423DC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');
     background-size:14px;background-position:center;background-repeat:no-repeat;
   }
-  .tip{
-    margin:.8rem 0 0;padding:.6rem .9rem;background:#F3FBE8;border-left:4px solid var(--enedis-green);
-    border-radius:0 10px 10px 0;font-size:.9rem;color:var(--text-muted);
-  }
-  .tip strong{color:var(--enedis-green-dark)}
 
   /* Lien formation */
   .card-link{
@@ -383,7 +378,6 @@
           <li>Comprendre le modèle régulé et le TURPE</li>
           <li>Situer les activités du domaine métier et de votre agence</li>
         </ul>
-        <p class="tip"><strong>Conseil pédagogique :</strong> prenez rendez-vous avec votre manager dès votre première semaine ; le RDV d'accueil structure toute la suite du parcours.</p>
       </div>
     </div>
 
@@ -479,7 +473,6 @@
           <li>Identifier les ouvrages de réseau et de branchement : branchement, compteur, disjoncteur</li>
           <li>Comprendre les comptages et le fonctionnement du système Linky</li>
         </ul>
-        <p class="tip"><strong>Conseil pédagogique :</strong> la formation en réalité virtuelle du CAD Auvergne rend le réseau électrique tangible ; planifiez cette session en début d'étape.</p>
       </div>
     </div>
 
@@ -555,7 +548,6 @@
           <li>Maîtriser les fondamentaux de la relation client et téléphonique</li>
           <li>Découvrir les outils SI de la relation client</li>
         </ul>
-        <p class="tip"><strong>Conseil pédagogique :</strong> les outils SI se maîtrisent par la pratique ; après chaque module, demandez un accès à l'environnement d'exercice avec votre manager.</p>
       </div>
     </div>
 
@@ -636,7 +628,6 @@
           <li>Traiter de bout en bout les affaires clients de votre périmètre</li>
           <li>Préparer la validation des acquis de votre parcours</li>
         </ul>
-        <p class="tip"><strong>Conseil pédagogique :</strong> validez le choix du parcours lors du RDV manager de l'étape 3 ; il correspond à votre fiche de poste et à votre équipe d'affectation.</p>
       </div>
     </div>
 
@@ -904,7 +895,7 @@
         if(en.isIntersecting){ en.target.classList.add("visible"); io.unobserve(en.target); }
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll(".card, .step-head, .legend-box, .chooser-grid, .tip, .objectifs, .block, .next-step").forEach(function(el){
+    document.querySelectorAll(".card, .step-head, .legend-box, .chooser-grid, .objectifs, .block, .next-step").forEach(function(el){
       el.classList.add("reveal"); io.observe(el);
     });
   }
