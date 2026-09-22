@@ -132,14 +132,6 @@
     padding:1rem 1.1rem;box-shadow:var(--shadow-soft);
   }
   .card:hover{border-color:var(--enedis-blue);box-shadow:var(--shadow)}
-  .card label.chk{display:flex;gap:.7rem;align-items:flex-start;cursor:pointer;font-weight:600}
-  .card input[type="checkbox"]{
-    width:1.35rem;height:1.35rem;flex:none;margin-top:.15rem;accent-color:var(--enedis-blue);cursor:pointer;
-    transition:transform .15s ease;
-  }
-  .card input[type="checkbox"]:hover{transform:scale(1.15)}
-  .card.checked{border-color:var(--ok);background:#F4FBF6}
-  .card.checked .card-title{text-decoration:line-through;color:var(--text-muted)}
   .card-title{margin:0 0 .5rem;font-size:1rem}
   .card-tags{display:flex;flex-wrap:wrap;gap:.35rem}
   .card-note{margin:.5rem 0 0;font-size:.85rem;color:var(--text-muted)}
@@ -320,8 +312,8 @@
         <h3 class="block-title">Présenter l'entreprise et son projet</h3>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Découvrir Enedis</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=29148971008">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Vidéo « La story d'Enedis »</span></label><div class="card-tags"><span class="tag t-video">Vidéo / Cotuto</span></div><a class="card-link" target="_blank" rel="noopener" href="https://www.myelectricnetwork.fr/group/mon-espace-rh/lire-detail/-/asset_publisher/AO6j/content/boite-%C3%A0-outils-attractivit%C3%A9-marque-employeur?typeGroup=erdf&amp;p_r_p_categoryId=#La%20story%20d'Enedis">Regarder la vidéo ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Découvrir Enedis</span><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=29148971008">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Vidéo « La story d'Enedis »</span><div class="card-tags"><span class="tag t-video">Vidéo / Cotuto</span></div><a class="card-link" target="_blank" rel="noopener" href="https://www.myelectricnetwork.fr/group/mon-espace-rh/lire-detail/-/asset_publisher/AO6j/content/boite-%C3%A0-outils-attractivit%C3%A9-marque-employeur?typeGroup=erdf&amp;p_r_p_categoryId=#La%20story%20d'Enedis">Regarder la vidéo ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
@@ -331,7 +323,7 @@
       </div>
     <div class="grid">
       <div class="card">
-        <label class="chk"><input type="checkbox"><span class="card-title">Rdv manager — accueil et intégration</span></label>
+        <span class="card-title">Rdv manager — accueil et intégration</span>
         <div class="card-tags"><span class="tag t-manager">Rdv manager</span></div>
         <p class="card-note">Organigramme de l'agence, activités et rythmes, description et missions de l'emploi, parcours de formation/intégration.</p>
       </div>
@@ -343,17 +335,17 @@
         <h3 class="block-title">Informer sur les connaissances socles de l'entreprise</h3>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Prévention des Risques Généraux (ADNPSSCPPRGD)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27596783616">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Code de bonne conduite (ADNTINO)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=524416">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le RGPD (ADNRGPD)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21373550600">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">La charte informatique des ressources numériques (ADNCHARTINFO)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21338521603">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">La cybersécurité chez Enedis (ADNCYBERSECU)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21577891841">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Programme anti-corruption (ADNDESP01)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=2743828480">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Réflexes anticorruption (ADNANTICOR)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/Learner/Home.aspx?idTraining=34220936353&amp;idTrainee=34223354403&amp;idTrainingSession=34222811544">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Sexisme et harcèlement sexuel au travail (ADNBSHS)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=17966366720">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Intelligence artificielle chez Enedis : tout ce que vous devez savoir</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Attitude interrogative et vigilance partagée</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Les enjeux de la sûreté chez Enedis</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Prévention des Risques Généraux (ADNPSSCPPRGD)</span><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27596783616">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Code de bonne conduite (ADNTINO)</span><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=524416">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Le RGPD (ADNRGPD)</span><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21373550600">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">La charte informatique des ressources numériques (ADNCHARTINFO)</span><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21338521603">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">La cybersécurité chez Enedis (ADNCYBERSECU)</span><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21577891841">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Programme anti-corruption (ADNDESP01)</span><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=2743828480">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Réflexes anticorruption (ADNANTICOR)</span><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/Learner/Home.aspx?idTraining=34220936353&amp;idTrainee=34223354403&amp;idTrainingSession=34222811544">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Sexisme et harcèlement sexuel au travail (ADNBSHS)</span><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=17966366720">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Intelligence artificielle chez Enedis : tout ce que vous devez savoir</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Attitude interrogative et vigilance partagée</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Les enjeux de la sûreté chez Enedis</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
     </div>
     </div>
     <div class="block">
@@ -363,7 +355,7 @@
       </div>
     <div class="grid">
       <div class="card">
-        <label class="chk"><input type="checkbox"><span class="card-title">Rdv manager — consignes locales de sécurité et 8 fondamentaux PSS</span></label>
+        <span class="card-title">Rdv manager — consignes locales de sécurité et 8 fondamentaux PSS</span>
         <div class="card-tags"><span class="tag t-manager">Rdv manager</span></div>
       </div>
     </div>
@@ -374,9 +366,9 @@
         <h3 class="block-title">Informer sur le modèle régulé et le TURPE</h3>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Tout comprendre aux principes du TURPE</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Procédure métier et régulation incitative</span></label><div class="card-tags"><span class="tag t-doc">Document à lire</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le catalogue des prestations</span></label><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=30581161986">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Tout comprendre aux principes du TURPE</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Procédure métier et régulation incitative</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div></div>
+      <div class="card"><span class="card-title">Le catalogue des prestations</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=30581161986">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
@@ -385,7 +377,7 @@
         <h3 class="block-title">Validation des acquis — Étape 1</h3>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis — Étape 1</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+      <div class="card"><span class="card-title">Validation des acquis — Étape 1</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
     </div>
     </div>
 
@@ -418,10 +410,10 @@
         <h3 class="block-title">Informer sur le chemin de l'électricité</h3>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Découverte de l'électricité</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Formation électrotechnique élémentaire</span></label><div class="card-tags"><span class="tag t-pres">Présentiel</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le chemin de l'électricité</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Module de formation en réalité virtuelle (CAD Auvergne)</span></label><div class="card-tags"><span class="tag t-pres">Présentiel</span></div></div>
+      <div class="card"><span class="card-title">Découverte de l'électricité</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Formation électrotechnique élémentaire</span><div class="card-tags"><span class="tag t-pres">Présentiel</span></div></div>
+      <div class="card"><span class="card-title">Le chemin de l'électricité</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Module de formation en réalité virtuelle (CAD Auvergne)</span><div class="card-tags"><span class="tag t-pres">Présentiel</span></div></div>
     </div>
     </div>
     <div class="block">
@@ -430,10 +422,10 @@
         <h3 class="block-title">Informer sur les comptages</h3>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le fonctionnement du système Linky</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Quelles prestations Linky pour le client ?</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Les services de la chaîne communicante Linky</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Comptage BT supérieur à 36 kVA</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Le fonctionnement du système Linky</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Quelles prestations Linky pour le client ?</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Les services de la chaîne communicante Linky</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Comptage BT supérieur à 36 kVA</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
     </div>
     </div>
     <div class="block">
@@ -442,9 +434,9 @@
         <h3 class="block-title">Informer sur les ouvrages de réseau et de branchement</h3>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Lumière sur les PNT</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Fondamentaux des raccordements</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Bilan Qualité de Fourniture</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Lumière sur les PNT</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Fondamentaux des raccordements</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Bilan Qualité de Fourniture</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
     </div>
     </div>
     <div class="block">
@@ -453,7 +445,7 @@
         <h3 class="block-title">Informer sur le Marché d'Affaires</h3>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Marché d'Affaires</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Marché d'Affaires</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
     </div>
     </div>
     <div class="block">
@@ -462,7 +454,7 @@
         <h3 class="block-title">Validation des acquis — Étape 2</h3>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis — Étape 2</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+      <div class="card"><span class="card-title">Validation des acquis — Étape 2</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
     </div>
     </div>
 
@@ -496,8 +488,8 @@
         <h3 class="block-title">Informer sur les fondamentaux de la relation client</h3>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Les fondamentaux de la relation client — module 1</span></label><div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Les fondamentaux de la relation client — module 2</span></label><div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div></div>
+      <div class="card"><span class="card-title">Les fondamentaux de la relation client — module 1</span><div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div></div>
+      <div class="card"><span class="card-title">Les fondamentaux de la relation client — module 2</span><div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div></div>
     </div>
     </div>
     <div class="block">
@@ -506,9 +498,9 @@
         <h3 class="block-title">Informer sur la politique client, tous segments clients</h3>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">La segmentation consommateur</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">La segmentation producteur</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">La Politique Clients</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">La segmentation consommateur</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">La segmentation producteur</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">La Politique Clients</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
     </div>
     </div>
     <div class="block">
@@ -517,7 +509,7 @@
         <h3 class="block-title">Informer sur le marché de l'électricité</h3>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le RIVA, de quoi parle-t-on ?</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Le RIVA, de quoi parle-t-on ?</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
     </div>
     </div>
     <div class="block">
@@ -526,8 +518,8 @@
         <h3 class="block-title">Maîtriser la relation client téléphonique</h3>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Guide métier Relations clients</span></label><div class="card-tags"><span class="tag t-doc">Document à lire</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Maîtriser la relation client téléphonique</span></label><div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div></div>
+      <div class="card"><span class="card-title">Guide métier Relations clients</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div></div>
+      <div class="card"><span class="card-title">Maîtriser la relation client téléphonique</span><div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div></div>
     </div>
     </div>
     <div class="block">
@@ -536,7 +528,7 @@
         <h3 class="block-title">Informer sur les outils SI de la relation client</h3>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Les outils SI de la relation client</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Les outils SI de la relation client</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
     </div>
     </div>
     <div class="block">
@@ -545,7 +537,7 @@
         <h3 class="block-title">Validation des acquis — Étape 3</h3>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis — Étape 3</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+      <div class="card"><span class="card-title">Validation des acquis — Étape 3</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
     </div>
     </div>
 
@@ -575,7 +567,7 @@
 
     <details class="help">
       <summary>Comment utiliser cette étape ?</summary>
-      <p>Choisissez, avec votre manager, le parcours correspondant à votre poste : seul le parcours sélectionné est affiché. Un changement de parcours conserve vos modules déjà cochés.</p>
+      <p>Choisissez, avec votre manager, le parcours correspondant à votre poste : seul le parcours sélectionné est affiché.</p>
     </details>
 
     <fieldset class="chooser" id="choix-parcours">
@@ -604,11 +596,11 @@
           <h4 class="block-title">Découvrir les outils du conseiller</h4>
         </div>
       <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Débuter sur les fondamentaux Ginko tous métiers</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">SGE : découverte du nouveau Portail SGE V.2</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">L'outil Kiamo pour les conseillers et opérateurs téléphoniques</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Utiliser VERINT (CRC et Opérateurs CAD)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Tout savoir sur CAPELLA</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Débuter sur les fondamentaux Ginko tous métiers</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">SGE : découverte du nouveau Portail SGE V.2</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">L'outil Kiamo pour les conseillers et opérateurs téléphoniques</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Utiliser VERINT (CRC et Opérateurs CAD)</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Tout savoir sur CAPELLA</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
       </div>
       </div>
       <div class="block">
@@ -617,7 +609,7 @@
           <h4 class="block-title">Débuter sur les affaires de correction de factures C5 (ACF)</h4>
         </div>
       <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Débuter sur les affaires de correction de factures C5 (ACF)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Débuter sur les affaires de correction de factures C5 (ACF)</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
       </div>
       </div>
       <div class="block">
@@ -626,17 +618,17 @@
           <h4 class="block-title">Débuter sur le traitement des prestations et interventions C5</h4>
         </div>
       <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Débuter sur le traitement des prestations et interventions C5</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Débuter sur le traitement des prestations C5 et le solde des interventions</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">F120 Mise en service sur raccordement existant</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">F130 Changement de fournisseur</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">F140 Résiliation à l'initiative du client</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">F180 Modification contractuelle hors optimisation TURPE C5</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">F360 Relevé spécial</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">F200B Intervention manquement contractuel — réduction de puissance et coupure</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">F920-F420C2 Enquête et vérification visuelle</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Micro-learning PNT</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">HAPe — tous utilisateurs</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Débuter sur le traitement des prestations et interventions C5</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Débuter sur le traitement des prestations C5 et le solde des interventions</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">F120 Mise en service sur raccordement existant</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">F130 Changement de fournisseur</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">F140 Résiliation à l'initiative du client</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">F180 Modification contractuelle hors optimisation TURPE C5</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">F360 Relevé spécial</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">F200B Intervention manquement contractuel — réduction de puissance et coupure</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">F920-F420C2 Enquête et vérification visuelle</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Micro-learning PNT</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">HAPe — tous utilisateurs</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
       </div>
       </div>
       <div class="block">
@@ -645,7 +637,7 @@
           <h4 class="block-title">Débuter sur le relevé et la facturation C5</h4>
         </div>
       <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Débuter sur le relevé et la facturation C5</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Débuter sur le relevé et la facturation C5</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
       </div>
       </div>
       <div class="block">
@@ -655,7 +647,7 @@
         </div>
       <div class="grid">
         <div class="card">
-          <label class="chk"><input type="checkbox"><span class="card-title">Prendre en charge les demandes clients (ligne AD + L1)</span></label>
+          <span class="card-title">Prendre en charge les demandes clients (ligne AD + L1)</span>
           <div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div>
           <p class="card-note">Demandes directes · Compte client PARTICULIER · Compte client ENTREPRISE · Perturbations LAN niveau 1.</p>
         </div>
@@ -667,7 +659,7 @@
           <h4 class="block-title">Validation des acquis — Parcours A</h4>
         </div>
       <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis — Parcours A</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+        <div class="card"><span class="card-title">Validation des acquis — Parcours A</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
       </div>
       </div>
     </div>
@@ -681,11 +673,11 @@
           <h4 class="block-title">Informer sur les acteurs de la production du marché de l'électricité</h4>
         </div>
       <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Filières de production d'électricité en France</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Les acteurs de la production du marché de l'électricité</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Transition énergétique</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">[OA PV] Découverte des obligations d'achat</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">[OA PV] Le contrat d'achat S21</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Filières de production d'électricité en France</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Les acteurs de la production du marché de l'électricité</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Transition énergétique</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">[OA PV] Découverte des obligations d'achat</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">[OA PV] Le contrat d'achat S21</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
       </div>
       </div>
       <div class="block">
@@ -694,11 +686,11 @@
           <h4 class="block-title">Découvrir le raccordement Petits Producteurs</h4>
         </div>
       <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Raccordement Petits Producteurs — demandes sans travaux</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Raccordement Petits Producteurs — avec travaux</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Barème de raccordement et régime SRRRER</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Raccordement Petits Producteurs — demandes sans travaux</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Raccordement Petits Producteurs — avec travaux</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Barème de raccordement et régime SRRRER</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
         <div class="card">
-          <label class="chk"><input type="checkbox"><span class="card-title">Explication des pièces justificatives</span></label>
+          <span class="card-title">Explication des pièces justificatives</span>
           <div class="card-tags"><span class="tag t-doc">Document à lire</span></div>
           <p class="card-note">Mandat de représentation, autorisation d'urbanisme, CONSUEL…</p>
         </div>
@@ -710,9 +702,9 @@
           <h4 class="block-title">Saisir les demandes sur Enedis-Connect</h4>
         </div>
       <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Saisie d'une demande CAE sur Enedis-Connect</span></label><div class="card-tags"><span class="tag t-libre">Libre-service</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Saisie d'une demande CACSI sur Enedis-Connect</span></label><div class="card-tags"><span class="tag t-libre">Libre-service</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Saisie d'une demande CU-I sur Enedis-Connect</span></label><div class="card-tags"><span class="tag t-libre">Libre-service</span></div></div>
+        <div class="card"><span class="card-title">Saisie d'une demande CAE sur Enedis-Connect</span><div class="card-tags"><span class="tag t-libre">Libre-service</span></div></div>
+        <div class="card"><span class="card-title">Saisie d'une demande CACSI sur Enedis-Connect</span><div class="card-tags"><span class="tag t-libre">Libre-service</span></div></div>
+        <div class="card"><span class="card-title">Saisie d'une demande CU-I sur Enedis-Connect</span><div class="card-tags"><span class="tag t-libre">Libre-service</span></div></div>
       </div>
       </div>
       <div class="block">
@@ -721,10 +713,10 @@
           <h4 class="block-title">Découvrir le Contrat d'Accès et d'Exploitation, le Contrat Unique en injection et la Convention d'Auto-Consommation Sans Injection</h4>
         </div>
       <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le Contrat d'Accès et d'Exploitation (CAE)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Débuter sur le CAE et sa mise en œuvre dans les activités P4</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Débuter sur le Contrat Unique en injection</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Débuter sur la CACSI et la Convention d'Auto-Consommation Sans Injection</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Le Contrat d'Accès et d'Exploitation (CAE)</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Débuter sur le CAE et sa mise en œuvre dans les activités P4</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Débuter sur le Contrat Unique en injection</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Débuter sur la CACSI et la Convention d'Auto-Consommation Sans Injection</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
       </div>
       </div>
       <div class="block">
@@ -733,9 +725,9 @@
           <h4 class="block-title">Accompagner un client dans son projet et dans la gestion de son contrat</h4>
         </div>
       <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Accompagner un client dans la gestion de son contrat</span></label><div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div></div>
+        <div class="card"><span class="card-title">Accompagner un client dans la gestion de son contrat</span><div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div></div>
         <div class="card">
-          <label class="chk"><input type="checkbox"><span class="card-title">Gestion des comptes clients</span></label>
+          <span class="card-title">Gestion des comptes clients</span>
           <div class="card-tags"><span class="tag t-el">E-learning</span></div>
           <p class="card-note">Comptes PARTICULIER, ENTREPRISE, COLL LOC · Changement de propriétaire · Modification de données contractuelles.</p>
         </div>
@@ -747,13 +739,13 @@
           <h4 class="block-title">Débuter le traitement des prestations P4, le solde des interventions, la facturation et le recouvrement</h4>
         </div>
       <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Traitement du Back Office Raccordement P4</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Débuter le traitement des prestations P4 et le solde des interventions</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Débuter sur le relevé et la facturation P4</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Suivi des impayés et recouvrement P4</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Facturation Recouvrement · E-facture / AES · Chorus Pro</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Changement de RE / sortie de périmètre</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Débuter sur les Affaires de Corrections de Factures P4</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Traitement du Back Office Raccordement P4</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Débuter le traitement des prestations P4 et le solde des interventions</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Débuter sur le relevé et la facturation P4</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Suivi des impayés et recouvrement P4</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Facturation Recouvrement · E-facture / AES · Chorus Pro</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Changement de RE / sortie de périmètre</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+        <div class="card"><span class="card-title">Débuter sur les Affaires de Corrections de Factures P4</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
       </div>
       </div>
       <div class="block">
@@ -762,7 +754,7 @@
           <h4 class="block-title">Validation des acquis — Parcours B</h4>
         </div>
       <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis — Parcours B</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+        <div class="card"><span class="card-title">Validation des acquis — Parcours B</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
       </div>
       </div>
     </div>
@@ -775,7 +767,7 @@
 
 <footer>
   <p><a class="card-link" href="#top">↑ Revenir en haut de la page</a></p>
-  <p>Parcours de professionnalisation à l'entrée en poste — Enedis · Socle Marché de Masse. Vos modules cochés sont enregistrés localement sur votre navigateur.</p>
+  <p>Parcours de professionnalisation à l'entrée en poste — Enedis · Socle Marché de Masse. Le parcours sélectionné est mémorisé localement sur votre navigateur.</p>
 </footer>
 
 <button type="button" id="btn-top" aria-label="Revenir en haut de la page">↑</button>
@@ -785,45 +777,19 @@
 (function(){
   "use strict";
   var STORAGE_KEY = "enedis-parcours-marche-masse-v2";
-  var state = { checks:{}, track:null };
+  var state = { track:null };
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   try{
-    var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || JSON.stringify({checks:{},mode:"apprenant",track:null}));
-    if(saved && typeof saved === "object"){ state.checks = saved.checks || {}; state.track = saved.track || null; }
+    var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    if(saved && typeof saved === "object"){ state.track = saved.track || null; }
   }catch(e){}
-
-  var boxes = Array.prototype.slice.call(document.querySelectorAll('.card input[type="checkbox"]'));
-  var trackOf = {};
-  boxes.forEach(function(box,i){
-    if(!box.id){ box.id = "chk-" + i; }
-    var holder = box.closest("[data-track]");
-    trackOf[box.id] = holder ? holder.dataset.track : null;
-    var label = box.closest("label.chk");
-    if(label && !label.hasAttribute("for")) label.setAttribute("for", box.id);
-    var card = box.closest(".card");
-    var title = card.querySelector(".card-title");
-    if(title && !title.id) title.id = box.id + "-t";
-    if(title) box.setAttribute("aria-labelledby", title.id);
-    var step = box.closest(".step");
-    var stepTitle = step.querySelector("h2");
-    box.setAttribute("aria-label", (stepTitle ? stepTitle.textContent.trim() + " — " : "") + (title ? title.textContent.trim() : ""));
-    box.addEventListener("change", function(){
-      if(box.checked) state.checks[box.id] = true; else delete state.checks[box.id];
-      save(); refresh();
-    });
-  });
 
   function save(){
     try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
   }
 
   function refresh(){
-    boxes.forEach(function(b){
-      b.checked = !!state.checks[b.id];
-      b.closest(".card").classList.toggle("checked", !!state.checks[b.id]);
-    });
-
     document.querySelectorAll(".subtrack").forEach(function(el){
       el.classList.toggle("locked", el.dataset.track !== state.track);
     });
