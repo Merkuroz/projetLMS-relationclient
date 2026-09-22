@@ -26,24 +26,6 @@
     --shadow-soft:0 4px 14px rgba(20,35,220,.08);
     font-size:16px;
   }
-  @keyframes aurora{
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-  }
-  @keyframes floaty{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-7px)}
-  }
-  @keyframes shimmer{
-    0%{background-position:-200% 0}
-    100%{background-position:200% 0}
-  }
-  @keyframes pop{
-    0%{transform:scale(1)}
-    45%{transform:scale(1.12)}
-    100%{transform:scale(1)}
-  }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
@@ -61,37 +43,13 @@
 
   /* ---------- Header ---------- */
   header.hero{
-    position:relative;overflow:hidden;
-    background:linear-gradient(120deg,var(--enedis-blue-deep) 0%,var(--enedis-blue) 45%,#2B3BF2 70%,var(--enedis-blue-dark) 100%);
-    background-size:220% 220%;
-    animation:aurora 18s ease-in-out infinite;
-    color:#fff;padding:2.2rem 1.2rem 3.4rem;
+    background:var(--enedis-blue);
+    color:#fff;padding:2.2rem 1.2rem 3rem;
   }
-  header.hero::before{
-    content:"";position:absolute;inset:-40%;
-    background:radial-gradient(38rem 38rem at 18% 25%,rgba(150,205,50,.22),transparent 60%),
-               radial-gradient(30rem 30rem at 85% 80%,rgba(255,255,255,.14),transparent 60%);
-    pointer-events:none;
-  }
-  header.hero::after{
-    content:"";position:absolute;left:0;right:0;bottom:-2px;height:52px;
-    background:#F7F9FF;
-    -webkit-mask:radial-gradient(140% 100% at 50% 100%,transparent 78%,#000 79%);
-    mask:radial-gradient(140% 100% at 50% 100%,transparent 78%,#000 79%);
-  }
-  .hero-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+  .hero-inner{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
   .brand{display:flex;align-items:center;gap:.9rem}
-  .brand svg{flex:none;filter:drop-shadow(0 4px 10px rgba(8,13,82,.35));animation:floaty 6s ease-in-out infinite}
-  .hero h1{font-size:clamp(1.35rem,3.2vw,2.1rem);margin:0;letter-spacing:-.01em;
-    background:linear-gradient(90deg,#fff 30%,#D9E2FF 50%,#fff 70%);
-    background-size:200% 100%;
-    animation:shimmer 8s linear infinite;
-    -webkit-background-clip:text;background-clip:text;
-  }
-  .hero h1{color:#fff}
-  @supports (-webkit-background-clip:text){
-    .hero h1{color:transparent}
-  }
+  .brand svg{flex:none}
+  .hero h1{font-size:clamp(1.35rem,3.2vw,2.1rem);margin:0;letter-spacing:-.01em;color:#fff}
   .hero p{margin:.2rem 0 0;color:#DDE3FF;font-size:.95rem}
 
   .btn{
@@ -134,8 +92,7 @@
     padding:.55rem 1rem;border-radius:999px;font-weight:700;font-size:.9rem;cursor:pointer;
     transition:border-color .15s,transform .15s,box-shadow .15s;
   }
-  nav.steps a:hover{border-color:var(--enedis-blue);transform:translateY(-2px);box-shadow:var(--shadow-soft)}
-  nav.steps a .step-pct{margin-left:.4rem;color:var(--enedis-blue)}
+  nav.steps a:hover{border-color:var(--enedis-blue)}
 
   main{max-width:1100px;margin:0 auto;padding:0 1.2rem 3rem}
 
@@ -147,24 +104,17 @@
     border-radius:999px;background:var(--border);
     transition:background .4s ease;
   }
-  .step.done::before{background:linear-gradient(180deg,var(--enedis-green),var(--enedis-blue))}
+  .step.done::before{background:var(--enedis-green)}
   .step:last-of-type::before{display:none}
   .step-head{display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap}
   .step-num{
     position:absolute;left:0;top:0;
     width:54px;height:54px;border-radius:50%;display:grid;place-items:center;
     font-size:1.4rem;font-weight:800;color:#fff;background:var(--enedis-blue);
-    background-image:linear-gradient(135deg,#2B3BF2,var(--enedis-blue) 60%,var(--enedis-blue-dark));
-    box-shadow:0 6px 16px rgba(20,35,220,.35);
   }
-  .step.done .step-num{
-    background:linear-gradient(135deg,#3FA14D,#1B7F3B);
-    background-image:none;
-  }
+  .step.done .step-num{background:var(--enedis-green-dark)}
   .step h2{margin:0;font-size:1.35rem;color:var(--enedis-blue)}
   .step-goal{margin:.4rem 0 0;color:var(--text-muted);font-size:.95rem}
-  .step-bar{height:8px;border-radius:999px;background:var(--border);overflow:hidden;margin:.9rem 0 1rem}
-  .step-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--enedis-blue),var(--enedis-green));transition:width .4s ease}
 
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
 
@@ -176,7 +126,7 @@
   .block-head{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin:0 0 .9rem}
   .block-num{
     flex:none;display:inline-grid;place-items:center;min-width:2.7rem;padding:.2rem .5rem;
-    border-radius:9px;background:linear-gradient(135deg,#2B3BF2,var(--enedis-blue-dark));
+    border-radius:9px;background:var(--enedis-blue);
     color:#fff;font-weight:800;font-size:.9rem;letter-spacing:.02em;
   }
   .block-title{margin:0;font-size:1.02rem;font-weight:800;color:var(--text);flex:1;min-width:12rem}
@@ -186,26 +136,19 @@
   }
   .block.done{border-color:var(--ok)}
   .block.done .block-count{background:#E2F5E9;color:var(--ok)}
-  .block.done .block-num{background:linear-gradient(135deg,#3FA14D,#1B7F3B)}
+  .block.done .block-num{background:var(--enedis-green-dark)}
   .card{
     position:relative;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);
-    padding:1rem 1.1rem;box-shadow:var(--shadow-soft);transition:transform .2s,border-color .2s,box-shadow .2s;
-    overflow:hidden;
+    padding:1rem 1.1rem;box-shadow:var(--shadow-soft);
   }
-  .card::after{
-    content:"";position:absolute;top:0;left:0;right:0;height:3px;
-    background:linear-gradient(90deg,var(--enedis-blue),var(--enedis-green));
-    opacity:0;transition:opacity .2s;
-  }
-  .card:hover{transform:translateY(-3px);border-color:var(--enedis-blue);box-shadow:var(--shadow)}
-  .card:hover::after,.card.checked::after{opacity:1}
+  .card:hover{border-color:var(--enedis-blue);box-shadow:var(--shadow)}
   .card label.chk{display:flex;gap:.7rem;align-items:flex-start;cursor:pointer;font-weight:600}
   .card input[type="checkbox"]{
     width:1.35rem;height:1.35rem;flex:none;margin-top:.15rem;accent-color:var(--enedis-blue);cursor:pointer;
     transition:transform .15s ease;
   }
   .card input[type="checkbox"]:hover{transform:scale(1.15)}
-  .card.checked{border-color:var(--ok);background:linear-gradient(180deg,#F4FBF6,#fff)}
+  .card.checked{border-color:var(--ok);background:#F4FBF6}
   .card.checked .card-title{text-decoration:line-through;color:var(--text-muted)}
   .card-title{margin:0 0 .5rem;font-size:1rem}
   .card-tags{display:flex;flex-wrap:wrap;gap:.35rem}
@@ -278,8 +221,7 @@
   .next-step{
     display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.6rem;
     margin:1.4rem 0 0;padding:.9rem 1.2rem;text-decoration:none;
-    background:linear-gradient(120deg,var(--enedis-blue-soft),#fff 70%);
-    border:2px dashed var(--enedis-blue);border-radius:var(--radius);
+    background:var(--enedis-blue-soft);border:2px dashed var(--enedis-blue);border-radius:var(--radius);
     color:var(--enedis-blue);font-weight:800;
     transition:border-style .2s,transform .15s,box-shadow .15s;
   }
@@ -287,7 +229,7 @@
   .next-step .next-state{display:block;font-size:.8rem;font-weight:700;color:var(--text-muted)}
   .next-step .next-arrow{font-size:1.3rem}
   .next-step.fin{
-    background:linear-gradient(120deg,#F3FBE8,#fff 70%);
+    background:#F3FBE8;
     border-color:var(--enedis-green-dark);color:var(--enedis-green-dark);
     text-align:center;justify-content:center;
   }
@@ -299,7 +241,7 @@
   /* ---------- Toast ---------- */
   #toast{
     position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%) translateY(120%);
-    background:linear-gradient(120deg,var(--enedis-blue),var(--enedis-blue-dark));
+    background:var(--enedis-blue);
     color:#fff;padding:.7rem 1.5rem;border-radius:999px;
     font-weight:700;box-shadow:var(--shadow);transition:transform .3s;z-index:50;
   }
@@ -375,10 +317,10 @@
     </fieldset>
 
 <nav class="steps" aria-label="Accès rapide aux étapes">
-  <a href="#etape-1">Étape 1 · Accueil<span class="step-pct" data-nav="s1"></span></a>
-  <a href="#etape-2">Étape 2 · Techniques<span class="step-pct" data-nav="s2"></span></a>
-  <a href="#etape-3">Étape 3 · Relation Clients<span class="step-pct" data-nav="s3"></span></a>
-  <a href="#etape-4">Étape 4 · Métier<span class="step-pct" data-nav="s4"></span></a>
+  <a href="#etape-1">Étape 1 · Accueil</a>
+  <a href="#etape-2">Étape 2 · Techniques</a>
+  <a href="#etape-3">Étape 3 · Relation Clients</a>
+  <a href="#etape-4">Étape 4 · Métier</a>
 </nav>
 
 <main id="parcours">
@@ -399,7 +341,6 @@
         <p class="tip"><strong>Conseil pédagogique :</strong> prenez rendez-vous avec votre manager dès votre première semaine ; le RDV d'accueil structure toute la suite du parcours.</p>
       </div>
     </div>
-    <div class="step-bar" role="progressbar" aria-labelledby="h-s1" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
 
     <div class="block">
       <div class="block-head">
@@ -502,7 +443,6 @@
         <p class="tip"><strong>Conseil pédagogique :</strong> la formation en réalité virtuelle du CAD Auvergne rend le réseau électrique tangible ; planifiez cette session en début d'étape.</p>
       </div>
     </div>
-    <div class="step-bar" role="progressbar" aria-labelledby="h-s2" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
 
     <div class="block">
       <div class="block-head">
@@ -584,7 +524,6 @@
         <p class="tip"><strong>Conseil pédagogique :</strong> les outils SI se maîtrisent par la pratique ; après chaque module, demandez un accès à l'environnement d'exercice avec votre manager.</p>
       </div>
     </div>
-    <div class="step-bar" role="progressbar" aria-labelledby="h-s3" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
 
     <div class="block">
       <div class="block-head">
@@ -672,7 +611,6 @@
         <p class="tip"><strong>Conseil pédagogique :</strong> validez le choix du parcours lors du RDV manager de l'étape 3 ; il correspond à votre fiche de poste et à votre équipe d'affectation.</p>
       </div>
     </div>
-    <div class="step-bar" role="progressbar" aria-labelledby="h-s4" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
 
     <details class="help">
       <summary>Comment utiliser cette étape ?</summary>
@@ -938,10 +876,6 @@
     var completedSteps = 0;
     document.querySelectorAll(".step").forEach(function(stepEl){
       var p = pct(stepEl);
-      var bar = stepEl.querySelector(".step-bar");
-      bar.querySelector("i").style.width = p + "%";
-      bar.setAttribute("aria-valuenow", p);
-      bar.setAttribute("aria-valuetext", p + "% de l'étape réalisée");
       var complete = p === 100;
       stepEl.classList.toggle("done", complete);
       if(complete) completedSteps++;
@@ -968,8 +902,6 @@
       });
       if(complete && !prevDone[stepEl.dataset.step] && !firstRefresh) celebrate(stepEl.querySelector("h2").textContent.replace(/\s*À venir|\s*En cours|\s*Terminée/g, "").trim());
       prevDone[stepEl.dataset.step] = complete;
-      var nav = document.querySelector('[data-nav="' + stepEl.dataset.step + '"]');
-      if(nav) nav.textContent = p + "%";
     });
 
     ["A","B"].forEach(function(t){
