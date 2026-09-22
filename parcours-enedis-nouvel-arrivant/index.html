@@ -102,9 +102,7 @@
   .step::before{
     content:"";position:absolute;left:25px;top:62px;bottom:-2.2rem;width:4px;
     border-radius:999px;background:var(--border);
-    transition:background .4s ease;
   }
-  .step.done::before{background:var(--enedis-green)}
   .step:last-of-type::before{display:none}
   .step-head{display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap}
   .step-num{
@@ -112,7 +110,6 @@
     width:54px;height:54px;border-radius:50%;display:grid;place-items:center;
     font-size:1.4rem;font-weight:800;color:#fff;background:var(--enedis-blue);
   }
-  .step.done .step-num{background:var(--enedis-green-dark)}
   .step h2{margin:0;font-size:1.35rem;color:var(--enedis-blue)}
   .step-goal{margin:.4rem 0 0;color:var(--text-muted);font-size:.95rem}
 
@@ -130,13 +127,6 @@
     color:#fff;font-weight:800;font-size:.9rem;letter-spacing:.02em;
   }
   .block-title{margin:0;font-size:1.02rem;font-weight:800;color:var(--text);flex:1;min-width:12rem}
-  .block-count{
-    margin-left:auto;font-size:.78rem;font-weight:800;color:var(--enedis-blue);
-    background:var(--enedis-blue-soft);padding:.2rem .6rem;border-radius:999px;white-space:nowrap;
-  }
-  .block.done{border-color:var(--ok)}
-  .block.done .block-count{background:#E2F5E9;color:var(--ok)}
-  .block.done .block-num{background:var(--enedis-green-dark)}
   .card{
     position:relative;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);
     padding:1rem 1.1rem;box-shadow:var(--shadow-soft);
@@ -195,15 +185,6 @@
   }
   .tip strong{color:var(--enedis-green-dark)}
 
-  /* Statut de l'étape */
-  .status-chip{
-    display:inline-block;vertical-align:middle;margin-left:.6rem;padding:.15rem .7rem;
-    border-radius:999px;font-size:.75rem;font-weight:800;letter-spacing:.02em;
-  }
-  .status-chip[data-state="todo"]{background:#EDF0F7;color:#3D3F66}
-  .status-chip[data-state="doing"]{background:#FFF3D6;color:#7A5200}
-  .status-chip[data-state="done"]{background:#E2F5E9;color:var(--ok)}
-
   /* Lien formation */
   .card-link{
     display:inline-flex;align-items:center;gap:.3rem;margin-top:.6rem;
@@ -242,8 +223,6 @@
     border-color:var(--enedis-green-dark);color:var(--enedis-green-dark);
     text-align:center;justify-content:center;
   }
-
-  #confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
 
   footer{text-align:center;color:var(--text-muted);font-size:.85rem;padding:1rem 1.2rem 2rem}
 
@@ -323,7 +302,7 @@
     <div class="step-head">
       <div class="step-num" aria-hidden="true">1</div>
       <div>
-        <h2 id="h-s1">Accueil, informations générales et acculturation <span class="status-chip" data-chip data-state="todo">À venir</span></h2>
+        <h2 id="h-s1">Accueil, informations générales et acculturation</h2>
         <ul class="objectifs" aria-label="Objectifs pédagogiques de l'étape 1">
           <li>Découvrir Enedis, son entreprise et son projet</li>
           <li>Identifier les consignes de sécurité et les 8 fondamentaux PSS</li>
@@ -339,7 +318,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">1.1</span>
         <h3 class="block-title">Présenter l'entreprise et son projet</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Découvrir Enedis</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=29148971008">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
@@ -350,7 +328,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">1.2</span>
         <h3 class="block-title">Présenter les activités du domaine métier dans la DR</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card">
@@ -364,7 +341,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">1.3</span>
         <h3 class="block-title">Informer sur les connaissances socles de l'entreprise</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Prévention des Risques Généraux (ADNPSSCPPRGD)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27596783616">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
@@ -384,7 +360,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">1.4</span>
         <h3 class="block-title">Présenter les consignes de sécurité</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card">
@@ -397,7 +372,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">1.5</span>
         <h3 class="block-title">Informer sur le modèle régulé et le TURPE</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Tout comprendre aux principes du TURPE</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -409,7 +383,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">1.6</span>
         <h3 class="block-title">Validation des acquis — Étape 1</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis — Étape 1</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
@@ -429,7 +402,7 @@
     <div class="step-head">
       <div class="step-num" aria-hidden="true">2</div>
       <div>
-        <h2 id="h-s2">Les bases techniques de l'électricité <span class="status-chip" data-chip data-state="todo">À venir</span></h2>
+        <h2 id="h-s2">Les bases techniques de l'électricité</h2>
         <ul class="objectifs" aria-label="Objectifs pédagogiques de l'étape 2">
           <li>Expliquer le chemin de l'électricité : production → transport → distribution → soutirage / injection</li>
           <li>Identifier les ouvrages de réseau et de branchement : branchement, compteur, disjoncteur</li>
@@ -443,7 +416,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">2.1</span>
         <h3 class="block-title">Informer sur le chemin de l'électricité</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Découverte de l'électricité</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -456,7 +428,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">2.2</span>
         <h3 class="block-title">Informer sur les comptages</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le fonctionnement du système Linky</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -469,7 +440,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">2.3</span>
         <h3 class="block-title">Informer sur les ouvrages de réseau et de branchement</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Lumière sur les PNT</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -481,7 +451,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">2.4</span>
         <h3 class="block-title">Informer sur le Marché d'Affaires</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Marché d'Affaires</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -491,7 +460,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">2.5</span>
         <h3 class="block-title">Validation des acquis — Étape 2</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis — Étape 2</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
@@ -511,7 +479,7 @@
     <div class="step-head">
       <div class="step-num" aria-hidden="true">3</div>
       <div>
-        <h2 id="h-s3">Les bases de la Relation Clients — Marché de Masse <span class="status-chip" data-chip data-state="todo">À venir</span></h2>
+        <h2 id="h-s3">Les bases de la Relation Clients — Marché de Masse</h2>
         <ul class="objectifs" aria-label="Objectifs pédagogiques de l'étape 3">
           <li>Comprendre le marché de l'électricité : fournisseurs, responsables d'équilibre, acheteurs, CRE</li>
           <li>Connaître la politique client et la segmentation (consommateurs, producteurs)</li>
@@ -526,7 +494,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">3.1</span>
         <h3 class="block-title">Informer sur les fondamentaux de la relation client</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Les fondamentaux de la relation client — module 1</span></label><div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div></div>
@@ -537,7 +504,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">3.2</span>
         <h3 class="block-title">Informer sur la politique client, tous segments clients</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">La segmentation consommateur</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -549,7 +515,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">3.3</span>
         <h3 class="block-title">Informer sur le marché de l'électricité</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le RIVA, de quoi parle-t-on ?</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -559,7 +524,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">3.4</span>
         <h3 class="block-title">Maîtriser la relation client téléphonique</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Guide métier Relations clients</span></label><div class="card-tags"><span class="tag t-doc">Document à lire</span></div></div>
@@ -570,7 +534,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">3.5</span>
         <h3 class="block-title">Informer sur les outils SI de la relation client</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Les outils SI de la relation client</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -580,7 +543,6 @@
       <div class="block-head">
         <span class="block-num" aria-hidden="true">3.6</span>
         <h3 class="block-title">Validation des acquis — Étape 3</h3>
-        <span class="block-count" data-blockcount>0/0</span>
       </div>
     <div class="grid">
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis — Étape 3</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
@@ -600,7 +562,7 @@
     <div class="step-head">
       <div class="step-num" aria-hidden="true">4</div>
       <div>
-        <h2 id="h-s4">Étape 4 : Spécifique métier <span class="status-chip" data-chip data-state="todo">À venir</span></h2>
+        <h2 id="h-s4">Étape 4 : Spécifique métier</h2>
         <ul class="objectifs" aria-label="Objectifs pédagogiques de l'étape 4">
           <li>Choisir votre parcours métier en accord avec votre manager</li>
           <li>Développer les compétences spécifiques à votre poste : CRC ACH C5/AD ou Petits Producteurs</li>
@@ -613,7 +575,7 @@
 
     <details class="help">
       <summary>Comment utiliser cette étape ?</summary>
-      <p>Choisissez, avec votre manager, le parcours correspondant à votre poste : seul le parcours sélectionné est affiché et pris en compte dans votre progression. Un changement de parcours conserve vos acquisitions déjà cochées.</p>
+      <p>Choisissez, avec votre manager, le parcours correspondant à votre poste : seul le parcours sélectionné est affiché. Un changement de parcours conserve vos modules déjà cochés.</p>
     </details>
 
     <fieldset class="chooser" id="choix-parcours">
@@ -640,7 +602,6 @@
         <div class="block-head">
           <span class="block-num" aria-hidden="true">A.1</span>
           <h4 class="block-title">Découvrir les outils du conseiller</h4>
-          <span class="block-count" data-blockcount>0/0</span>
         </div>
       <div class="grid">
         <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Débuter sur les fondamentaux Ginko tous métiers</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -654,7 +615,6 @@
         <div class="block-head">
           <span class="block-num" aria-hidden="true">A.2</span>
           <h4 class="block-title">Débuter sur les affaires de correction de factures C5 (ACF)</h4>
-          <span class="block-count" data-blockcount>0/0</span>
         </div>
       <div class="grid">
         <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Débuter sur les affaires de correction de factures C5 (ACF)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -664,7 +624,6 @@
         <div class="block-head">
           <span class="block-num" aria-hidden="true">A.3</span>
           <h4 class="block-title">Débuter sur le traitement des prestations et interventions C5</h4>
-          <span class="block-count" data-blockcount>0/0</span>
         </div>
       <div class="grid">
         <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Débuter sur le traitement des prestations et interventions C5</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -684,7 +643,6 @@
         <div class="block-head">
           <span class="block-num" aria-hidden="true">A.4</span>
           <h4 class="block-title">Débuter sur le relevé et la facturation C5</h4>
-          <span class="block-count" data-blockcount>0/0</span>
         </div>
       <div class="grid">
         <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Débuter sur le relevé et la facturation C5</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -694,7 +652,6 @@
         <div class="block-head">
           <span class="block-num" aria-hidden="true">A.5</span>
           <h4 class="block-title">Prendre en charge les demandes clients</h4>
-          <span class="block-count" data-blockcount>0/0</span>
         </div>
       <div class="grid">
         <div class="card">
@@ -708,7 +665,6 @@
         <div class="block-head">
           <span class="block-num" aria-hidden="true">A.6</span>
           <h4 class="block-title">Validation des acquis — Parcours A</h4>
-          <span class="block-count" data-blockcount>0/0</span>
         </div>
       <div class="grid">
         <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis — Parcours A</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
@@ -723,7 +679,6 @@
         <div class="block-head">
           <span class="block-num" aria-hidden="true">B.1</span>
           <h4 class="block-title">Informer sur les acteurs de la production du marché de l'électricité</h4>
-          <span class="block-count" data-blockcount>0/0</span>
         </div>
       <div class="grid">
         <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Filières de production d'électricité en France</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -737,7 +692,6 @@
         <div class="block-head">
           <span class="block-num" aria-hidden="true">B.2</span>
           <h4 class="block-title">Découvrir le raccordement Petits Producteurs</h4>
-          <span class="block-count" data-blockcount>0/0</span>
         </div>
       <div class="grid">
         <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Raccordement Petits Producteurs — demandes sans travaux</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -754,7 +708,6 @@
         <div class="block-head">
           <span class="block-num" aria-hidden="true">B.3</span>
           <h4 class="block-title">Saisir les demandes sur Enedis-Connect</h4>
-          <span class="block-count" data-blockcount>0/0</span>
         </div>
       <div class="grid">
         <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Saisie d'une demande CAE sur Enedis-Connect</span></label><div class="card-tags"><span class="tag t-libre">Libre-service</span></div></div>
@@ -766,7 +719,6 @@
         <div class="block-head">
           <span class="block-num" aria-hidden="true">B.4</span>
           <h4 class="block-title">Découvrir le Contrat d'Accès et d'Exploitation, le Contrat Unique en injection et la Convention d'Auto-Consommation Sans Injection</h4>
-          <span class="block-count" data-blockcount>0/0</span>
         </div>
       <div class="grid">
         <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le Contrat d'Accès et d'Exploitation (CAE)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -779,7 +731,6 @@
         <div class="block-head">
           <span class="block-num" aria-hidden="true">B.5</span>
           <h4 class="block-title">Accompagner un client dans son projet et dans la gestion de son contrat</h4>
-          <span class="block-count" data-blockcount>0/0</span>
         </div>
       <div class="grid">
         <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Accompagner un client dans la gestion de son contrat</span></label><div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div></div>
@@ -794,7 +745,6 @@
         <div class="block-head">
           <span class="block-num" aria-hidden="true">B.6</span>
           <h4 class="block-title">Débuter le traitement des prestations P4, le solde des interventions, la facturation et le recouvrement</h4>
-          <span class="block-count" data-blockcount>0/0</span>
         </div>
       <div class="grid">
         <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Traitement du Back Office Raccordement P4</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
@@ -810,7 +760,6 @@
         <div class="block-head">
           <span class="block-num" aria-hidden="true">B.7</span>
           <h4 class="block-title">Validation des acquis — Parcours B</h4>
-          <span class="block-count" data-blockcount>0/0</span>
         </div>
       <div class="grid">
         <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis — Parcours B</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
@@ -826,10 +775,9 @@
 
 <footer>
   <p><a class="card-link" href="#top">↑ Revenir en haut de la page</a></p>
-  <p>Parcours de professionnalisation à l'entrée en poste — Enedis · Socle Marché de Masse. Votre progression est enregistrée localement sur votre navigateur.</p>
+  <p>Parcours de professionnalisation à l'entrée en poste — Enedis · Socle Marché de Masse. Vos modules cochés sont enregistrés localement sur votre navigateur.</p>
 </footer>
 
-<canvas id="confetti" aria-hidden="true"></canvas>
 <button type="button" id="btn-top" aria-label="Revenir en haut de la page">↑</button>
 <div id="toast" role="status" aria-live="polite"></div>
 
@@ -847,7 +795,6 @@
 
   var boxes = Array.prototype.slice.call(document.querySelectorAll('.card input[type="checkbox"]'));
   var trackOf = {};
-  function boxActive(box){ return trackOf[box.id] === null || trackOf[box.id] === state.track; }
   boxes.forEach(function(box,i){
     if(!box.id){ box.id = "chk-" + i; }
     var holder = box.closest("[data-track]");
@@ -864,21 +811,11 @@
     box.addEventListener("change", function(){
       if(box.checked) state.checks[box.id] = true; else delete state.checks[box.id];
       save(); refresh();
-      if(box.checked){
-        toast("Bravo ! Module validé : " + (title ? title.textContent.trim() : ""));
-      }
     });
   });
 
   function save(){
     try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
-  }
-
-  function pct(stepEl){
-    var list = Array.prototype.slice.call(stepEl.querySelectorAll('.card input[type="checkbox"]')).filter(boxActive);
-    if(!list.length) return 0;
-    var done = list.filter(function(b){ return state.checks[b.id]; }).length;
-    return Math.round(done / list.length * 100);
   }
 
   function refresh(){
@@ -891,35 +828,6 @@
       el.classList.toggle("locked", el.dataset.track !== state.track);
     });
 
-    document.querySelectorAll(".step").forEach(function(stepEl){
-      var p = pct(stepEl);
-      var complete = p === 100;
-      stepEl.classList.toggle("done", complete);
-      var chip = stepEl.querySelector("[data-chip]");
-      if(chip){
-        chip.textContent = complete ? "Terminée" : (p > 0 ? "En cours" : "À venir");
-        chip.dataset.state = complete ? "done" : (p > 0 ? "doing" : "todo");
-      }
-      var nextState = stepEl.querySelector("[data-nextstate]");
-      if(nextState && !stepEl.querySelector(".next-step.fin")){
-        nextState.textContent = complete
-          ? "Étape terminée — poursuivez votre parcours :"
-          : (p > 0 ? "Étape en cours, terminez vos modules puis poursuivez :" : "Une fois cette étape terminée, poursuivez votre parcours :");
-      }
-      stepEl.querySelectorAll(".block").forEach(function(bEl){
-        var bBoxes = Array.prototype.slice.call(bEl.querySelectorAll('.card input[type="checkbox"]')).filter(boxActive);
-        var bDone = bBoxes.filter(function(b){ return state.checks[b.id]; }).length;
-        var cnt = bEl.querySelector("[data-blockcount]");
-        if(cnt){
-          cnt.textContent = bDone + "/" + bBoxes.length;
-          cnt.setAttribute("aria-label", bDone + " module(s) réalisé(s) sur " + bBoxes.length);
-        }
-        bEl.classList.toggle("done", bBoxes.length > 0 && bDone === bBoxes.length);
-      });
-      if(complete && !prevDone[stepEl.dataset.step] && !firstRefresh) celebrate(stepEl.querySelector("h2").textContent.replace(/\s*À venir|\s*En cours|\s*Terminée/g, "").trim());
-      prevDone[stepEl.dataset.step] = complete;
-    });
-
     ["A","B"].forEach(function(t){
       var btn = document.getElementById("track-" + t);
       var selected = state.track === t;
@@ -929,11 +837,10 @@
     var note = document.getElementById("chooser-note");
     if(state.track){
       var tName = document.querySelector('.subtrack[data-track="' + state.track + '"] h3').textContent.trim();
-      note.textContent = "Parcours actif : " + tName + ". Seuls les modules de ce parcours comptent dans votre progression.";
+      note.textContent = "Parcours actif : " + tName + ". Seuls les modules de ce parcours sont affichés.";
     } else {
       note.textContent = "Aucun parcours sélectionné — l'étape 4 sera activée après le choix effectué avec votre manager.";
     }
-    firstRefresh = false;
   }
 
   function toast(msg){
@@ -942,40 +849,6 @@
     t.classList.add("show");
     clearTimeout(t._timer);
     t._timer = setTimeout(function(){ t.classList.remove("show"); }, 2600);
-  }
-
-  /* Confettis de célébration à la validation d'une étape */
-  var prevDone = {};
-  var firstRefresh = true;
-  function celebrate(title){
-    toast("Félicitations ! Étape terminée : " + title);
-    var canvas = document.getElementById("confetti");
-    if(reduceMotion || !canvas || !canvas.getContext) return;
-    var ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    var colors = ["#1423DC", "#96CD32", "#7A6BD6", "#E27BA6", "#C99700"];
-    var parts = [];
-    for(var i = 0; i < 110; i++){
-      parts.push({ x: canvas.width / 2, y: canvas.height * 0.35, vx: (Math.random() - 0.5) * 12, vy: Math.random() * -10 - 3, s: Math.random() * 8 + 4, c: colors[i % colors.length], r: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.3, life: 90 + Math.random() * 40 });
-    }
-    var t0 = null;
-    function frame(ts){
-      if(!t0) t0 = ts;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      var alive = false;
-      parts.forEach(function(p){
-        p.x += p.vx; p.y += p.vy; p.vy += 0.25; p.r += p.vr; p.life--;
-        if(p.life > 0 && p.y < canvas.height + 20){
-          alive = true;
-          ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r);
-          ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * 0.6);
-          ctx.restore();
-        }
-      });
-      if(alive && ts - t0 < 3500) requestAnimationFrame(frame);
-      else ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-    requestAnimationFrame(frame);
   }
 
   /* Apparition progressive des cartes au défilement */
