@@ -159,15 +159,27 @@
   main{max-width:1100px;margin:0 auto;padding:0 1.2rem 3rem}
 
   /* ---------- Sections étapes ---------- */
-  .step{margin-top:1.6rem;scroll-margin-top:1rem}
-  .step-head{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+  /* ---------- Fil conducteur : timeline verticale ---------- */
+  .step{position:relative;margin-top:2.2rem;padding-left:80px;scroll-margin-top:1rem}
+  .step::before{
+    content:"";position:absolute;left:25px;top:62px;bottom:-2.2rem;width:4px;
+    border-radius:999px;background:var(--border);
+    transition:background .4s ease;
+  }
+  .step.done::before{background:linear-gradient(180deg,var(--enedis-green),var(--enedis-blue))}
+  .step:last-of-type::before{display:none}
+  .step-head{display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap}
   .step-num{
-    flex:none;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;
+    position:absolute;left:0;top:0;
+    width:54px;height:54px;border-radius:50%;display:grid;place-items:center;
     font-size:1.4rem;font-weight:800;color:#fff;background:var(--enedis-blue);
     background-image:linear-gradient(135deg,#2B3BF2,var(--enedis-blue) 60%,var(--enedis-blue-dark));
     box-shadow:0 6px 16px rgba(20,35,220,.35);
   }
-  .step.done .step-num{background:var(--ok)}
+  .step.done .step-num{
+    background:linear-gradient(135deg,#3FA14D,#1B7F3B);
+    background-image:none;
+  }
   .step h2{margin:0;font-size:1.35rem;color:var(--enedis-blue)}
   .step-goal{margin:.4rem 0 0;color:var(--text-muted);font-size:.95rem}
   .step-bar{height:8px;border-radius:999px;background:var(--border);overflow:hidden;margin:.9rem 0 1rem}
@@ -261,6 +273,24 @@
   .reveal{opacity:0;transform:translateY(14px);transition:opacity .45s ease,transform .45s ease}
   .reveal.visible{opacity:1;transform:none}
 
+  /* Bannière fil conducteur vers l'étape suivante */
+  .next-step{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.6rem;
+    margin:1.4rem 0 0;padding:.9rem 1.2rem;text-decoration:none;
+    background:linear-gradient(120deg,var(--enedis-blue-soft),#fff 70%);
+    border:2px dashed var(--enedis-blue);border-radius:var(--radius);
+    color:var(--enedis-blue);font-weight:800;
+    transition:border-style .2s,transform .15s,box-shadow .15s;
+  }
+  .next-step:hover{border-style:solid;transform:translateY(-2px);box-shadow:var(--shadow-soft)}
+  .next-step .next-state{display:block;font-size:.8rem;font-weight:700;color:var(--text-muted)}
+  .next-step .next-arrow{font-size:1.3rem}
+  .next-step.fin{
+    background:linear-gradient(120deg,#F3FBE8,#fff 70%);
+    border-color:var(--enedis-green-dark);color:var(--enedis-green-dark);
+    text-align:center;justify-content:center;
+  }
+
   #confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
 
   footer{text-align:center;color:var(--text-muted);font-size:.85rem;padding:1rem 1.2rem 2rem}
@@ -282,6 +312,10 @@
   }
   @media (max-width:600px){
     .progress-card{flex-direction:column;align-items:flex-start}
+    .step{padding-left:0;margin-top:1.6rem}
+    .step::before{display:none}
+    .step-num{position:static;flex:none}
+    .step-head{align-items:center}
   }
 </style>
 </head>
@@ -390,6 +424,11 @@
       </div>
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis — Étape 1</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
     </div>
+
+    <a class="next-step" href="#etape-2">
+      <span><span class="next-state" data-nextstate>Une fois cette étape terminée, poursuivez votre parcours :</span>Étape 2 — Les bases techniques de l'électricité</span>
+      <span class="next-arrow" aria-hidden="true">→</span>
+    </a>
   </section>
 
   <!-- ================= ETAPE 2 ================= -->
@@ -427,6 +466,11 @@
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le catalogue des prestations</span></label><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=30581161986">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis — Étape 2</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
     </div>
+
+    <a class="next-step" href="#etape-3">
+      <span><span class="next-state" data-nextstate>Une fois cette étape terminée, poursuivez votre parcours :</span>Étape 3 — Les bases de la Relation Clients</span>
+      <span class="next-arrow" aria-hidden="true">→</span>
+    </a>
   </section>
 
   <!-- ================= ETAPE 3 ================= -->
@@ -458,6 +502,11 @@
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Les outils SI de la relation client</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
       <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis — Étape 3</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
     </div>
+
+    <a class="next-step" href="#etape-4">
+      <span><span class="next-state" data-nextstate>Une fois cette étape terminée, poursuivez votre parcours :</span>Étape 4 — Spécifique métier (choix de votre parcours avec votre manager)</span>
+      <span class="next-arrow" aria-hidden="true">→</span>
+    </a>
   </section>
 
   <!-- ================= ETAPE 4 ================= -->
@@ -570,6 +619,8 @@
         <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis — Parcours B</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
       </div>
     </div>
+
+    <p class="next-step fin"><span class="next-state" data-nextstate>Vous avez atteint la fin du parcours :</span>Félicitations, votre professionnalisation est complète !</p>
   </section>
 </main>
 
@@ -665,6 +716,12 @@
       if(chip){
         chip.textContent = complete ? "Terminée" : (p > 0 ? "En cours" : "À venir");
         chip.dataset.state = complete ? "done" : (p > 0 ? "doing" : "todo");
+      }
+      var nextState = stepEl.querySelector("[data-nextstate]");
+      if(nextState && !stepEl.querySelector(".next-step.fin")){
+        nextState.textContent = complete
+          ? "Étape terminée — poursuivez votre parcours :"
+          : (p > 0 ? "Étape en cours, terminez vos modules puis poursuivez :" : "Une fois cette étape terminée, poursuivez votre parcours :");
       }
       if(complete && !prevDone[stepEl.dataset.step] && !firstRefresh) celebrate(stepEl.querySelector("h2").textContent.replace(/\s*À venir|\s*En cours|\s*Terminée/g, "").trim());
       prevDone[stepEl.dataset.step] = complete;
