@@ -65,7 +65,7 @@
     background:linear-gradient(120deg,var(--enedis-blue-deep) 0%,var(--enedis-blue) 45%,#2B3BF2 70%,var(--enedis-blue-dark) 100%);
     background-size:220% 220%;
     animation:aurora 18s ease-in-out infinite;
-    color:#fff;padding:2.2rem 1.2rem 6rem;
+    color:#fff;padding:2.2rem 1.2rem 3.4rem;
   }
   header.hero::before{
     content:"";position:absolute;inset:-40%;
@@ -94,25 +94,6 @@
   }
   .hero p{margin:.2rem 0 0;color:#DDE3FF;font-size:.95rem}
 
-  /* ---------- Progress bar ---------- */
-  .progress-dock{max-width:1100px;margin:-3.4rem auto 0;padding:0 1.2rem;position:relative;z-index:5}
-  .progress-card{
-    background:rgba(255,255,255,.88);
-    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-    border:1px solid rgba(214,220,245,.7);
-    border-radius:var(--radius-lg);box-shadow:var(--shadow);
-    padding:1.2rem 1.5rem;display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;justify-content:space-between;
-  }
-  .progress-info{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
-  .ring{--p:0;position:relative;width:78px;height:78px;border-radius:50%;
-    background:conic-gradient(var(--enedis-blue) calc(var(--p)*1%),var(--enedis-green) calc(var(--p)*1%),var(--border) 0);
-    display:grid;place-items:center;filter:drop-shadow(0 3px 8px rgba(20,35,220,.25));
-  }  .ring::before{content:"";position:absolute;width:62px;height:62px;border-radius:50%;background:#fff;left:8px;top:8px}
-  .ring span{position:relative;font-weight:800;color:var(--enedis-blue);font-size:1rem}
-  .ring.pop{animation:pop .45s ease}
-  .progress-text strong{display:block;font-size:1.05rem}
-  .progress-text small{color:var(--text-muted)}
-  .progress-actions{display:flex;gap:.6rem;flex-wrap:wrap}
   .btn{
     border:2px solid var(--enedis-blue);background:#fff;color:var(--enedis-blue);
     padding:.55rem 1.1rem;border-radius:999px;font-weight:700;cursor:pointer;font-size:.9rem;
@@ -331,7 +312,6 @@
     .reveal{opacity:1;transform:none}
   }
   @media (max-width:600px){
-    .progress-card{flex-direction:column;align-items:flex-start}
     .step{padding-left:0;margin-top:1.6rem}
     .step::before{display:none}
     .step-num{position:static;flex:none}
@@ -358,21 +338,6 @@
   </div>
 </header>
 
-<div class="progress-dock">
-  <div class="progress-card">
-    <div class="progress-info">
-      <div class="ring" id="ring" role="img" aria-label="Progression globale"><span id="ring-txt">0%</span></div>
-      <div class="progress-text">
-        <strong id="prog-title">Votre progression</strong>
-        <small><span id="prog-done">0</span> étape(s) sur <span id="prog-total">0</span> réalisée(s)</small>
-      </div>
-    </div>
-    <div class="progress-actions">
-      <button type="button" class="btn btn-primary" id="btn-reset">Réinitialiser</button>
-    </div>
-  </div>
-</div>
-
 <section class="legend" aria-labelledby="legend-title">
   <div class="legend-box">
     <h2 id="legend-title">Légende des modalités pédagogiques</h2>
@@ -391,6 +356,23 @@
     <p style="margin:.7rem 0 0;font-size:.88rem"><a class="card-link" href="https://experience-enedis.syfadis.com/Catalog" target="_blank" rel="noopener">Accéder au catalogue des formations Enedis ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></p>
   </div>
 </section>
+
+    <fieldset class="chooser" id="choix-parcours">
+      <legend>Choisissez votre parcours métier de l'étape 4 (en accord avec votre manager)</legend>
+      <div class="chooser-grid">
+        <button type="button" class="choice" id="track-A" aria-pressed="false">
+          <span class="choice-title">Parcours A — Chargé de Relations Clients ACH C5 et AD</span>
+          <span class="choice-desc">Affaires de correction de factures C5 (ACF), prestations et interventions C5, relevé et facturation C5, fiches F120 à F920, prise en charge des demandes clients (ligne AD + L1).</span>
+          <span class="pick" aria-hidden="false"></span>
+        </button>
+        <button type="button" class="choice" id="track-B" aria-pressed="false">
+          <span class="choice-title">Parcours B — CRC Gestion et Raccordement Petits Producteurs</span>
+          <span class="choice-desc">Raccordement Petits Producteurs (avec et sans travaux), CAE, CACSI, Contrat Unique en injection, obligations d'achat, gestion des contrats et impayés P4.</span>
+          <span class="pick" aria-hidden="false"></span>
+        </button>
+      </div>
+      <p class="chooser-note" id="chooser-note" role="status">Aucun parcours sélectionné — l'étape 4 sera activée après le choix effectué avec votre manager.</p>
+    </fieldset>
 
 <nav class="steps" aria-label="Accès rapide aux étapes">
   <a href="#etape-1">Étape 1 · Accueil<span class="step-pct" data-nav="s1"></span></a>
@@ -694,25 +676,8 @@
 
     <details class="help">
       <summary>Comment utiliser cette étape ?</summary>
-      <p>Choisissez, avec votre manager, le parcours correspondant à votre poste : seul le parcours sélectionné est affiché et pris en compte dans votre progression. Un changement de parcours conserve vos acquisitions déjà cochées.</p>
+      <p>Choisissez, avec votre manager, le parcours correspondant à votre poste à l'aide des boutons de choix situés <a class="card-link" href="#choix-parcours">en haut de la page</a> : seul le parcours sélectionné est affiché et pris en compte dans votre progression. Un changement de parcours conserve vos acquisitions déjà cochées.</p>
     </details>
-
-    <fieldset class="chooser">
-      <legend>Choisissez votre parcours métier (en accord avec votre manager)</legend>
-      <div class="chooser-grid">
-        <button type="button" class="choice" id="track-A" aria-pressed="false">
-          <span class="choice-title">Parcours A — Chargé de Relations Clients ACH C5 et AD</span>
-          <span class="choice-desc">Affaires de correction de factures C5 (ACF), prestations et interventions C5, relevé et facturation C5, fiches F120 à F920, prise en charge des demandes clients (ligne AD + L1).</span>
-          <span class="pick" aria-hidden="false"></span>
-        </button>
-        <button type="button" class="choice" id="track-B" aria-pressed="false">
-          <span class="choice-title">Parcours B — CRC Gestion et Raccordement Petits Producteurs</span>
-          <span class="choice-desc">Raccordement Petits Producteurs (avec et sans travaux), CAE, CACSI, Contrat Unique en injection, obligations d'achat, gestion des contrats et impayés P4.</span>
-          <span class="pick" aria-hidden="false"></span>
-        </button>
-      </div>
-      <p class="chooser-note" id="chooser-note" role="status">Aucun parcours sélectionné — l'étape 4 sera activée après le choix effectué avec votre manager.</p>
-    </fieldset>
 
     <!-- 4A CRC ACH C5 et AD -->
     <div class="subtrack" data-track="A">
@@ -942,8 +907,6 @@
       if(box.checked) state.checks[box.id] = true; else delete state.checks[box.id];
       save(); refresh();
       if(box.checked){
-        var ring = document.getElementById("ring");
-        ring.classList.remove("pop"); void ring.offsetWidth; ring.classList.add("pop");
         toast("Bravo ! Étape franchie : " + (title ? title.textContent.trim() : "module validé"));
       }
     });
@@ -971,15 +934,6 @@
     });
 
     var activeBoxes = boxes.filter(boxActive);
-    var totalDone = activeBoxes.filter(function(b){ return state.checks[b.id]; }).length;
-    var global = activeBoxes.length ? Math.round(totalDone / activeBoxes.length * 100) : 0;
-
-    document.getElementById("ring").style.setProperty("--p", global);
-    animatePct(global);
-    document.getElementById("ring").setAttribute("aria-label", "Progression globale : " + global + "%");
-    document.getElementById("prog-done").textContent = totalDone;
-    document.getElementById("prog-total").textContent = activeBoxes.length;
-    document.getElementById("prog-title").textContent = "Votre progression";
 
     var completedSteps = 0;
     document.querySelectorAll(".step").forEach(function(stepEl){
@@ -1042,24 +996,6 @@
     t._timer = setTimeout(function(){ t.classList.remove("show"); }, 2600);
   }
 
-  /* Compteur animé de l'anneau de progression */
-  var shownPct = 0;
-  function animatePct(target){
-    var el = document.getElementById("ring-txt");
-    var ring = document.getElementById("ring");
-    if(reduceMotion){ shownPct = target; el.textContent = target + "%"; return; }
-    var start = shownPct, t0 = null, dur = 550;
-    function stepFn(ts){
-      if(!t0) t0 = ts;
-      var k = Math.min(1, (ts - t0) / dur);
-      var v = Math.round(start + (target - start) * (1 - Math.pow(1 - k, 3)));
-      el.textContent = v + "%";
-      ring.style.setProperty("--p", v);
-      if(k < 1) requestAnimationFrame(stepFn); else shownPct = target;
-    }
-    requestAnimationFrame(stepFn);
-  }
-
   /* Confettis de célébration à la validation d'une étape */
   var prevDone = {};
   var firstRefresh = true;
@@ -1113,13 +1049,6 @@
       toast("Parcours sélectionné : " + tName);
     });
   });
-
-  document.getElementById("btn-reset").addEventListener("click", function(){
-    state.checks = {}; save(); refresh(); toast("Progression réinitialisée");
-  });
-
-  refresh();
-})();
 
   refresh();
 })();
