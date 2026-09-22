@@ -4,7 +4,8 @@ Mise en page dynamique, ludique et pédagogique (couleurs Enedis, accessibilité
 
 ## Contenu
 
-- `bloc-lms.html` : fragment HTML autonome à coller dans un **bloc HTML** d'une page du LMS « Expérience » (Bealink). CSS et JavaScript intégrés, sélecteurs préfixés `#pna` pour éviter tout conflit avec la charte du LMS.
+- `index.html` : **page HTML autonome** (document complet, ouvrable directement dans un navigateur). C'est le livrable principal.
+- `../archive/bloc-lms-experience-bealink.html` : archive — fragment HTML à coller dans un bloc HTML du LMS « Expérience » (Bealink), si ce mode d'intégration est un jour requis.
 
 ## Fonctionnalités
 
@@ -15,10 +16,6 @@ Mise en page dynamique, ludique et pédagogique (couleurs Enedis, accessibilité
 - Mode manager avec export CSV du suivi.
 - Accessibilité : structure sémantique ARIA, navigation clavier, focus visible, respect de « prefers-reduced-motion ».
 
-## Intégration
+## Utilisation
 
-1. Ouvrir une page du LMS Expérience (Bealink) en édition.
-2. Ajouter un bloc HTML et coller le contenu de `bloc-lms.html` en mode source / HTML brut.
-3. Publier et vérifier le rendu (styles et scripts non filtrés par l'éditeur).
-
-> Remarque : si le LMS bloque le JavaScript dans les blocs, demander la variante statique (suivi désactivé, même mise en page).
+Ouvrir `index.html` dans un navigateur, ou l'héberger et partager le lien aux apprenants et managers.
