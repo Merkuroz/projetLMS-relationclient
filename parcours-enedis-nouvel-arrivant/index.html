@@ -225,6 +225,11 @@
     padding:1rem 1.1rem;box-shadow:var(--shadow-soft);
     transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
   }
+  .card::before{
+    content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:0;height:3px;background:var(--enedis-blue);transition:width .25s ease;
+  }
+  .card:hover::before{width:70%}
   .card:hover{transform:translateY(-4px);border-color:var(--enedis-blue);box-shadow:var(--shadow)}
   .card-link{transition:gap .2s ease}
   .card-title{margin:0 0 .5rem;font-size:1rem}
