@@ -262,12 +262,10 @@
   /* Bannière fil conducteur vers l'étape suivante */
   .next-step{
     display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.6rem;
-    margin:1.4rem 0 0;padding:.9rem 1.2rem;text-decoration:none;
+    margin:1.4rem 0 0;padding:.9rem 1.2rem;
     background:var(--enedis-blue-soft);border:2px dashed var(--enedis-blue);border-radius:var(--radius);
     color:var(--enedis-blue);font-weight:800;
-    transition:border-style .2s,transform .15s,box-shadow .15s;
   }
-  .next-step:hover{border-style:solid;transform:translateY(-2px);box-shadow:var(--shadow-soft)}
   .next-step .next-state{display:block;font-size:.8rem;font-weight:700;color:var(--text-muted)}
   .next-step .next-arrow{font-size:1.3rem}
   .back-top{margin:1.4rem 0 0;text-align:center}
@@ -464,10 +462,10 @@
     </div>
     </div>
 
-    <a class="next-step" href="#etape-2">
+    <div class="next-step">
       <span><span class="next-state" data-nextstate>Une fois cette étape terminée, poursuivez votre parcours :</span>Étape 2 — Les bases techniques de l'électricité</span>
       <span class="next-arrow" aria-hidden="true">→</span>
-    </a>
+    </div>
   </section>
 
   <!-- ================= ETAPE 2 ================= -->
@@ -539,10 +537,10 @@
     </div>
     </div>
 
-    <a class="next-step" href="#etape-3">
+    <div class="next-step">
       <span><span class="next-state" data-nextstate>Une fois cette étape terminée, poursuivez votre parcours :</span>Étape 3 — Les bases de la Relation Clients</span>
       <span class="next-arrow" aria-hidden="true">→</span>
-    </a>
+    </div>
   </section>
 
   <!-- ================= ETAPE 3 ================= -->
@@ -620,10 +618,10 @@
     </div>
     </div>
 
-    <a class="next-step" href="#etape-4">
+    <div class="next-step">
       <span><span class="next-state" data-nextstate>Une fois cette étape terminée, poursuivez votre parcours :</span>Étape 4 — Spécifique métier (choix de votre parcours avec votre manager)</span>
       <span class="next-arrow" aria-hidden="true">→</span>
-    </a>
+    </div>
   </section>
 
   <!-- ================= ETAPE 4 ================= -->
