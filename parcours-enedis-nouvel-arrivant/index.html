@@ -228,6 +228,15 @@
   .next-step .next-state{display:block;font-size:.8rem;font-weight:700;color:var(--text-muted)}
   .next-step .next-arrow{font-size:1.3rem}
   .back-top{margin:1.4rem 0 0;text-align:center}
+  #btn-top{
+    position:fixed;right:1.2rem;bottom:1.2rem;z-index:45;
+    width:46px;height:46px;border-radius:50%;
+    border:2px solid var(--enedis-blue);background:#fff;color:var(--enedis-blue);
+    font-size:1.2rem;font-weight:800;cursor:pointer;display:none;place-items:center;
+    box-shadow:var(--shadow-soft);
+  }
+  #btn-top.show{display:grid}
+  #btn-top:hover{background:var(--enedis-blue-soft)}
   .next-step.fin{
     background:#F3FBE8;
     border-color:var(--enedis-green-dark);color:var(--enedis-green-dark);
@@ -821,6 +830,7 @@
 </footer>
 
 <canvas id="confetti" aria-hidden="true"></canvas>
+<button type="button" id="btn-top" aria-label="Revenir en haut de la page">↑</button>
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -993,6 +1003,16 @@
   });
 
   refresh();
+
+  var btnTop = document.getElementById("btn-top");
+  function syncTop(){
+    btnTop.classList.toggle("show", window.scrollY > 400);
+  }
+  window.addEventListener("scroll", syncTop, { passive: true });
+  syncTop();
+  btnTop.addEventListener("click", function(){
+    window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+  });
 })();
 </script>
 </body>
