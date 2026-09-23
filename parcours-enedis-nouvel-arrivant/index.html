@@ -188,10 +188,12 @@
     font-family:ui-monospace,Consolas,monospace;letter-spacing:.02em;
   }
   .assist-box{
-    background:#fff;border:1px solid var(--border);border-radius:var(--radius);
-    padding:1rem 1.2rem;margin-top:.8rem;
+    background:#FFF9E6;border:3px solid var(--enedis-blue);border-radius:var(--radius);
+    padding:1.1rem 1.3rem;margin-top:.9rem;
+    box-shadow:var(--shadow-soft);
   }
-  .assist-box p{margin:0;font-size:.92rem}
+  .assist-box p{margin:0;font-size:1.02rem;font-weight:700;color:var(--text)}
+  .assist-box strong{font-weight:800;font-size:1.05rem;color:var(--enedis-blue)}
   .assist-box .card-link{margin-top:0}
 
   /* ---------- Nav étapes ---------- */
@@ -307,7 +309,20 @@
   /* Objectifs pédagogiques */
 
   .objectifs-block{border-style:dashed;border-color:var(--enedis-blue-soft);background:var(--enedis-blue-soft)}
-  .objectifs-block .block-title{color:var(--enedis-blue)}
+  .objectifs-block .block-head{align-items:center}
+  .objectifs-block .block-title{
+    color:var(--enedis-blue);display:inline-flex;align-items:center;gap:.55rem;
+  }
+  .objectifs-block .block-title::before{
+    content:"";flex:none;width:26px;height:26px;
+    background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="%231423DC" stroke-width="2.4"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="%231423DC" stroke-width="2.4"/><circle cx="12" cy="12" r="1.4" fill="%231423DC"/></svg>');
+    background-size:contain;background-repeat:no-repeat;
+  }
+  .objectifs-block li{
+    background:#fff;border:1px solid var(--border);border-radius:10px;
+    padding:.45rem .8rem .45rem .9rem;font-weight:600;color:var(--text);
+  }
+  .objectifs-block li::before{width:20px;height:20px;background-color:#fff}
   .objectifs-block .objectifs{margin:0}
   .objectifs{list-style:none;padding:0;margin:.6rem 0 0;display:flex;flex-direction:column;gap:.3rem}
   .objectifs li{display:flex;gap:.5rem;align-items:flex-start;font-size:.92rem;color:var(--text-muted)}
