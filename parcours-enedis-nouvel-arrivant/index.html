@@ -49,6 +49,9 @@
   - Parcours A ou B : le choix est memorise sur le navigateur.
     Pour un LMS, utilisez un lien direct avec ?parcours=A
     ou ?parcours=B a la fin de l'adresse de la page.
+  - Etapes : de meme, ?etape=1 a ?etape=4 ouvre directement
+    une etape ; ?etape=4&parcours=A ouvre l'etape 4 sur le
+    parcours A. Utile pour creer des activites LMS distinctes.
 
   REGLE D'OR : ne supprimez jamais les balises d'ouverture
   <div> sans leur balise de fermeture </div> associee.
@@ -714,7 +717,7 @@
     <details class="help">
       <summary>Comment utiliser cette étape ?</summary>
       <p>Choisissez, avec votre manager, le parcours correspondant à votre poste : seul le parcours sélectionné est affiché.</p>
-      <p>Sur un LMS, si le choix ne s'enregistre pas, utilisez un lien direct en ajoutant <code>?parcours=A</code> ou <code>?parcours=B</code> à l'adresse de la page — le parcours s'ouvre automatiquement.</p>
+      <p>Sur un LMS, si le choix ne s'enregistre pas, utilisez un lien direct en ajoutant <code>?parcours=A</code> ou <code>?parcours=B</code> à l'adresse de la page — le parcours s'ouvre automatiquement. De même, <code>?etape=1</code> à <code>?etape=4</code> ouvre directement l'étape concernée, et <code>?etape=4&amp;parcours=A</code> combine les deux.</p>
     </details>
 
     <fieldset class="chooser" id="choix-parcours">
@@ -1002,13 +1005,19 @@
   }catch(e){}
 
   /* Lien direct : ajoutez ?parcours=A ou ?parcours=B a l'adresse de la page
-     pour ouvrir directement le parcours voulu (utile sur un LMS). */
+     pour ouvrir directement le parcours voulu (utile sur un LMS).
+     Ajoutez aussi ?etape=1 a 4 (ou les deux : ?etape=4&parcours=A)
+     pour ouvrir directement une etape precise. */
+  var gotoStep = null;
   (function(){
-    var m = (location.search + "|" + location.hash).match(/parcours=(a|b)/i);
+    var s = location.search + "|" + location.hash;
+    var m = s.match(/parcours=(a|b)/i);
     if(m){
       state.track = m[1].toUpperCase();
       try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
     }
+    var e = s.match(/etape=([1-4])/i);
+    if(e){ gotoStep = "etape-" + e[1]; }
   })();
 
   function save(){
@@ -1111,6 +1120,16 @@
   });
 
   refresh();
+
+  /* Si un lien direct ?etape=N est present, deroule jusqu'a l'etape demandee */
+  if(gotoStep){
+    var target = document.getElementById(gotoStep);
+    if(target){
+      setTimeout(function(){
+        target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      }, reduceMotion ? 0 : 300);
+    }
+  }
 
   var btnTop = document.getElementById("btn-top");
   function syncTop(){
