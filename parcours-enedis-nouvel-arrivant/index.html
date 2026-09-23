@@ -523,10 +523,6 @@
 
 <div class="back-top"><a class="card-link" href="#top">↑ Revenir en haut de la page</a></div>
 
-    <div class="next-step">
-      <span><span class="next-state" data-nextstate>Une fois cette étape terminée, poursuivez votre parcours :</span>Étape 2 — Les bases techniques de l'électricité</span>
-      <span class="next-arrow" aria-hidden="true">→</span>
-    </div>
   </section>
 
   <!-- ================= ETAPE 2 ================= -->
@@ -608,10 +604,6 @@
 
 <div class="back-top"><a class="card-link" href="#top">↑ Revenir en haut de la page</a></div>
 
-    <div class="next-step">
-      <span><span class="next-state" data-nextstate>Une fois cette étape terminée, poursuivez votre parcours :</span>Étape 3 — Les bases de la Relation Clients</span>
-      <span class="next-arrow" aria-hidden="true">→</span>
-    </div>
   </section>
 
   <!-- ================= ETAPE 3 ================= -->
@@ -716,10 +708,6 @@
 
 <div class="back-top"><a class="card-link" href="#top">↑ Revenir en haut de la page</a></div>
 
-    <div class="next-step">
-      <span><span class="next-state" data-nextstate>Une fois cette étape terminée, poursuivez votre parcours :</span>Étape 4 — Spécifique métier (choix de votre parcours avec votre manager)</span>
-      <span class="next-arrow" aria-hidden="true">→</span>
-    </div>
   </section>
 
   <!-- ================= ETAPE 4 ================= -->
@@ -1105,7 +1093,7 @@
         if(en.isIntersecting){ en.target.classList.add("visible"); io.unobserve(en.target); }
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll(".card, .step-head, .legend-box, .chooser-grid, .objectifs, .block, .next-step").forEach(function(el){
+    document.querySelectorAll(".card, .step-head, .legend-box, .chooser-grid, .objectifs, .block")).forEach(function(el){
       el.classList.add("reveal"); io.observe(el);
     });
   }
