@@ -38,20 +38,19 @@
   la pastille (block-num), par exemple 1.7 apres 1.6.
 
   BON A SAVOIR :
-  - La barre de navigation en haut de page est generee
-    automatiquement a partir du libelle court de chaque etape
-    (attribut data-nav de la balise section). Pour changer un
-    libelle, modifiez data-nav ; rien d'autre a faire.
-  - Chaque carte d'activite recoit automatiquement un lien
-    vers le catalogue des formations, sauf les cartes
-    "Rdv manager", les quiz et celles qui ont deja un lien
-    dedie. Les cartes "Parcours MY HR" pointent vers MY HR.
-  - Parcours A ou B : le choix est memorise sur le navigateur.
-    Pour un LMS, utilisez un lien direct avec ?parcours=A
-    ou ?parcours=B a la fin de l'adresse de la page.
-  - Etapes : de meme, ?etape=1 a ?etape=4 ouvre directement
-    une etape ; ?etape=4&parcours=A ouvre l'etape 4 sur le
-    parcours A. Utile pour creer des activites LMS distinctes.
+  - La barre de navigation et le choix de parcours fonctionnent
+    SANS JavaScript : ils sont ecrits en dur dans la page.
+    - Navigation : modifiez les libelles des liens dans la
+      SECTION 3 directement.
+    - Parcours A ou B : les liens pointent vers les ancres
+      #parcours-a et #parcours-b. Avec JavaScript, le choix est
+      en plus memorise sur le navigateur.
+  - Chaque carte possede son lien en dur dans le HTML. Pour une
+    nouvelle carte sans lien, recopiez le lien d'une carte
+    voisine ; sinon le script (si actif) ajoute le lien
+    catalogue automatiquement.
+  - Liens directs pour LMS : ?parcours=A ou ?parcours=B,
+    ?etape=1 a ?etape=4, combinables (?etape=4&parcours=A).
 
   REGLE D'OR : ne supprimez jamais les balises d'ouverture
   <div> sans leur balise de fermeture </div> associee.
@@ -263,7 +262,12 @@
   .card-tags{display:flex;flex-wrap:wrap;gap:.35rem}
   .card-note{margin:.5rem 0 0;font-size:.85rem;color:var(--text-muted)}
 
-  .subtrack{margin-top:1.4rem}
+  .subtrack{margin-top:1.4rem;scroll-margin-top:1rem}
+  .subtrack.locked{display:none}
+  /* Sans JavaScript : le choix de parcours fonctionne par ancre (#parcours-a / #parcours-b) */
+  main:has(#parcours-a:target) .subtrack[data-track="B"],
+  main:has(#parcours-b:target) .subtrack[data-track="A"]{display:none}
+  a.choice{text-decoration:none;color:inherit}
   .subtrack > h3{
     font-size:1.05rem;color:#fff;background:var(--enedis-blue);display:inline-block;
     padding:.4rem 1rem;border-radius:999px;
@@ -413,6 +417,11 @@
      SECTION 3 : NAVIGATION ET CHOIX DU PARCOURS (etape 4)
      ============================================================ -->
 <nav class="steps" aria-label="Accès rapide aux étapes">
+  <a href="#etape-1">Étape 1 · Accueil</a>
+  <a href="#etape-2">Étape 2 · Techniques</a>
+  <a href="#etape-3">Étape 3 · Relation Clients</a>
+  <a href="#etape-4" data-navtrack="A">Étape 4 · Parcours A — CRC ACH C5 et AD</a>
+  <a href="#etape-4" data-navtrack="B">Étape 4 · Parcours B — Raccordement Petits Producteurs</a>
 </nav>
 
 <main id="parcours">
@@ -551,7 +560,7 @@
       </div>
     <div class="grid">
       <div class="card"><span class="card-title">Fondamentaux des raccordements</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNBRC</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=26782859264">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><span class="card-title">EVISIA : module de formation en réalité virtuelle (CAD Auvergne)</span><div class="card-tags"><span class="tag t-pres">Présentiel / RV</span></div></div>
+      <div class="card"><span class="card-title">EVISIA : module de formation en réalité virtuelle (CAD Auvergne)</span><div class="card-tags"><span class="tag t-pres">Présentiel / RV</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
@@ -653,7 +662,7 @@
     <div class="grid">
       <div class="card"><span class="card-title">Les fondamentaux de la relation client — module 1</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNCRCMRC1D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28516286464">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Les fondamentaux de la relation client — module 2</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNCRCMRC2D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28516286465">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><span class="card-title">Maîtriser la relation client téléphonique</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNRCTEL</span></div></div>
+      <div class="card"><span class="card-title">Maîtriser la relation client téléphonique</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNRCTEL</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Le RIVA, de quoi parle-t-on ?</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNPSSRIVAD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27596783617">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
@@ -678,7 +687,7 @@
       <div class="card"><span class="card-title">Utiliser VERINT — pour les CRC et Opérateurs CAD</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNCRCVERINT</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=30648172545">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">L'outil Kiamo pour les conseillers et opérateurs téléphoniques</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNKIAMOCONS</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=23624024064">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">SGE : découverte du nouveau Portail SGE V.2</span><div class="card-tags"><span class="tag t-video">Vidéo / Cotuto</span></div><a class="card-link" target="_blank" rel="noopener" href="https://cotuto.enedis.fr/playlist/PUB/01a69456-720c-43ee-ae98-5cce9e8e8b39">Regarder la vidéo ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><span class="card-title">Débuter sur les fondamentaux Ginko tous métiers</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNTSGINKOD</span></div></div>
+      <div class="card"><span class="card-title">Débuter sur les fondamentaux Ginko tous métiers</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNTSGINKOD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Guide métier Relations clients</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">GRC-Harmonie</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
@@ -716,29 +725,29 @@
 
     <details class="help">
       <summary>Comment utiliser cette étape ?</summary>
-      <p>Choisissez, avec votre manager, le parcours correspondant à votre poste : seul le parcours sélectionné est affiché.</p>
-      <p>Sur un LMS, si le choix ne s'enregistre pas, utilisez un lien direct en ajoutant <code>?parcours=A</code> ou <code>?parcours=B</code> à l'adresse de la page — le parcours s'ouvre automatiquement. De même, <code>?etape=1</code> à <code>?etape=4</code> ouvre directement l'étape concernée, et <code>?etape=4&amp;parcours=A</code> combine les deux.</p>
+      <p>Choisissez, avec votre manager, le parcours correspondant à votre poste : cliquez sur Parcours A ou Parcours B — seul le parcours sélectionné est affiché.</p>
+      <p>Sur un LMS, un lien direct avec <code>?parcours=A</code> ou <code>?parcours=B</code> à l'adresse de la page ouvre automatiquement le parcours voulu ; <code>?etape=1</code> à <code>?etape=4</code> ouvre directement une étape.</p>
     </details>
 
     <fieldset class="chooser" id="choix-parcours">
       <legend>Choisissez votre parcours métier (en accord avec votre manager)</legend>
       <div class="chooser-grid">
-        <button type="button" class="choice" id="track-A" aria-pressed="false">
+        <a class="choice" id="track-A" href="#parcours-a" aria-pressed="false">
           <span class="choice-title">Parcours A — Chargé de Relations Clients ACH C5 et AD</span>
           <span class="choice-desc">Relevé et facturation C5, affaires de correction de factures C5 (ACF), prestations et interventions C5, fiches F120 à F920, prise en charge des demandes clients (ligne AD + L1).</span>
-          <span class="pick" aria-hidden="false"></span>
-        </button>
-        <button type="button" class="choice" id="track-B" aria-pressed="false">
+          <span class="pick" aria-hidden="false">Choisir ce parcours</span>
+        </a>
+        <a class="choice" id="track-B" href="#parcours-b" aria-pressed="false">
           <span class="choice-title">Parcours B — CRC Gestion et Raccordement Petits Producteurs</span>
           <span class="choice-desc">Acteurs de la production, raccordement Petits Producteurs (avec et sans travaux), CAE, CACSI, Contrat Unique en injection, obligations d'achat, prestations et facturation P4, impayés et recouvrement, gestion des contrats.</span>
-          <span class="pick" aria-hidden="false"></span>
-        </button>
+          <span class="pick" aria-hidden="false">Choisir ce parcours</span>
+        </a>
       </div>
-      <p class="chooser-note" id="chooser-note" role="status">Aucun parcours sélectionné — l'étape 4 sera activée après le choix effectué avec votre manager.</p>
+      <p class="chooser-note" id="chooser-note" role="status">Aucun parcours sélectionné — cliquez sur le parcours correspondant à votre poste (choix à valider avec votre manager).</p>
     </fieldset>
 
     <!-- 4A CRC ACH C5 et AD -->
-    <div class="subtrack" data-track="A">
+    <div class="subtrack" id="parcours-a" data-track="A">
       <h3>Parcours A — Chargé de Relations Clients ACH C5 et AD</h3>
 
     <div class="block">
@@ -747,8 +756,8 @@
         <h4 class="block-title">Débuter sur le relevé et la facturation C5</h4>
       </div>
     <div class="grid">
-      <div class="card"><span class="card-title">Débuter sur le relevé et la facturation C5</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDC5REFAD</span></div></div>
-      <div class="card"><span class="card-title">Micro-learning PNT</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Débuter sur le relevé et la facturation C5</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDC5REFAD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Micro-learning PNT</span><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
@@ -757,7 +766,7 @@
         <h4 class="block-title">Débuter sur les affaires de correction de factures C5</h4>
       </div>
     <div class="grid">
-      <div class="card"><span class="card-title">Débuter sur le traitement des Affaires de Corrections de factures C5 (ACF)</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDC5ACFD</span></div></div>
+      <div class="card"><span class="card-title">Débuter sur le traitement des Affaires de Corrections de factures C5 (ACF)</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDC5ACFD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
@@ -766,7 +775,7 @@
         <h4 class="block-title">Débuter le traitement des prestations et interventions C5</h4>
       </div>
     <div class="grid">
-      <div class="card"><span class="card-title">Débuter sur le traitement des prestations C5 et le solde des interventions</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDC5PRID</span></div></div>
+      <div class="card"><span class="card-title">Débuter sur le traitement des prestations C5 et le solde des interventions</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDC5PRID</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">HAPe — tous utilisateurs</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNHAPETU</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=34220951270">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">F120 Mise en service sur raccordement existant</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO4D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27705901059">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">F130 Changement de fournisseur</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO5D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27705901060">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
@@ -789,9 +798,9 @@
       <div class="card"><span class="card-title">Pose en rebond</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO12D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27705901067">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Ligne 1 HO</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO17D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28455305219">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Guide métier AD</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><span class="card-title">Compte client PARTICULIER</span><div class="card-tags"><span class="tag t-cen">Animation CEN</span></div></div>
+      <div class="card"><span class="card-title">Compte client PARTICULIER</span><div class="card-tags"><span class="tag t-cen">Animation CEN</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Compte client ENTREPRISE</span><div class="card-tags"><span class="tag t-lean">LeanApp</span></div><a class="card-link" target="_blank" rel="noopener" href="https://lzm0ra.axshare.com/?code=0347619ae4ae9f755e6c9f05f6d0b6df&amp;id=r6q84o&amp;p=accueil">Ouvrir l'application ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><span class="card-title">Perturbations LAN niveau 1</span><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Perturbations LAN niveau 1</span><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
@@ -806,7 +815,7 @@
     </div>
 
     <!-- 4B CRC Gestion et Raccordement Petits Producteurs -->
-    <div class="subtrack" data-track="B">
+    <div class="subtrack" id="parcours-b" data-track="B">
       <h3>Parcours B — CRC Gestion et Raccordement Petits Producteurs</h3>
 
     <div class="block">
@@ -838,7 +847,7 @@
       </div>
     <div class="grid">
       <div class="card"><span class="card-title">Raccordement Petits Producteurs — demandes sans travaux</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO28DV1</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/Learner/Home.aspx?idTraining=28455305230&amp;idTrainee=33956725473&amp;idTrainingSession=31218532356">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><span class="card-title">Barème de raccordement et régime SRRRER</span><div class="card-tags"></div></div>
+      <div class="card"><span class="card-title">Barème de raccordement et régime SRRRER</span><div class="card-tags"></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Raccordement Petits Producteurs — avec travaux</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
@@ -858,7 +867,7 @@
       </div>
     <div class="grid">
       <div class="card"><span class="card-title">Le Contrat d'Accès et d'Exploitation</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNP4CAE</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=24005771264">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><span class="card-title">Débuter sur le Contrat d'Accès et d'Exploitation (CAE) et sa mise en œuvre dans les activités P4</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDP4CAED</span></div></div>
+      <div class="card"><span class="card-title">Débuter sur le Contrat d'Accès et d'Exploitation (CAE) et sa mise en œuvre dans les activités P4</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDP4CAED</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Débuter sur le Contrat Unique en injection</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Débuter sur la CACSI</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
@@ -869,7 +878,7 @@
         <h4 class="block-title">Accompagner un client dans son projet</h4>
       </div>
     <div class="grid">
-      <div class="card"><span class="card-title">Traitement du Back Office Raccordement P4</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span></div></div>
+      <div class="card"><span class="card-title">Traitement du Back Office Raccordement P4</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Explication des pièces justificatives (mandat de représentation, autorisation d'urbanisme, CONSUEL…)</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Saisie d'une demande CAE sur Enedis-Connect</span><div class="card-tags"><span class="tag t-video">Vidéo / Cotuto</span></div><a class="card-link" target="_blank" rel="noopener" href="https://distributionelectricite.sharepoint.com.mcas.ms/teams/Enedis-TeamRaccoC5-DCT-130016078/_layouts/15/AccessDenied.aspx?Source=https%3A%2F%2Fdistributionelectricite.sharepoint.com%2F%3Av%3A%2Fr%2Fteams%2FEnedis-TeamRaccoC5-DCT-130016078%2FDocuments+partages%2FGeneral%2FRacco+P4%2FRacco+P4+BO%2FBACK+OFFICE+P4%2FVid%C3%A9os+CAEST+CONNECT+PRAC+OSR+OLIVIER+GINKO%2FCAEST+ENEDIS+Connect.mp4%3Freferrer%3DOutlook.Win32%26referrerScenario%3Demail-linkwithoutembed%26e%3D1zAzYG%26web%3D1%26csf%3D1&amp;correlation=9dfb3da2-703f-3001-4ae4-8a0496d18b4f&amp;Type=item&amp;name=16683ab5-75ef-4e35-bbc3-ce169980112a&amp;listItemId=1580&amp;listItemUniqueId=52bddb1e-fcf0-4098-aeb6-495ba1cbe273&amp;allowautoredirecttosource=true">Regarder la vidéo ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Saisie d'une demande CU-I sur Enedis-Connect</span><div class="card-tags"><span class="tag t-video">Vidéo / Cotuto</span></div><a class="card-link" target="_blank" rel="noopener" href="https://distributionelectricite.sharepoint.com.mcas.ms/teams/Enedis-TeamRaccoC5-DCT-130016078/_layouts/15/AccessDenied.aspx?Source=https%3A%2F%2Fdistributionelectricite.sharepoint.com%2F%3Av%3A%2Fr%2Fteams%2FEnedis-TeamRaccoC5-DCT-130016078%2FDocuments+partages%2FGeneral%2FRacco+P4%2FRacco+P4+BO%2FBACK+OFFICE+P4%2FVid%C3%A9os+CAEST+CONNECT+PRAC+OSR+OLIVIER+GINKO%2FCAEST+ENEDIS+Connect.mp4%3Freferrer%3DOutlook.Win32%26referrerScenario%3Demail-linkwithoutembed%26e%3D1zAzYG%26web%3D1%26csf%3D1&amp;correlation=9dfb3da2-703f-3001-4ae4-8a0496d18b4f&amp;Type=item&amp;name=16683ab5-75ef-4e35-bbc3-ce169980112a&amp;listItemId=1580&amp;listItemUniqueId=52bddb1e-fcf0-4098-aeb6-495ba1cbe273&amp;allowautoredirecttosource=true">Regarder la vidéo ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
@@ -891,9 +900,9 @@
         <h4 class="block-title">Débuter le traitement des prestations P4 et le solde des interventions</h4>
       </div>
     <div class="grid">
-      <div class="card"><span class="card-title">Débuter sur le traitement des prestations P4 et le solde des interventions</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDP4PRID</span></div></div>
+      <div class="card"><span class="card-title">Débuter sur le traitement des prestations P4 et le solde des interventions</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDP4PRID</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Changement de propriétaire</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO25D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28455305229">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><span class="card-title">Signedis</span><div class="card-tags"><span class="tag t-cen">Animation CEN</span></div></div>
+      <div class="card"><span class="card-title">Signedis</span><div class="card-tags"><span class="tag t-cen">Animation CEN</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Modification de données contractuelles</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO24D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28455305228">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Changement de RE / sortie de périmètre</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Résiliation</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO23D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28455305227">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
@@ -914,8 +923,8 @@
         <h4 class="block-title">Débuter sur le relevé et la facturation P4</h4>
       </div>
     <div class="grid">
-      <div class="card"><span class="card-title">Débuter sur le relevé et la facturation P4</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDP4REFAD</span></div></div>
-      <div class="card"><span class="card-title">Débuter sur les Affaires de Corrections de Factures P4</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDP4ACFD</span></div></div>
+      <div class="card"><span class="card-title">Débuter sur le relevé et la facturation P4</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDP4REFAD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Débuter sur les Affaires de Corrections de Factures P4</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDP4ACFD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
@@ -933,7 +942,7 @@
         <h4 class="block-title">Suivi des impayés et recouvrement P4</h4>
       </div>
     <div class="grid">
-      <div class="card"><span class="card-title">Suivi des impayés et recouvrements P4</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDP4RECD</span></div></div>
+      <div class="card"><span class="card-title">Suivi des impayés et recouvrements P4</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDP4RECD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Facturation Recouvrement</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO22D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28455305224">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
@@ -952,10 +961,10 @@
         <h4 class="block-title">Accompagner un client dans la gestion de son contrat</h4>
       </div>
     <div class="grid">
-      <div class="card"><span class="card-title">Compte client PARTICULIER</span><div class="card-tags"><span class="tag t-cen">Animation CEN</span></div></div>
+      <div class="card"><span class="card-title">Compte client PARTICULIER</span><div class="card-tags"><span class="tag t-cen">Animation CEN</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Compte client ENTREPRISE</span><div class="card-tags"><span class="tag t-lean">LeanApp</span></div><a class="card-link" target="_blank" rel="noopener" href="https://lzm0ra.axshare.com/?code=0347619ae4ae9f755e6c9f05f6d0b6df&amp;id=r6q84o&amp;p=accueil">Ouvrir l'application ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
       <div class="card"><span class="card-title">Compte client COLL LOC</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
-      <div class="card"><span class="card-title">E-facture / AES / Chorus Pro</span><div class="card-tags"><span class="tag t-cen">Animation CEN</span></div></div>
+      <div class="card"><span class="card-title">E-facture / AES / Chorus Pro</span><div class="card-tags"><span class="tag t-cen">Animation CEN</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
@@ -1004,14 +1013,14 @@
     if(saved && typeof saved === "object" && (saved.track === "A" || saved.track === "B")){ state.track = saved.track; }
   }catch(e){}
 
-  /* Lien direct : ajoutez ?parcours=A ou ?parcours=B a l'adresse de la page
-     pour ouvrir directement le parcours voulu (utile sur un LMS).
+  /* Lien direct : ?parcours=A ou ?parcours=B (ou l'ancre #parcours-a / #parcours-b)
+     ouvre directement le parcours voulu (utile sur un LMS).
      Ajoutez aussi ?etape=1 a 4 (ou les deux : ?etape=4&parcours=A)
      pour ouvrir directement une etape precise. */
   var gotoStep = null;
   (function(){
     var s = location.search + "|" + location.hash;
-    var m = s.match(/parcours=(a|b)/i);
+    var m = s.match(/parcours[-=](a|b)/i);
     if(m){
       state.track = m[1].toUpperCase();
       try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
@@ -1040,7 +1049,7 @@
       var tName = document.querySelector('.subtrack[data-track="' + state.track + '"] h3').textContent.trim();
       note.textContent = "Parcours actif : " + tName + ". Seuls les modules de ce parcours sont affichés.";
     } else {
-      note.textContent = "Aucun parcours sélectionné — l'étape 4 sera activée après le choix effectué avec votre manager.";
+      note.textContent = "Aucun parcours sélectionné — cliquez sur le parcours correspondant à votre poste (choix à valider avec votre manager).";
     }
   }
 
@@ -1051,28 +1060,6 @@
     clearTimeout(t._timer);
     t._timer = setTimeout(function(){ t.classList.remove("show"); }, 2600);
   }
-
-  /* Generation automatique de la navigation a partir des etapes */
-  var nav = document.querySelector("nav.steps");
-  document.querySelectorAll("main .step").forEach(function(stepEl){
-    var num = stepEl.dataset.step.replace("s", "");
-    if(stepEl.dataset.nav){
-      var a = document.createElement("a");
-      a.href = "#" + stepEl.id;
-      a.textContent = "Étape " + num + " · " + stepEl.dataset.nav;
-      nav.appendChild(a);
-    } else {
-      stepEl.querySelectorAll(".subtrack").forEach(function(sub){
-        var t = sub.dataset.track;
-        var name = sub.querySelector("h3").textContent.trim().replace(/^Parcours [AB] — /, "");
-        var a2 = document.createElement("a");
-        a2.href = "#" + stepEl.id;
-        a2.setAttribute("data-navtrack", t);
-        a2.textContent = "Étape " + num + " · Parcours " + t + " — " + name;
-        nav.appendChild(a2);
-      });
-    }
-  });
 
   /* Lien catalogue prepare sur chaque activite, sauf les Rdv manager */
   var CATALOG_URL = "https://experience-enedis.syfadis.com/Catalog";
