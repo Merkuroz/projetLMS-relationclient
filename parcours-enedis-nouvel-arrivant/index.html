@@ -271,11 +271,11 @@
   .card-tags{display:flex;flex-wrap:wrap;gap:.35rem}
   .card-note{margin:.5rem 0 0;font-size:.85rem;color:var(--text-muted)}
 
-  .subtrack{margin-top:1.4rem;scroll-margin-top:1rem}
+  .subtrack{margin-top:1.4rem;scroll-margin-top:1rem;display:none}
   .subtrack.locked{display:none}
   /* Sans JavaScript : le choix de parcours fonctionne par ancre (#parcours-a / #parcours-b) */
-  main:has(#parcours-a:target) .subtrack[data-track="B"],
-  main:has(#parcours-b:target) .subtrack[data-track="A"]{display:none}
+  main:has(#parcours-a:target) .subtrack[data-track="A"],
+  main:has(#parcours-b:target) .subtrack[data-track="B"]{display:block}
   a.choice{text-decoration:none;color:inherit}
   .subtrack > h3{
     font-size:1.05rem;color:#fff;background:var(--enedis-blue);display:inline-block;
@@ -303,7 +303,6 @@
   .choice .pick{font-weight:800;font-size:.9rem;color:var(--enedis-blue)}
   .choice[aria-pressed="true"]{border-color:var(--ok);background:#F4FBF6}
   .choice[aria-pressed="true"] .pick{color:var(--ok)}
-  .chooser-note{margin:.8rem 0 0;font-size:.88rem;color:var(--text-muted)}
 
   /* Objectifs pédagogiques */
 
@@ -753,12 +752,6 @@
         </ul>
     </div>
 
-    <details class="help">
-      <summary>Comment utiliser cette étape ?</summary>
-      <p>Choisissez, avec votre manager, le parcours correspondant à votre poste : cliquez sur Parcours A ou Parcours B — seul le parcours sélectionné est affiché.</p>
-      <p>Sur un LMS, un lien direct avec <code>?parcours=A</code> ou <code>?parcours=B</code> à l'adresse de la page ouvre automatiquement le parcours voulu ; <code>?etape=1</code> à <code>?etape=4</code> ouvre directement une étape.</p>
-    </details>
-
     <fieldset class="chooser" id="choix-parcours">
       <legend>Choisissez votre parcours métier (en accord avec votre manager)</legend>
       <div class="chooser-grid">
@@ -773,7 +766,6 @@
           <span class="pick" aria-hidden="false">Choisir ce parcours</span>
         </a>
       </div>
-      <p class="chooser-note" id="chooser-note" role="status">Aucun parcours sélectionné — cliquez sur le parcours correspondant à votre poste (choix à valider avec votre manager).</p>
     </fieldset>
 
     <!-- 4A CRC ACH C5 et AD -->
@@ -842,6 +834,8 @@
       <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
     </div>
     </div>
+
+
       <p class="next-step fin"><span class="next-state">Vous avez atteint la fin du parcours :</span>Félicitations, votre professionnalisation est complète !</p>
     </div>
 
@@ -1067,7 +1061,7 @@
 
   function refresh(){
     document.querySelectorAll(".subtrack").forEach(function(el){
-      el.classList.toggle("locked", el.dataset.track !== state.track);
+      el.style.display = (el.dataset.track === state.track) ? "block" : "none";
     });
 
     ["A","B"].forEach(function(t){
@@ -1076,13 +1070,6 @@
       btn.setAttribute("aria-pressed", selected ? "true" : "false");
       btn.querySelector(".pick").textContent = selected ? "✓ Parcours sélectionné" : "Choisir ce parcours";
     });
-    var note = document.getElementById("chooser-note");
-    if(state.track){
-      var tName = document.querySelector('.subtrack[data-track="' + state.track + '"] h3').textContent.trim();
-      note.textContent = "Parcours actif : " + tName + ". Seuls les modules de ce parcours sont affichés.";
-    } else {
-      note.textContent = "Aucun parcours sélectionné — cliquez sur le parcours correspondant à votre poste (choix à valider avec votre manager).";
-    }
   }
 
   function toast(msg){
