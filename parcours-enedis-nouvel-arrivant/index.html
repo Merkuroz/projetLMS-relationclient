@@ -118,7 +118,7 @@
     font-family:"Marianne","Segoe UI",system-ui,-apple-system,sans-serif;
     background:var(--enedis-bg);
     color:var(--text);
-    line-height:1.6;
+    line-height:1.75;
   }
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   a.skip-link{position:absolute;left:-999px;top:8px;background:#fff;color:var(--enedis-blue);padding:.6rem 1rem;border-radius:8px;z-index:100;font-weight:600}
@@ -214,13 +214,13 @@
 
   /* ---------- Sections étapes ---------- */
   /* ---------- Fil conducteur : timeline verticale ---------- */
-  .step{position:relative;margin-top:2.2rem;padding-left:80px;scroll-margin-top:1rem}
+  .step{position:relative;margin-top:3rem;padding-left:80px;scroll-margin-top:1rem}
   .step::before{
     content:"";position:absolute;left:25px;top:62px;bottom:-2.2rem;width:4px;
     border-radius:999px;background:var(--border);
   }
   .step:last-of-type::before{display:none}
-  .step-head{display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap}
+  .step-head{display:flex;align-items:flex-start;gap:1.1rem;flex-wrap:wrap;margin-bottom:1.3rem}
   .step-num{
     position:absolute;left:0;top:0;
     width:54px;height:54px;border-radius:50%;display:grid;place-items:center;
@@ -231,17 +231,17 @@
   .step h2{margin:0;font-size:1.35rem;color:var(--enedis-blue)}
   .step-goal{margin:.4rem 0 0;color:var(--text-muted);font-size:.95rem}
 
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.15rem}
 
   /* ---------- Blocs thématiques numérotés ---------- */
   .block{
     background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);
-    padding:1rem 1.1rem 1.1rem;margin:0 0 1.1rem;box-shadow:var(--shadow-soft);
+    padding:1.15rem 1.25rem 1.25rem;margin:0 0 1.6rem;box-shadow:var(--shadow-soft);
     transition:border-color .2s ease;
   }
   .block:hover{border-color:var(--enedis-blue-soft)}
 
-  .block-head{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin:0 0 .9rem}
+  .block-head{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin:0 0 1.05rem}
   .block-up{
     margin-left:auto;flex:none;white-space:nowrap;
     font-size:.78rem;font-weight:700;color:var(--enedis-blue);text-decoration:none;
@@ -257,7 +257,7 @@
   .block-title{margin:0;font-size:1.02rem;font-weight:800;color:var(--text);flex:1;min-width:12rem}
   .card{
     position:relative;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);
-    padding:1rem 1.1rem;box-shadow:var(--shadow-soft);
+    padding:1.15rem 1.25rem;box-shadow:var(--shadow-soft);
     transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
   }
   .card::before{
@@ -269,9 +269,9 @@
   .block{outline:3px solid transparent;outline-offset:4px;transition:outline-color .25s ease,background .25s ease}
   .block:hover,.block:focus-within{outline-color:var(--enedis-green)}
   .card-link{transition:gap .2s ease}
-  .card-title{margin:0 0 .5rem;font-size:1rem}
-  .card-tags{display:flex;flex-wrap:wrap;gap:.35rem}
-  .card-note{margin:.5rem 0 0;font-size:.85rem;color:var(--text-muted)}
+  .card-title{margin:0 0 .6rem;font-size:1rem;line-height:1.45}
+  .card-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.3rem}
+  .card-note{margin:.65rem 0 0;font-size:.85rem;color:var(--text-muted);line-height:1.5}
 
   .subtrack{margin-top:1.4rem;scroll-margin-top:1rem;display:none}
   .subtrack.locked{display:none}
@@ -325,7 +325,7 @@
   .objectifs-block li::before{width:20px;height:20px;background-color:#fff}
   .objectifs-block .objectifs{margin:0}
   .objectifs{list-style:none;padding:0;margin:.6rem 0 0;display:flex;flex-direction:column;gap:.3rem}
-  .objectifs li{display:flex;gap:.5rem;align-items:flex-start;font-size:.92rem;color:var(--text-muted)}
+  .objectifs li{display:flex;gap:.55rem;align-items:flex-start;font-size:.92rem;color:var(--text-muted);line-height:1.5}
   .objectifs li::before{
     content:"";flex:none;width:18px;height:18px;margin-top:.15rem;border-radius:50%;
     background:var(--enedis-blue-soft);
