@@ -44,7 +44,11 @@
     libelle, modifiez data-nav ; rien d'autre a faire.
   - Chaque carte d'activite recoit automatiquement un lien
     vers le catalogue des formations, sauf les cartes
-    "Rdv manager" et celles qui ont deja un lien dedie.
+    "Rdv manager", les quiz et celles qui ont deja un lien
+    dedie. Les cartes "Parcours MY HR" pointent vers MY HR.
+  - Parcours A ou B : le choix est memorise sur le navigateur.
+    Pour un LMS, utilisez un lien direct avec ?parcours=A
+    ou ?parcours=B a la fin de l'adresse de la page.
 
   REGLE D'OR : ne supprimez jamais les balises d'ouverture
   <div> sans leur balise de fermeture </div> associee.
@@ -710,6 +714,7 @@
     <details class="help">
       <summary>Comment utiliser cette étape ?</summary>
       <p>Choisissez, avec votre manager, le parcours correspondant à votre poste : seul le parcours sélectionné est affiché.</p>
+      <p>Sur un LMS, si le choix ne s'enregistre pas, utilisez un lien direct en ajoutant <code>?parcours=A</code> ou <code>?parcours=B</code> à l'adresse de la page — le parcours s'ouvre automatiquement.</p>
     </details>
 
     <fieldset class="chooser" id="choix-parcours">
@@ -982,14 +987,29 @@
 <script>
 (function(){
   "use strict";
-  var STORAGE_KEY = "enedis-parcours-marche-masse-v2";
+  var STORAGE_KEY = "enedis-parcours-mm-v3";
   var state = { track:null };
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* Menage : suppression de l'ancienne sauvegarde (obsolète) si présente */
+  try{ localStorage.removeItem("enedis-parcours-marche-masse-v2"); }catch(e){}
+
+  /* Stockage local : facultatif — si le navigateur ou le LMS le bloque,
+     le choix de parcours reste actif durant la session. */
   try{
     var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-    if(saved && typeof saved === "object"){ state.track = saved.track || null; }
+    if(saved && typeof saved === "object" && (saved.track === "A" || saved.track === "B")){ state.track = saved.track; }
   }catch(e){}
+
+  /* Lien direct : ajoutez ?parcours=A ou ?parcours=B a l'adresse de la page
+     pour ouvrir directement le parcours voulu (utile sur un LMS). */
+  (function(){
+    var m = (location.search + "|" + location.hash).match(/parcours=(a|b)/i);
+    if(m){
+      state.track = m[1].toUpperCase();
+      try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+    }
+  })();
 
   function save(){
     try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
