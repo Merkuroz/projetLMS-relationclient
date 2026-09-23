@@ -25,7 +25,7 @@
   Avec un lien d'acces, ajoutez a la fin de la carte :
 
     <a class="card-link" target="_blank" rel="noopener"
-       href="ADRESSE-DE-LA-FORMATION">Ouvrir la formation </a>
+       href="ADRESSE-DE-LA-FORMATION">Ouvrir la formation ↗</a>
 
   ETIQUETTES DISPONIBLES (variable "tag") :
     t-cv Classe virtuelle | t-pres Presentiel | t-el E-learning
@@ -395,10 +395,10 @@
       <span class="tag t-lean">LeanApp</span>
       <span class="tag t-val">Validation des acquis / Quiz</span>
     </div>
-    <p style="margin:.7rem 0 0;font-size:.88rem"><a class="card-link" href="https://experience-enedis.syfadis.com/Catalog" target="_blank" rel="noopener">Accéder au catalogue des formations Enedis <span class="sr-only"> (nouvelle fenêtre)</span></a></p>
+    <p style="margin:.7rem 0 0;font-size:.88rem"><a class="card-link" href="https://experience-enedis.syfadis.com/Catalog" target="_blank" rel="noopener">Accéder au catalogue des formations Enedis ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></p>
   </div>
   <div class="assist-box">
-    <p><strong>Assistance informatique :</strong> 09 70 83 03 03 ou sur <a class="card-link" href="https://mysi.enedis.fr/" target="_blank" rel="noopener">mysi.enedis.fr <span class="sr-only"> (nouvelle fenêtre)</span></a></p>
+    <p><strong>Assistance informatique :</strong> 09 70 83 03 03 ou sur <a class="card-link" href="https://mysi.enedis.fr/" target="_blank" rel="noopener">mysi.enedis.fr ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></p>
   </div>
 </section>
 
@@ -499,7 +499,7 @@
 
     <div class="next-step">
       <span><span class="next-state" data-nextstate>Une fois cette étape terminée, poursuivez votre parcours :</span>Étape 2 — Les bases techniques de l'électricité</span>
-      <span class="next-arrow" aria-hidden="true"></span>
+      <span class="next-arrow" aria-hidden="true">→</span>
     </div>
   </section>
 
@@ -510,7 +510,7 @@
       <div>
         <h2 id="h-s2">Les bases techniques de l'électricité</h2>
         <ul class="objectifs" aria-label="Objectifs pédagogiques de l'étape 2">
-          <li>Expliquer le chemin de l'électricité : production  transport  distribution  soutirage / injection</li>
+          <li>Expliquer le chemin de l'électricité : production → transport → distribution → soutirage / injection</li>
           <li>Identifier les ouvrages de réseau et de branchement : branchement, compteur, disjoncteur</li>
           <li>Comprendre les comptages et le fonctionnement du système Linky</li>
         </ul>
@@ -582,7 +582,7 @@
 
     <div class="next-step">
       <span><span class="next-state" data-nextstate>Une fois cette étape terminée, poursuivez votre parcours :</span>Étape 3 — Les bases de la Relation Clients</span>
-      <span class="next-arrow" aria-hidden="true"></span>
+      <span class="next-arrow" aria-hidden="true">→</span>
     </div>
   </section>
 
@@ -688,7 +688,7 @@
 
     <div class="next-step">
       <span><span class="next-state" data-nextstate>Une fois cette étape terminée, poursuivez votre parcours :</span>Étape 4 — Spécifique métier (choix de votre parcours avec votre manager)</span>
-      <span class="next-arrow" aria-hidden="true"></span>
+      <span class="next-arrow" aria-hidden="true">→</span>
     </div>
   </section>
 
@@ -965,11 +965,11 @@
 </main>
 
 <footer>
-  <p><a class="card-link" href="#top"> Revenir en haut de la page</a></p>
+  <p><a class="card-link" href="#top">↑ Revenir en haut de la page</a></p>
   <p>Parcours de professionnalisation à l'entrée en poste — Enedis · Socle Marché de Masse. Le parcours sélectionné est mémorisé localement sur votre navigateur.</p>
 </footer>
 
-<button type="button" id="btn-top" aria-label="Revenir en haut de la page"></button>
+<button type="button" id="btn-top" aria-label="Revenir en haut de la page">↑</button>
 <div id="toast" role="status" aria-live="polite"></div>
 
 <!-- ============================================================
@@ -1047,6 +1047,7 @@
 
   /* Lien catalogue prepare sur chaque activite, sauf les Rdv manager */
   var CATALOG_URL = "https://experience-enedis.syfadis.com/Catalog";
+  var MYHR_URL = "https://myhr.talent-soft.com/MyTalentsoft#/Me";
   document.querySelectorAll(".card").forEach(function(card){
     if(card.querySelector("a.card-link")) return;
     if(card.querySelector(".tag.t-manager")) return;
@@ -1055,8 +1056,9 @@
     a.className = "card-link";
     a.target = "_blank";
     a.rel = "noopener";
-    a.href = CATALOG_URL;
-    a.textContent = "Accéder au catalogue ";
+    var isMyhr = !!card.querySelector(".tag.t-myhr");
+    a.href = isMyhr ? MYHR_URL : CATALOG_URL;
+    a.textContent = isMyhr ? "Ouvrir le parcours MY HR ↗" : "Accéder au catalogue ↗";
     var sr = document.createElement("span");
     sr.className = "sr-only";
     sr.textContent = " (nouvelle fenêtre)";
