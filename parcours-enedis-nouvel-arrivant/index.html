@@ -176,16 +176,7 @@
   .btn-primary{background:var(--enedis-blue);color:#fff;box-shadow:0 4px 14px rgba(20,35,220,.35)}
   .btn-primary:hover{background:var(--enedis-blue-dark)}
 
-  /* ---------- Legend ---------- */
-  .legend{max-width:1100px;margin:1.2rem auto 0;padding:0 1.2rem}
-  .legend-box{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem;position:relative;overflow:hidden}
-  .legend-box::after{
-    content:"";position:absolute;left:0;right:0;bottom:0;height:3px;
-    background:var(--enedis-blue);transform-origin:left;
-    animation:grow-line .8s ease .3s both;
-  }
-  .legend-box h2{font-size:1rem;margin:0 0 .6rem;color:var(--enedis-blue)}
-  .legend-grid{display:flex;flex-wrap:wrap;gap:.45rem}
+  /* ---------- Etiquettes des modalites pedagogiques ---------- */
   .tag{
     display:inline-flex;align-items:center;gap:.35rem;font-size:.75rem;font-weight:700;
     padding:.25rem .7rem;border-radius:999px;border:1.5px solid transparent;
@@ -790,12 +781,12 @@
         <a class="choice" id="track-A" href="#parcours-a">
           <span class="choice-title">Parcours A — Chargé de Relations Clients ACH C5 et AD</span>
           <span class="choice-desc">Relevé et facturation C5, affaires de correction de factures C5 (ACF), prestations et interventions C5, fiches F120 à F920, prise en charge des demandes clients (ligne AD + L1).</span>
-          <span class="pick" aria-hidden="false">Choisir ce parcours</span>
+          <span class="pick">Choisir ce parcours</span>
         </a>
         <a class="choice" id="track-B" href="#parcours-b">
           <span class="choice-title">Parcours B — CRC Gestion et Raccordement Petits Producteurs</span>
           <span class="choice-desc">Acteurs de la production, raccordement Petits Producteurs (avec et sans travaux), CAE, CACSI, Contrat Unique en injection, obligations d'achat, prestations et facturation P4, impayés et recouvrement, gestion des contrats.</span>
-          <span class="pick" aria-hidden="false">Choisir ce parcours</span>
+          <span class="pick">Choisir ce parcours</span>
         </a>
       </div>
     </fieldset>
@@ -1137,7 +1128,7 @@
         if(en.isIntersecting){ en.target.classList.add("visible"); io.unobserve(en.target); }
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll(".card, .step-head, .legend-box, .chooser-grid, .objectifs, .block")).forEach(function(el){
+    document.querySelectorAll(".card, .step-head, .chooser-grid, .objectifs, .block").forEach(function(el){
       el.classList.add("reveal"); io.observe(el);
     });
   }
