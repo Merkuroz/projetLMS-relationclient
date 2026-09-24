@@ -218,6 +218,7 @@
   .step::before{
     content:"";position:absolute;left:25px;top:62px;bottom:-2.2rem;width:4px;
     border-radius:999px;background:var(--border);
+    animation:grow-down .7s ease .2s both;
   }
   .step:last-of-type::before{display:none}
   .step-head{display:flex;align-items:flex-start;gap:1.1rem;flex-wrap:wrap;margin-bottom:1.3rem}
@@ -226,8 +227,16 @@
     width:54px;height:54px;border-radius:50%;display:grid;place-items:center;
     font-size:1.4rem;font-weight:800;color:#fff;background:var(--enedis-blue);
     transition:transform .2s ease,background .2s ease;
+    animation:pop-in .5s ease both;
   }
+  .step:nth-of-type(2) .step-num{animation-delay:.15s}
+  .step:nth-of-type(3) .step-num{animation-delay:.3s}
+  .step:nth-of-type(4) .step-num{animation-delay:.45s}
   .step:hover .step-num{transform:scale(1.08)}
+  @keyframes grow-down{
+    0%{transform:scaleY(0);transform-origin:top}
+    100%{transform:scaleY(1);transform-origin:top}
+  }
   .step h2{margin:0;font-size:1.35rem;color:var(--enedis-blue)}
   .step-goal{margin:.4rem 0 0;color:var(--text-muted);font-size:.95rem}
 
