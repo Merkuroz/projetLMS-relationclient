@@ -322,8 +322,8 @@
   .choice .choice-title{display:block;margin:0;font-size:1.05rem;font-weight:800;color:var(--enedis-blue)}
   .choice .choice-desc{display:block;margin:0;font-size:.88rem;color:var(--text-muted);flex:1}
   .choice .pick{font-weight:800;font-size:.9rem;color:var(--enedis-blue)}
-  .choice[aria-pressed="true"]{border-color:var(--ok);background:#F4FBF6}
-  .choice[aria-pressed="true"] .pick{color:var(--ok)}
+  .choice.selected{border-color:var(--ok);background:#F4FBF6}
+  .choice.selected .pick{color:var(--ok)}
 
   /* Objectifs pédagogiques */
 
@@ -759,12 +759,12 @@
     <fieldset class="chooser" id="choix-parcours">
       <legend>Choisissez votre parcours métier (en accord avec votre manager)</legend>
       <div class="chooser-grid">
-        <a class="choice" id="track-A" href="#parcours-a" aria-pressed="false">
+        <a class="choice" id="track-A" href="#parcours-a">
           <span class="choice-title">Parcours A — Chargé de Relations Clients ACH C5 et AD</span>
           <span class="choice-desc">Relevé et facturation C5, affaires de correction de factures C5 (ACF), prestations et interventions C5, fiches F120 à F920, prise en charge des demandes clients (ligne AD + L1).</span>
           <span class="pick" aria-hidden="false">Choisir ce parcours</span>
         </a>
-        <a class="choice" id="track-B" href="#parcours-b" aria-pressed="false">
+        <a class="choice" id="track-B" href="#parcours-b">
           <span class="choice-title">Parcours B — CRC Gestion et Raccordement Petits Producteurs</span>
           <span class="choice-desc">Acteurs de la production, raccordement Petits Producteurs (avec et sans travaux), CAE, CACSI, Contrat Unique en injection, obligations d'achat, prestations et facturation P4, impayés et recouvrement, gestion des contrats.</span>
           <span class="pick" aria-hidden="false">Choisir ce parcours</span>
@@ -1068,7 +1068,7 @@
     ["A","B"].forEach(function(t){
       var btn = document.getElementById("track-" + t);
       var selected = state.track === t;
-      btn.setAttribute("aria-pressed", selected ? "true" : "false");
+      btn.classList.toggle("selected", selected);
       btn.querySelector(".pick").textContent = selected ? "✓ Parcours sélectionné" : "Choisir ce parcours";
     });
   }
