@@ -135,18 +135,32 @@
   .hero-inner{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
   .hero-inner > *{animation:slide-in-left .55s ease both}
   .hero-inner > *:nth-child(2){animation-delay:.12s}
-  /* Indicateur "descendre" : fleche animant une seule fois (< 5s, pas de boucle, RGAA 13.8) */
+  /* Indicateur "descendre" moderne : pilule degradee Enedis, fleche animee une fois (RGAA 13.8) */
   .scroll-hint{
-    max-width:1100px;margin:1rem auto 0;padding:0 1.2rem;
-    display:flex;align-items:center;gap:.55rem;
-    font-weight:700;color:var(--enedis-blue);font-size:.92rem;
+    max-width:1100px;margin:1.3rem auto 0;padding:0 1.2rem;
   }
-  .scroll-hint .chevrons{display:inline-flex;flex-direction:column;line-height:.35;font-size:1.05rem}
-  .scroll-hint .chevrons span{animation:chevron-drop 1.8s ease .6s 1 both}
-  .scroll-hint .chevrons span:nth-child(2){animation-delay:.9s}
-  .scroll-hint .chevrons span:nth-child(3){animation-delay:1.2s}
-  @keyframes chevron-drop{
-    0%{opacity:0;transform:translateY(-8px)}
+  .scroll-hint a.hint-pill{
+    display:inline-flex;align-items:center;gap:.7rem;
+    padding:.6rem 1.15rem .6rem .7rem;border-radius:999px;
+    background:linear-gradient(120deg,var(--enedis-blue) 0%,var(--enedis-blue) 45%,var(--enedis-green-dark) 100%);
+    color:#fff;font-weight:700;font-size:.92rem;text-decoration:none;
+    box-shadow:0 6px 18px rgba(20,35,220,.28);
+    transition:transform .2s ease,box-shadow .2s ease;
+  }
+  .scroll-hint a.hint-pill:hover{
+    transform:translateY(-2px);
+    box-shadow:0 9px 24px rgba(20,35,220,.38);
+  }
+  .scroll-hint a.hint-pill:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+  .scroll-hint .hint-ico{
+    display:inline-grid;place-items:center;width:32px;height:32px;flex:none;
+    background:rgba(255,255,255,.18);border-radius:50%;
+  }
+  .scroll-hint .hint-ico svg{width:16px;height:16px;display:block}
+  .scroll-hint .hint-ico svg{animation:hint-nudge 1.6s ease .8s 1 both}
+  @keyframes hint-nudge{
+    0%{opacity:0;transform:translateY(-7px)}
+    55%{opacity:1;transform:translateY(3px)}
     100%{opacity:1;transform:translateY(0)}
   }
   .brand{display:flex;align-items:center;gap:.9rem}
@@ -438,7 +452,7 @@
   </div>
 </header>
 
-<p class="scroll-hint"><a class="card-link" href="#etape-1">Commencez le parcours en descendant dans la page</a> <span class="chevrons" aria-hidden="true"><span>›</span><span>›</span><span>›</span></span></p>
+<p class="scroll-hint"><a class="hint-pill" href="#etape-1"><span class="hint-ico" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v10"/><path d="M3.5 8.5 8 13l4.5-4.5"/></svg></span>Commencez le parcours en descendant dans la page</a></p>
 
   <div class="assist-box">
     <p><strong>Assistance informatique :</strong> 09 70 83 03 03 ou sur <a class="card-link" href="https://mysi.enedis.fr/" target="_blank" rel="noopener">mysi.enedis.fr ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></p>
