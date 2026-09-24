@@ -237,27 +237,16 @@
     0%{transform:scaleY(0);transform-origin:top}
     100%{transform:scaleY(1);transform-origin:top}
   }
-  /* Reflet lumineux qui parcourt le fil en continu */
-  .step::after{
-    content:"";position:absolute;left:23.5px;top:62px;bottom:-2.2rem;width:7px;
-    border-radius:999px;pointer-events:none;
-    background:linear-gradient(180deg,transparent, var(--enedis-blue) 45%, var(--enedis-green) 55%, transparent);
-    background-size:100% 220px;
-    animation:fil-flow 5s linear infinite;
-    opacity:.85;
-  }
-  .step:last-of-type::after{display:none}
-  @keyframes fil-flow{
-    0%{background-position:0 -220px}
-    100%{background-position:0 calc(100% + 220px)}
-  }
-  /* Pulsation continue et alternee des numeros d'etape */
+  /* RGAA 13.8 : aucune animation ne dure plus de 5 secondes et
+     aucune ne boucle ; elles s'executent une fois a l'ouverture.
+     Elles sont toutes neutralisees par prefers-reduced-motion (voir plus bas). */
   @keyframes num-pulse{
-    0%,100%{box-shadow:0 0 0 0 rgba(20,35,220,.45)}
+    0%{box-shadow:0 0 0 0 rgba(20,35,220,.45)}
     70%{box-shadow:0 0 0 13px rgba(20,35,220,0)}
+    100%{box-shadow:0 0 0 13px rgba(20,35,220,0)}
   }
-  .step:nth-of-type(odd) .step-num{animation:num-pulse 5s ease-in-out infinite}
-  .step:nth-of-type(even) .step-num{animation:num-pulse 5s ease-in-out 2.5s infinite}
+  .step:nth-of-type(odd) .step-num{animation:num-pulse 2.8s ease-out 1 both}
+  .step:nth-of-type(even) .step-num{animation:num-pulse 2.8s ease-out 1.4s 1 both}
   .step h2{margin:0;font-size:1.35rem;color:var(--enedis-blue)}
   .step-goal{margin:.4rem 0 0;color:var(--text-muted);font-size:.95rem}
 
