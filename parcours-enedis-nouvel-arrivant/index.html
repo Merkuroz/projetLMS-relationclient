@@ -237,6 +237,27 @@
     0%{transform:scaleY(0);transform-origin:top}
     100%{transform:scaleY(1);transform-origin:top}
   }
+  /* Reflet lumineux qui parcourt le fil en continu */
+  .step::after{
+    content:"";position:absolute;left:23.5px;top:62px;bottom:-2.2rem;width:7px;
+    border-radius:999px;pointer-events:none;
+    background:linear-gradient(180deg,transparent, var(--enedis-blue) 45%, var(--enedis-green) 55%, transparent);
+    background-size:100% 220px;
+    animation:fil-flow 2.6s linear infinite;
+    opacity:.85;
+  }
+  .step:last-of-type::after{display:none}
+  @keyframes fil-flow{
+    0%{background-position:0 -220px}
+    100%{background-position:0 calc(100% + 220px)}
+  }
+  /* Pulsation continue et alternee des numeros d'etape */
+  @keyframes num-pulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(20,35,220,.45)}
+    70%{box-shadow:0 0 0 13px rgba(20,35,220,0)}
+  }
+  .step:nth-of-type(odd) .step-num{animation:num-pulse 2.6s ease-in-out infinite}
+  .step:nth-of-type(even) .step-num{animation:num-pulse 2.6s ease-in-out 1.3s infinite}
   .step h2{margin:0;font-size:1.35rem;color:var(--enedis-blue)}
   .step-goal{margin:.4rem 0 0;color:var(--text-muted);font-size:.95rem}
 
@@ -390,7 +411,7 @@
   }
   @media (max-width:600px){
     .step{padding-left:0;margin-top:1.6rem}
-    .step::before{display:none}
+    .step::before,.step::after{display:none}
     .step-num{position:static;flex:none}
     .step-head{align-items:center}
   }
