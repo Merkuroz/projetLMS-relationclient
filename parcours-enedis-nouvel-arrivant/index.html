@@ -1,11 +1,75 @@
 <!doctype html>
+<!--
+  ============================================================
+  PARCOURS NOUVEL ARRIVANT ENEDIS — GUIDE DE MISE A JOUR
+  ============================================================
+  Ce fichier se lit de haut en bas en 5 grandes sections,
+  delimitees par des bannieres de commentaire :
+
+    SECTION 1 : STYLES (couleurs, mise en page, animations)
+    SECTION 2 : EN-TETE ET LEGENDE
+    SECTION 3 : NAVIGATION ET CHOIX DU PARCOURS (etape 4)
+    SECTION 4 : LES QUATRE ETAPES DU PARCOURS
+    SECTION 5 : SCRIPT (automatisation — ne rien modifier
+                sauf si vous savez ce que vous faites)
+
+  COMMENT AJOUTER UN MODULE DE FORMATION ?
+  Recopiez une carte existante dans le bloc souhaite, puis
+  modifiez le titre et l'etiquette. Modele de carte simple :
+
+    <div class="card">
+      <p class="card-title">Titre de la formation</p>
+      <div class="card-tags"><span class="tag t-el">E-learning</span></div>
+    </div>
+
+  Avec un lien d'acces, ajoutez a la fin de la carte :
+
+    <a class="card-link" target="_blank" rel="noopener"
+       href="ADRESSE-DE-LA-FORMATION">Ouvrir la formation ↗</a>
+
+  ETIQUETTES DISPONIBLES (variable "tag") :
+    t-cv Classe virtuelle | t-pres Presentiel | t-el E-learning
+    t-video Video | t-doc Document a lire | t-manager Rdv manager
+    t-libre Libre-service | t-insc Sur inscription | t-imd Immersion
+    t-val Validation / Quiz
+
+  COMMENT AJOUTER UN BLOC DANS UNE ETAPE ?
+  Recopiez un bloc "div class=block" existant et renumerotez
+  la pastille (block-num), par exemple 1.7 apres 1.6.
+
+  BON A SAVOIR :
+  - La barre de navigation et le choix de parcours fonctionnent
+    SANS JavaScript : ils sont ecrits en dur dans la page.
+    - Navigation : modifiez les libelles des liens dans la
+      SECTION 3 directement.
+    - Parcours A ou B : les liens pointent vers les ancres
+      #parcours-a et #parcours-b. Avec JavaScript, le choix est
+      en plus memorise sur le navigateur.
+  - Chaque carte possede son lien en dur dans le HTML. Pour une
+    nouvelle carte sans lien, recopiez le lien d'une carte
+    voisine ; sinon le script (si actif) ajoute le lien
+    catalogue automatiquement.
+  - Liens directs pour LMS : ?parcours=A ou ?parcours=B,
+    ?etape=1 a ?etape=4, combinables (?etape=4&parcours=A).
+
+  REGLE D'OR : ne supprimez jamais les balises d'ouverture
+  <div> sans leur balise de fermeture </div> associee.
+  ============================================================
+-->
 <html lang="fr">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Parcours de professionnalisation nouvel arrivant Enedis â Socle MarchÃ© de Masse. Suivi de progression pour les apprenants." />
+<meta name="description" content="Parcours de professionnalisation nouvel arrivant Enedis — Socle Marché de Masse. Suivi de progression pour les apprenants." />
 <title>Parcours nouvel arrivant Enedis</title>
 <style>
+/* ============================================================
+   SECTION 1 : STYLES
+   1a. Couleurs   1b. Animations   1c. Mise en page generale
+   1d. Blocs et cartes   1e. Divers
+   ============================================================ */
+
+  /* ---------- 1a. Couleurs et variables ---------- */
   :root{
     --enedis-blue:#1423DC;
     --enedis-blue-dark:#0E188F;
@@ -26,32 +90,35 @@
     --shadow-soft:0 4px 14px rgba(20,35,220,.08);
     font-size:16px;
   }
-  @keyframes aurora{
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-  }
-  @keyframes floaty{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-7px)}
-  }
-  @keyframes shimmer{
-    0%{background-position:-200% 0}
-    100%{background-position:200% 0}
-  }
-  @keyframes pop{
-    0%{transform:scale(1)}
-    45%{transform:scale(1.12)}
-    100%{transform:scale(1)}
-  }
   *{box-sizing:border-box}
+
+  /* ---------- 1b. Animations ---------- */
+  @keyframes fade-up{
+    0%{opacity:0;transform:translateY(18px)}
+    100%{opacity:1;transform:translateY(0)}
+  }
+  @keyframes pop-in{
+    0%{transform:scale(.85);opacity:0}
+    60%{transform:scale(1.04)}
+    100%{transform:scale(1);opacity:1}
+  }
+  @keyframes slide-in-left{
+    0%{opacity:0;transform:translateX(-24px)}
+    100%{opacity:1;transform:translateX(0)}
+  }
+  @keyframes grow-line{
+    0%{transform:scaleX(0)}
+    100%{transform:scaleX(1)}
+  }
+
+  /* ---------- 1c. Mise en page generale ---------- */
   html{scroll-behavior:smooth}
   body{
     margin:0;
     font-family:"Marianne","Segoe UI",system-ui,-apple-system,sans-serif;
     background:var(--enedis-bg);
     color:var(--text);
-    line-height:1.6;
+    line-height:1.75;
   }
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   a.skip-link{position:absolute;left:-999px;top:8px;background:#fff;color:var(--enedis-blue);padding:.6rem 1rem;border-radius:8px;z-index:100;font-weight:600}
@@ -61,58 +128,44 @@
 
   /* ---------- Header ---------- */
   header.hero{
-    position:relative;overflow:hidden;
-    background:linear-gradient(120deg,var(--enedis-blue-deep) 0%,var(--enedis-blue) 45%,#2B3BF2 70%,var(--enedis-blue-dark) 100%);
-    background-size:220% 220%;
-    animation:aurora 18s ease-in-out infinite;
-    color:#fff;padding:2.2rem 1.2rem 6rem;
+    background:var(--enedis-blue);
+    color:#fff;padding:2.2rem 1.2rem 3rem;
+    animation:fade-up .6s ease both;
   }
-  header.hero::before{
-    content:"";position:absolute;inset:-40%;
-    background:radial-gradient(38rem 38rem at 18% 25%,rgba(150,205,50,.22),transparent 60%),
-               radial-gradient(30rem 30rem at 85% 80%,rgba(255,255,255,.14),transparent 60%);
+  .hero-inner{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+  .hero-inner > *{animation:slide-in-left .55s ease both}
+  .hero-inner > *:nth-child(2){animation-delay:.12s}
+  /* Indicateur "descendre" integre au fil de suivi : pastille chevron sous chaque
+     numero d'etape. Decorative (aria-hidden), animee une seule fois (RGAA 13.8). */
+  /* Pastille chevron : suit la progression du defilement le long du fil.
+     RGAA 13.8 : le mouvement est provoque par l'action de l'utilisateur (defilement),
+     il s'arrete des que l'utilisateur arrete de defiler. */
+  .step::after{
+    content:"";position:absolute;left:13px;top:64px;
+    width:28px;height:28px;border-radius:50%;
+    background:linear-gradient(135deg,var(--enedis-blue) 0%,var(--enedis-green-dark) 100%);
+    background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3.5 6 8 10.5 12.5 6" fill="none" stroke="%23fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'),
+      linear-gradient(135deg,var(--enedis-blue) 0%,var(--enedis-green-dark) 100%);
+    background-size:14px 14px,100% 100%;
+    background-position:center,center;
+    background-repeat:no-repeat,no-repeat;
+    box-shadow:0 3px 10px rgba(20,35,220,.3);
     pointer-events:none;
+    animation:fil-follow linear both;
+    animation-timeline:view();
+    animation-range:entry 10% exit 90%;
   }
-  header.hero::after{
-    content:"";position:absolute;left:0;right:0;bottom:-2px;height:52px;
-    background:#F7F9FF;
-    -webkit-mask:radial-gradient(140% 100% at 50% 100%,transparent 78%,#000 79%);
-    mask:radial-gradient(140% 100% at 50% 100%,transparent 78%,#000 79%);
+  @keyframes fil-follow{
+    0%{top:64px;opacity:.35}
+    10%{opacity:1}
+    90%{opacity:1}
+    100%{top:calc(100% - 3rem);opacity:.35}
   }
-  .hero-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+  .step:last-of-type::after{display:none}
   .brand{display:flex;align-items:center;gap:.9rem}
-  .brand svg{flex:none;filter:drop-shadow(0 4px 10px rgba(8,13,82,.35));animation:floaty 6s ease-in-out infinite}
-  .hero h1{font-size:clamp(1.35rem,3.2vw,2.1rem);margin:0;letter-spacing:-.01em;
-    background:linear-gradient(90deg,#fff 30%,#D9E2FF 50%,#fff 70%);
-    background-size:200% 100%;
-    animation:shimmer 8s linear infinite;
-    -webkit-background-clip:text;background-clip:text;
-  }
-  .hero h1{color:#fff}
-  @supports (-webkit-background-clip:text){
-    .hero h1{color:transparent}
-  }
+  .hero h1{font-size:clamp(1.35rem,3.2vw,2.1rem);margin:0;letter-spacing:-.01em;color:#fff}
   .hero p{margin:.2rem 0 0;color:#DDE3FF;font-size:.95rem}
 
-  /* ---------- Progress bar ---------- */
-  .progress-dock{max-width:1100px;margin:-3.4rem auto 0;padding:0 1.2rem;position:relative;z-index:5}
-  .progress-card{
-    background:rgba(255,255,255,.88);
-    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-    border:1px solid rgba(214,220,245,.7);
-    border-radius:var(--radius-lg);box-shadow:var(--shadow);
-    padding:1.2rem 1.5rem;display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;justify-content:space-between;
-  }
-  .progress-info{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
-  .ring{--p:0;position:relative;width:78px;height:78px;border-radius:50%;
-    background:conic-gradient(var(--enedis-blue) calc(var(--p)*1%),var(--enedis-green) calc(var(--p)*1%),var(--border) 0);
-    display:grid;place-items:center;filter:drop-shadow(0 3px 8px rgba(20,35,220,.25));
-  }  .ring::before{content:"";position:absolute;width:62px;height:62px;border-radius:50%;background:#fff;left:8px;top:8px}
-  .ring span{position:relative;font-weight:800;color:var(--enedis-blue);font-size:1rem}
-  .ring.pop{animation:pop .45s ease}
-  .progress-text strong{display:block;font-size:1.05rem}
-  .progress-text small{color:var(--text-muted)}
-  .progress-actions{display:flex;gap:.6rem;flex-wrap:wrap}
   .btn{
     border:2px solid var(--enedis-blue);background:#fff;color:var(--enedis-blue);
     padding:.55rem 1.1rem;border-radius:999px;font-weight:700;cursor:pointer;font-size:.9rem;
@@ -123,18 +176,16 @@
   .btn-primary{background:var(--enedis-blue);color:#fff;box-shadow:0 4px 14px rgba(20,35,220,.35)}
   .btn-primary:hover{background:var(--enedis-blue-dark)}
 
-  /* ---------- Legend ---------- */
-  .legend{max-width:1100px;margin:1.2rem auto 0;padding:0 1.2rem}
-  .legend-box{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.2rem}
-  .legend-box h2{font-size:1rem;margin:0 0 .6rem;color:var(--enedis-blue)}
-  .legend-grid{display:flex;flex-wrap:wrap;gap:.45rem}
+  /* ---------- Etiquettes des modalites pedagogiques ---------- */
   .tag{
     display:inline-flex;align-items:center;gap:.35rem;font-size:.75rem;font-weight:700;
     padding:.25rem .7rem;border-radius:999px;border:1.5px solid transparent;
-    transition:transform .15s ease;
+    transition:transform .15s ease,background .15s ease;
   }
-  .tag:hover{transform:scale(1.05)}
+  .tag:hover{transform:scale(1.06)}
   .tag::before{content:"";width:9px;height:9px;border-radius:50%;background:currentColor}
+  .tag::before{transition:transform .2s ease}
+  .tag:hover::before{transform:scale(1.35)}
   .t-cv{background:#EAF0FF;color:var(--enedis-blue);border-color:var(--enedis-blue)}
   .t-pres{background:#FFF3D6;color:#7A5200;border-color:#C99700}
   .t-el{background:#EDFBD8;color:var(--enedis-green-dark);border-color:var(--enedis-green)}
@@ -145,100 +196,136 @@
   .t-insc{background:#EDEBFD;color:#3F2FA0;border-color:#7A6BD6}
   .t-imd{background:#FFF6CE;color:#6B5200;border-color:#D6B400}
   .t-val{background:var(--enedis-blue);color:#fff;border-color:var(--enedis-blue-dark)}
+  .t-myhr{background:#E8F0FE;color:#0B5394;border-color:#3C78C8}
+  .t-cen{background:#FDF2E9;color:#8F4B12;border-color:#D98E4A}
+  .t-lean{background:#EDFBF3;color:#14602F;border-color:#3BB56E}
+  .card-code{
+    display:inline-flex;align-items:center;font-size:.72rem;font-weight:700;
+    padding:.25rem .6rem;border-radius:6px;
+    background:#F1F3FA;color:var(--text-muted);border:1px dashed var(--border);
+    font-family:ui-monospace,Consolas,monospace;letter-spacing:.02em;
+  }
+  .assist-box{
+    background:#FFF9E6;border:3px solid var(--enedis-blue);border-radius:var(--radius);
+    padding:1.1rem 1.3rem;margin-top:.9rem;
+    box-shadow:var(--shadow-soft);
+  }
+  .assist-box p{margin:0;font-size:1.02rem;font-weight:700;color:var(--text)}
+  .assist-box strong{font-weight:800;font-size:1.05rem;color:var(--enedis-blue)}
+  .assist-box .card-link{margin-top:0}
 
-  /* ---------- Nav Ã©tapes ---------- */
+  /* ---------- Nav étapes ---------- */
   nav.steps{max-width:1100px;margin:1.4rem auto 0;padding:0 1.2rem;display:flex;gap:.6rem;flex-wrap:wrap}
   nav.steps a{
     text-decoration:none;background:#fff;border:2px solid var(--border);color:var(--text);
     padding:.55rem 1rem;border-radius:999px;font-weight:700;font-size:.9rem;cursor:pointer;
+    animation:pop-in .45s ease both;
     transition:border-color .15s,transform .15s,box-shadow .15s;
   }
-  nav.steps a:hover{border-color:var(--enedis-blue);transform:translateY(-2px);box-shadow:var(--shadow-soft)}
-  nav.steps a .step-pct{margin-left:.4rem;color:var(--enedis-blue)}
+  nav.steps a:nth-child(2){animation-delay:.06s}
+  nav.steps a:nth-child(3){animation-delay:.12s}
+  nav.steps a:nth-child(4){animation-delay:.18s}
+  nav.steps a:nth-child(5){animation-delay:.24s}
+  nav.steps a:hover{border-color:var(--enedis-blue)}
 
   main{max-width:1100px;margin:0 auto;padding:0 1.2rem 3rem}
 
-  /* ---------- Sections Ã©tapes ---------- */
+  /* ---------- Sections étapes ---------- */
   /* ---------- Fil conducteur : timeline verticale ---------- */
-  .step{position:relative;margin-top:2.2rem;padding-left:80px;scroll-margin-top:1rem}
+  .step{position:relative;margin-top:3rem;padding-left:80px;scroll-margin-top:1rem}
   .step::before{
     content:"";position:absolute;left:25px;top:62px;bottom:-2.2rem;width:4px;
     border-radius:999px;background:var(--border);
-    transition:background .4s ease;
+    animation:grow-down .7s ease .2s both;
   }
-  .step.done::before{background:linear-gradient(180deg,var(--enedis-green),var(--enedis-blue))}
   .step:last-of-type::before{display:none}
-  .step-head{display:flex;align-items:flex-start;gap:1rem;flex-wrap:wrap}
+  .step-head{display:flex;align-items:flex-start;gap:1.1rem;flex-wrap:wrap;margin-bottom:1.3rem}
   .step-num{
     position:absolute;left:0;top:0;
     width:54px;height:54px;border-radius:50%;display:grid;place-items:center;
     font-size:1.4rem;font-weight:800;color:#fff;background:var(--enedis-blue);
-    background-image:linear-gradient(135deg,#2B3BF2,var(--enedis-blue) 60%,var(--enedis-blue-dark));
-    box-shadow:0 6px 16px rgba(20,35,220,.35);
+    transition:transform .2s ease,background .2s ease;
+    animation:pop-in .5s ease both;
   }
-  .step.done .step-num{
-    background:linear-gradient(135deg,#3FA14D,#1B7F3B);
-    background-image:none;
+  .step:nth-of-type(2) .step-num{animation-delay:.15s}
+  .step:nth-of-type(3) .step-num{animation-delay:.3s}
+  .step:nth-of-type(4) .step-num{animation-delay:.45s}
+  .step:hover .step-num{transform:scale(1.08)}
+  @keyframes grow-down{
+    0%{transform:scaleY(0);transform-origin:top}
+    100%{transform:scaleY(1);transform-origin:top}
   }
+  /* RGAA 13.8 : aucune animation ne dure plus de 5 secondes et
+     aucune ne boucle ; elles s'executent une fois a l'ouverture.
+     Elles sont toutes neutralisees par prefers-reduced-motion (voir plus bas). */
+  @keyframes num-pulse{
+    0%{box-shadow:0 0 0 0 rgba(20,35,220,.45)}
+    70%{box-shadow:0 0 0 13px rgba(20,35,220,0)}
+    100%{box-shadow:0 0 0 13px rgba(20,35,220,0)}
+  }
+  .step:nth-of-type(odd) .step-num{animation:num-pulse 2.8s ease-out 1 both}
+  .step:nth-of-type(even) .step-num{animation:num-pulse 2.8s ease-out 1.4s 1 both}
   .step h2{margin:0;font-size:1.35rem;color:var(--enedis-blue)}
   .step-goal{margin:.4rem 0 0;color:var(--text-muted);font-size:.95rem}
-  .step-bar{height:8px;border-radius:999px;background:var(--border);overflow:hidden;margin:.9rem 0 1rem}
-  .step-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--enedis-blue),var(--enedis-green));transition:width .4s ease}
 
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.15rem}
 
-  /* ---------- Blocs thÃ©matiques numÃ©rotÃ©s ---------- */
+  /* ---------- Blocs thématiques numérotés ---------- */
   .block{
     background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);
-    padding:1rem 1.1rem 1.1rem;margin:0 0 1.1rem;box-shadow:var(--shadow-soft);
+    padding:1.15rem 1.25rem 1.25rem;margin:0 0 1.6rem;box-shadow:var(--shadow-soft);
+    transition:border-color .2s ease;
   }
-  .block-head{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin:0 0 .9rem}
+  .block:hover{border-color:var(--enedis-blue-soft)}
+
+  .block-head{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin:0 0 1.05rem}
+  .block-up{
+    margin-left:auto;flex:none;white-space:nowrap;
+    font-size:.78rem;font-weight:700;color:var(--enedis-blue);text-decoration:none;
+    border:1.5px solid var(--enedis-blue-soft);padding:.15rem .6rem;border-radius:999px;
+    transition:background .2s ease;
+  }
+  .block-up:hover{background:var(--enedis-blue-soft)}
   .block-num{
     flex:none;display:inline-grid;place-items:center;min-width:2.7rem;padding:.2rem .5rem;
-    border-radius:9px;background:linear-gradient(135deg,#2B3BF2,var(--enedis-blue-dark));
+    border-radius:9px;background:var(--enedis-blue);
     color:#fff;font-weight:800;font-size:.9rem;letter-spacing:.02em;
   }
   .block-title{margin:0;font-size:1.02rem;font-weight:800;color:var(--text);flex:1;min-width:12rem}
-  .block-count{
-    margin-left:auto;font-size:.78rem;font-weight:800;color:var(--enedis-blue);
-    background:var(--enedis-blue-soft);padding:.2rem .6rem;border-radius:999px;white-space:nowrap;
-  }
-  .block.done{border-color:var(--ok)}
-  .block.done .block-count{background:#E2F5E9;color:var(--ok)}
-  .block.done .block-num{background:linear-gradient(135deg,#3FA14D,#1B7F3B)}
   .card{
     position:relative;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);
-    padding:1rem 1.1rem;box-shadow:var(--shadow-soft);transition:transform .2s,border-color .2s,box-shadow .2s;
-    overflow:hidden;
+    padding:1.15rem 1.25rem;box-shadow:var(--shadow-soft);
+    transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
   }
-  .card::after{
-    content:"";position:absolute;top:0;left:0;right:0;height:3px;
-    background:linear-gradient(90deg,var(--enedis-blue),var(--enedis-green));
-    opacity:0;transition:opacity .2s;
+  .card::before{
+    content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+    width:0;height:3px;background:var(--enedis-blue);transition:width .25s ease;
   }
-  .card:hover{transform:translateY(-3px);border-color:var(--enedis-blue);box-shadow:var(--shadow)}
-  .card:hover::after,.card.checked::after{opacity:1}
-  .card label.chk{display:flex;gap:.7rem;align-items:flex-start;cursor:pointer;font-weight:600}
-  .card input[type="checkbox"]{
-    width:1.35rem;height:1.35rem;flex:none;margin-top:.15rem;accent-color:var(--enedis-blue);cursor:pointer;
-    transition:transform .15s ease;
-  }
-  .card input[type="checkbox"]:hover{transform:scale(1.15)}
-  .card.checked{border-color:var(--ok);background:linear-gradient(180deg,#F4FBF6,#fff)}
-  .card.checked .card-title{text-decoration:line-through;color:var(--text-muted)}
-  .card-title{margin:0 0 .5rem;font-size:1rem}
-  .card-tags{display:flex;flex-wrap:wrap;gap:.35rem}
-  .card-note{margin:.5rem 0 0;font-size:.85rem;color:var(--text-muted)}
-  .card-link{font-size:.85rem;color:var(--enedis-blue);font-weight:700}
+  .card:hover::before{width:70%}
+  .card:hover{transform:translateY(-4px);border-color:var(--enedis-blue);box-shadow:var(--shadow)}
+  .block{outline:3px solid transparent;outline-offset:4px;transition:outline-color .25s ease,background .25s ease}
+  .block:hover,.block:focus-within{outline-color:var(--enedis-green)}
+  .card-link{transition:gap .2s ease}
+  .card-title{margin:0 0 .6rem;font-size:1rem;line-height:1.45}
+  .card-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.3rem}
+  .card-note{margin:.65rem 0 0;font-size:.85rem;color:var(--text-muted);line-height:1.5}
 
-  .subtrack{margin-top:1.4rem}
+  .subtrack{margin-top:1.4rem;scroll-margin-top:1rem;display:none}
+  .subtrack.locked{display:none}
+  /* Sans JavaScript : le choix de parcours fonctionne par ancre (#parcours-a / #parcours-b) */
+  main:has(#parcours-a:target) .subtrack[data-track="A"],
+  main:has(#parcours-b:target) .subtrack[data-track="B"]{display:block}
+  a.choice{text-decoration:none;color:inherit}
   .subtrack > h3{
     font-size:1.05rem;color:#fff;background:var(--enedis-blue);display:inline-block;
     padding:.4rem 1rem;border-radius:999px;
+    animation:slide-in-left .4s ease both;
   }
   .subtrack.locked{display:none}
   details.help{background:#fff;border:1px solid var(--border);border-radius:12px;padding:.7rem 1rem;margin-bottom:1rem}
-  details.help summary{font-weight:700;color:var(--enedis-blue);cursor:pointer}
+  details.help summary{font-weight:700;color:var(--enedis-blue);cursor:pointer;transition:color .2s ease}
+  details.help[open]{animation:fade-up .35s ease both}
+  details.help summary:hover{color:var(--enedis-blue-dark)}
   details.help p{margin:.5rem 0 0;font-size:.9rem;color:var(--text-muted)}
 
   .chooser{border:0;margin:0 0 1.2rem;padding:0}
@@ -253,72 +340,71 @@
   .choice .choice-title{display:block;margin:0;font-size:1.05rem;font-weight:800;color:var(--enedis-blue)}
   .choice .choice-desc{display:block;margin:0;font-size:.88rem;color:var(--text-muted);flex:1}
   .choice .pick{font-weight:800;font-size:.9rem;color:var(--enedis-blue)}
-  .choice[aria-pressed="true"]{border-color:var(--ok);background:#F4FBF6}
-  .choice[aria-pressed="true"] .pick{color:var(--ok)}
-  .chooser-note{margin:.8rem 0 0;font-size:.88rem;color:var(--text-muted)}
+  .choice.selected{border-color:var(--ok);background:#F4FBF6}
+  .choice.selected .pick{color:var(--ok)}
 
-  /* Objectifs pÃ©dagogiques */
+  /* Objectifs pédagogiques */
+
+  .objectifs-block{border-style:dashed;border-color:var(--enedis-blue-soft);background:var(--enedis-blue-soft)}
+  .objectifs-block .block-head{align-items:center}
+  .objectifs-block .block-title{
+    color:var(--enedis-blue);display:inline-flex;align-items:center;gap:.55rem;
+  }
+  .objectifs-block .block-title::before{
+    content:"";flex:none;width:26px;height:26px;
+    background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="%231423DC" stroke-width="2.4"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="%231423DC" stroke-width="2.4"/><circle cx="12" cy="12" r="1.4" fill="%231423DC"/></svg>');
+    background-size:contain;background-repeat:no-repeat;
+  }
+  .objectifs-block li{
+    background:#fff;border:1px solid var(--border);border-radius:10px;
+    padding:.45rem .8rem .45rem .9rem;font-weight:600;color:var(--text);
+  }
+  .objectifs-block li::before{width:20px;height:20px;background-color:#fff}
+  .objectifs-block .objectifs{margin:0}
   .objectifs{list-style:none;padding:0;margin:.6rem 0 0;display:flex;flex-direction:column;gap:.3rem}
-  .objectifs li{display:flex;gap:.5rem;align-items:flex-start;font-size:.92rem;color:var(--text-muted)}
+  .objectifs li{display:flex;gap:.55rem;align-items:flex-start;font-size:.92rem;color:var(--text-muted);line-height:1.5}
   .objectifs li::before{
     content:"";flex:none;width:18px;height:18px;margin-top:.15rem;border-radius:50%;
     background:var(--enedis-blue-soft);
     background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="%231423DC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');
     background-size:14px;background-position:center;background-repeat:no-repeat;
   }
-  .tip{
-    margin:.8rem 0 0;padding:.6rem .9rem;background:#F3FBE8;border-left:4px solid var(--enedis-green);
-    border-radius:0 10px 10px 0;font-size:.9rem;color:var(--text-muted);
-  }
-  .tip strong{color:var(--enedis-green-dark)}
-
-  /* Statut de l'Ã©tape */
-  .status-chip{
-    display:inline-block;vertical-align:middle;margin-left:.6rem;padding:.15rem .7rem;
-    border-radius:999px;font-size:.75rem;font-weight:800;letter-spacing:.02em;
-  }
-  .status-chip[data-state="todo"]{background:#EDF0F7;color:#3D3F66}
-  .status-chip[data-state="doing"]{background:#FFF3D6;color:#7A5200}
-  .status-chip[data-state="done"]{background:#E2F5E9;color:var(--ok)}
 
   /* Lien formation */
   .card-link{
     display:inline-flex;align-items:center;gap:.3rem;margin-top:.6rem;
     color:var(--enedis-blue);font-weight:800;font-size:.88rem;text-decoration:none;
     border-bottom:2px solid transparent;padding-bottom:1px;
+    transition:gap .2s ease,border-bottom-color .2s ease,color .2s ease;
   }
-  .card-link:hover{border-bottom-color:var(--enedis-blue)}
+  .card-link:hover{border-bottom-color:var(--enedis-blue);gap:.6rem}
 
   /* Animations d'apparition */
   .reveal{opacity:0;transform:translateY(14px);transition:opacity .45s ease,transform .45s ease}
   .reveal.visible{opacity:1;transform:none}
 
-  /* BanniÃ¨re fil conducteur vers l'Ã©tape suivante */
+  /* Bannière fil conducteur vers l'étape suivante */
   .next-step{
     display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.6rem;
-    margin:1.4rem 0 0;padding:.9rem 1.2rem;text-decoration:none;
-    background:linear-gradient(120deg,var(--enedis-blue-soft),#fff 70%);
-    border:2px dashed var(--enedis-blue);border-radius:var(--radius);
+    margin:1.4rem 0 0;padding:.9rem 1.2rem;
+    background:var(--enedis-blue-soft);border:2px dashed var(--enedis-blue);border-radius:var(--radius);
     color:var(--enedis-blue);font-weight:800;
-    transition:border-style .2s,transform .15s,box-shadow .15s;
   }
-  .next-step:hover{border-style:solid;transform:translateY(-2px);box-shadow:var(--shadow-soft)}
   .next-step .next-state{display:block;font-size:.8rem;font-weight:700;color:var(--text-muted)}
   .next-step .next-arrow{font-size:1.3rem}
+  .back-top{margin:1.4rem 0 0;text-align:center}
   .next-step.fin{
-    background:linear-gradient(120deg,#F3FBE8,#fff 70%);
+    background:#F3FBE8;
     border-color:var(--enedis-green-dark);color:var(--enedis-green-dark);
     text-align:center;justify-content:center;
   }
-
-  #confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
 
   footer{text-align:center;color:var(--text-muted);font-size:.85rem;padding:1rem 1.2rem 2rem}
 
   /* ---------- Toast ---------- */
   #toast{
     position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%) translateY(120%);
-    background:linear-gradient(120deg,var(--enedis-blue),var(--enedis-blue-dark));
+    background:var(--enedis-blue);
     color:#fff;padding:.7rem 1.5rem;border-radius:999px;
     font-weight:700;box-shadow:var(--shadow);transition:transform .3s;z-index:50;
   }
@@ -331,348 +417,341 @@
     .reveal{opacity:1;transform:none}
   }
   @media (max-width:600px){
-    .progress-card{flex-direction:column;align-items:flex-start}
     .step{padding-left:0;margin-top:1.6rem}
-    .step::before{display:none}
+    .step::before,.step::after{display:none}
     .step-num{position:static;flex:none}
     .step-head{align-items:center}
   }
 </style>
 </head>
-<body>
+<body id="top">
+
+<!-- ============================================================
+     SECTION 2 : EN-TETE ET LEGENDE
+     ============================================================ -->
 <a class="skip-link" href="#etape-1">Aller au contenu du parcours</a>
 
 <header class="hero">
   <div class="hero-inner">
     <div class="brand">
-      <svg width="46" height="46" viewBox="0 0 46 46" role="img" aria-label="Logo Enedis">
-        <rect width="46" height="46" rx="10" fill="#fff"/>
-        <path d="M12 24h8l3-8 4 14 3-8h4" fill="none" stroke="#1423DC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="34" cy="14" r="4" fill="#96CD32"/>
-      </svg>
       <div>
-        <h1>Parcours nouvel arrivant â Socle MarchÃ© de Masse</h1>
-        <p>Enedis Â· Parcours de professionnalisation Ã  l'entrÃ©e en poste â espace apprenant</p>
+        <h1>Parcours nouvel arrivant — Socle Marché de Masse</h1>
+        <p>Enedis · Espace apprenant</p>
       </div>
     </div>
   </div>
 </header>
 
-<div class="progress-dock">
-  <div class="progress-card">
-    <div class="progress-info">
-      <div class="ring" id="ring" role="img" aria-label="Progression globale"><span id="ring-txt">0%</span></div>
-      <div class="progress-text">
-        <strong id="prog-title">Votre progression</strong>
-        <small><span id="prog-done">0</span> Ã©tape(s) sur <span id="prog-total">0</span> rÃ©alisÃ©e(s)</small>
-      </div>
-    </div>
-    <div class="progress-actions">
-      <button type="button" class="btn btn-primary" id="btn-reset">RÃ©initialiser</button>
-    </div>
-  </div>
-</div>
 
-<section class="legend" aria-labelledby="legend-title">
-  <div class="legend-box">
-    <h2 id="legend-title">LÃ©gende des modalitÃ©s pÃ©dagogiques</h2>
-    <div class="legend-grid">
-      <span class="tag t-cv">Classe virtuelle</span>
-      <span class="tag t-pres">Formation en prÃ©sentiel</span>
-      <span class="tag t-el">E-learning / Capsule</span>
-      <span class="tag t-video">VidÃ©o / Cotuto</span>
-      <span class="tag t-doc">Document Ã  lire</span>
-      <span class="tag t-manager">Rdv manager</span>
-      <span class="tag t-libre">Libre-service</span>
-      <span class="tag t-insc">Formation sur inscription</span>
-      <span class="tag t-imd">Immersion dirigÃ©e (IMD)</span>
-      <span class="tag t-val">Validation des acquis / Quiz</span>
-    </div>
-    <p style="margin:.7rem 0 0;font-size:.88rem"><a class="card-link" href="https://experience-enedis.syfadis.com/Catalog" target="_blank" rel="noopener">AccÃ©der au catalogue des formations Enedis â<span class="sr-only"> (nouvelle fenÃªtre)</span></a></p>
+  <div class="assist-box">
+    <p><strong>Assistance informatique :</strong> 09 70 83 03 03 ou sur <a class="card-link" href="https://mysi.enedis.fr/" target="_blank" rel="noopener">mysi.enedis.fr ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></p>
   </div>
-</section>
 
-<nav class="steps" aria-label="AccÃ¨s rapide aux Ã©tapes">
-  <a href="#etape-1">Ãtape 1 Â· Accueil<span class="step-pct" data-nav="s1"></span></a>
-  <a href="#etape-2">Ãtape 2 Â· Techniques<span class="step-pct" data-nav="s2"></span></a>
-  <a href="#etape-3">Ãtape 3 Â· Relation Clients<span class="step-pct" data-nav="s3"></span></a>
-  <a href="#etape-4">Ãtape 4 Â· MÃ©tier<span class="step-pct" data-nav="s4"></span></a>
+<!-- ============================================================
+     SECTION 3 : NAVIGATION ET CHOIX DU PARCOURS (etape 4)
+     ============================================================ -->
+<nav class="steps" aria-label="Accès rapide aux étapes">
+  <a href="#etape-1">Étape 1 · Accueil</a>
+  <a href="#etape-2">Étape 2 · Techniques</a>
+  <a href="#etape-3">Étape 3 · Relation Clients</a>
+  <a href="#parcours-a" data-navtrack="A">Étape 4 · Parcours A — CRC ACH C5 et AD</a>
+  <a href="#parcours-b" data-navtrack="B">Étape 4 · Parcours B — Raccordement Petits Producteurs</a>
 </nav>
 
 <main id="parcours">
 
   <!-- ================= ETAPE 1 ================= -->
-  <section class="step" id="etape-1" data-step="s1" aria-labelledby="h-s1">
+  <section class="step" id="etape-1" data-step="s1" data-nav="Accueil" aria-labelledby="h-s1">
     <div class="step-head">
       <div class="step-num" aria-hidden="true">1</div>
       <div>
-        <h2 id="h-s1">Accueil, informations gÃ©nÃ©rales et acculturation <span class="status-chip" data-chip data-state="todo">Ã venir</span></h2>
-        <ul class="objectifs" aria-label="Objectifs pÃ©dagogiques de l'Ã©tape 1">
-          <li>DÃ©couvrir Enedis, son entreprise et son projet</li>
-          <li>Identifier les consignes de sÃ©curitÃ© et les 8 fondamentaux PSS</li>
-          <li>ConnaÃ®tre les connaissances socles de l'entreprise</li>
-          <li>Comprendre le modÃ¨le rÃ©gulÃ© et le TURPE</li>
-          <li>Situer les activitÃ©s du domaine mÃ©tier et de votre agence</li>
-        </ul>
-        <p class="tip"><strong>Conseil pÃ©dagogique :</strong> prenez rendez-vous avec votre manager dÃ¨s votre premiÃ¨re semaine ; le RDV d'accueil structure toute la suite du parcours.</p>
+        <h2 id="h-s1">Accueil, informations générales et acculturation</h2>
       </div>
     </div>
-    <div class="step-bar" role="progressbar" aria-labelledby="h-s1" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+
+    <div class="block objectifs-block">
+      <div class="block-head">
+        <h3 class="block-title">Objectifs de l'étape 1</h3>
+      </div>
+      <ul class="objectifs" aria-label="Objectifs pédagogiques de l'étape 1">
+          <li>Découvrir Enedis, son entreprise et son projet</li>
+          <li>Identifier les consignes de sécurité et les 8 fondamentaux PSS</li>
+          <li>Connaître les connaissances socles de l'entreprise</li>
+          <li>Comprendre le modèle régulé et le TURPE</li>
+          <li>Situer les activités du domaine métier et de votre agence</li>
+        </ul>
+    </div>
 
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">1.1</span>
-        <h3 class="block-title">PrÃ©senter l'entreprise et son projet</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Présenter l'entreprise et son projet</h3><a class="block-up" href="#etape-1">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Pack Â« nouvel arrivant Â» â DÃ©couvrir Enedis</span></label><div class="card-tags"><span class="tag t-doc">Document Ã  lire</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">VidÃ©o Â« La story d'Enedis Â»</span></label><div class="card-tags"><span class="tag t-video">VidÃ©o / Cotuto</span></div></div>
+      <div class="card"><span class="card-title">Découvrir Enedis</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSENEDIS1D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=29148971008">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Vidéo « la Story d'Enedis »</span><div class="card-tags"><span class="tag t-video">Vidéo / Cotuto</span></div><a class="card-link" target="_blank" rel="noopener" href="https://www.myelectricnetwork.fr/group/mon-espace-rh/lire-detail/-/asset_publisher/AO6j/content/boite-%C3%A0-outils-attractivit%C3%A9-marque-employeur?typeGroup=erdf&amp;p_r_p_categoryId=#La%20story%20d'Enedis">Regarder la vidéo ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">1.2</span>
-        <h3 class="block-title">PrÃ©senter les activitÃ©s du domaine mÃ©tier dans la DR</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Présenter les activités du domaine métier</h3><a class="block-up" href="#etape-1">↑ début de l'étape</a>
       </div>
     <div class="grid">
       <div class="card">
-        <label class="chk"><input type="checkbox"><span class="card-title">Rdv manager â accueil et intÃ©gration</span></label>
+        <span class="card-title">Rendez-vous managérial — accueil et intégration</span>
         <div class="card-tags"><span class="tag t-manager">Rdv manager</span></div>
-        <p class="card-note">Organigramme de l'agence, activitÃ©s et rythmes, description et missions de l'emploi, parcours de formation/intÃ©gration.</p>
+        <p class="card-note">Organigramme de l'agence, activités et rythmes, description et missions de l'emploi, parcours de formation/intégration.</p>
       </div>
     </div>
     </div>
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">1.3</span>
-        <h3 class="block-title">Informer sur les connaissances socles de l'entreprise</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Présenter les consignes de sécurité</h3><a class="block-up" href="#etape-1">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">PrÃ©vention des Risques GÃ©nÃ©raux (ADNPSSCPPRGD)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27596783616">Ouvrir la formation â<span class="sr-only"> (nouvelle fenÃªtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Code de bonne conduite (ADNTINO)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=524416">Ouvrir la formation â<span class="sr-only"> (nouvelle fenÃªtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le RGPD (ADNRGPD)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21373550600">Ouvrir la formation â<span class="sr-only"> (nouvelle fenÃªtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">La charte informatique des ressources numÃ©riques (ADNCHARTINFO)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21338521603">Ouvrir la formation â<span class="sr-only"> (nouvelle fenÃªtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">La cybersÃ©curitÃ© chez Enedis (ADNCYBERSECU)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21577891841">Ouvrir la formation â<span class="sr-only"> (nouvelle fenÃªtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Programme anti-corruption (ADNDESP01)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=2743828480">Ouvrir la formation â<span class="sr-only"> (nouvelle fenÃªtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">RÃ©flexes anticorruption (ADNANTICOR)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/Learner/Home.aspx?idTraining=34220936353&amp;idTrainee=34223354403&amp;idTrainingSession=34222811544">Ouvrir la formation â<span class="sr-only"> (nouvelle fenÃªtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Sexisme et harcÃ¨lement sexuel au travail (ADNBSHS)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=17966366720">Ouvrir la formation â<span class="sr-only"> (nouvelle fenÃªtre)</span></a></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Intelligence artificielle chez Enedis : tout ce que vous devez savoir</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Attitude interrogative et vigilance partagÃ©e</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Les enjeux de la sÃ»retÃ© chez Enedis</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Les enjeux de la sûreté chez Enedis</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNSURETEENEDIS</span></div><a class="card-link" target="_blank" rel="noopener" href="https://ecampus.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=34220937026">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Attitude interrogative et vigilance partagée</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNAIVP</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=25260294144">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Rendez-vous managérial — consignes locales de sécurité et 8 fondamentaux PSS</span><div class="card-tags"><span class="tag t-manager">Rdv manager</span></div></div>
     </div>
     </div>
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">1.4</span>
-        <h3 class="block-title">PrÃ©senter les consignes de sÃ©curitÃ©</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Informer sur les connaissances socles de l'entreprise</h3><a class="block-up" href="#etape-1">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card">
-        <label class="chk"><input type="checkbox"><span class="card-title">Rdv manager â consignes locales de sÃ©curitÃ© et 8 fondamentaux PSS</span></label>
-        <div class="card-tags"><span class="tag t-manager">Rdv manager</span></div>
-      </div>
+      <div class="card"><span class="card-title">Prévention des Risques Généraux</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNPSSCPPRGD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27596783616">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Code de bonne conduite</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTINO</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=524416">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Le règlement général sur la protection des données</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNRGPD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21373550600">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">La charte informatique des ressources numériques d'Enedis</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNCHARTINFO</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21338521603">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">La cybersécurité chez Enedis</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNCYBERSECU</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21577891841">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Programme anti-corruption</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNDESP01</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=2743828480">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Réflexes anticorruption</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNANTICOR</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/Learner/Home.aspx?idTraining=34220936353&amp;idTrainee=34223354403&amp;idTrainingSession=34222811544">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Intelligence artificielle chez Enedis : tout ce que vous devez savoir !</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNIAENEDIS</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=32715833344">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">1.5</span>
-        <h3 class="block-title">Informer sur le modÃ¨le rÃ©gulÃ© et le TURPE</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Informer sur le modèle régulé et le TURPE</h3><a class="block-up" href="#etape-1">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Tout comprendre aux principes du TURPE</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">ProcÃ©dure mÃ©tier et rÃ©gulation incitative</span></label><div class="card-tags"><span class="tag t-doc">Document Ã  lire</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le catalogue des prestations</span></label><div class="card-tags"><span class="tag t-doc">Document Ã  lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=30581161986">Ouvrir la formation â<span class="sr-only"> (nouvelle fenÃªtre)</span></a></div>
+      <div class="card"><span class="card-title">Tout comprendre aux principes du TURPE</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTURPE</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=3555098624">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Le catalogue des prestations</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSCATALD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=29161095168">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Procédure métier et régulation incitative</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNMETIERACHCAPS</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=30581161986">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">1.6</span>
-        <h3 class="block-title">Validation des acquis â Ãtape 1</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Validation des acquis</h3><a class="block-up" href="#etape-1">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis â Ãtape 1</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
     </div>
     </div>
 
-    <a class="next-step" href="#etape-2">
-      <span><span class="next-state" data-nextstate>Une fois cette Ã©tape terminÃ©e, poursuivez votre parcours :</span>Ãtape 2 â Les bases techniques de l'Ã©lectricitÃ©</span>
-      <span class="next-arrow" aria-hidden="true">â</span>
-    </a>
+<div class="back-top"><a class="card-link" href="#top">↑ Revenir en haut de la page</a></div>
+
   </section>
 
   <!-- ================= ETAPE 2 ================= -->
-  <section class="step" id="etape-2" data-step="s2" aria-labelledby="h-s2">
+  <section class="step" id="etape-2" data-step="s2" data-nav="Techniques" aria-labelledby="h-s2">
     <div class="step-head">
       <div class="step-num" aria-hidden="true">2</div>
       <div>
-        <h2 id="h-s2">Les bases techniques de l'Ã©lectricitÃ© <span class="status-chip" data-chip data-state="todo">Ã venir</span></h2>
-        <ul class="objectifs" aria-label="Objectifs pÃ©dagogiques de l'Ã©tape 2">
-          <li>Expliquer le chemin de l'Ã©lectricitÃ© : production â transport â distribution â soutirage / injection</li>
-          <li>Identifier les ouvrages de rÃ©seau et de branchement : branchement, compteur, disjoncteur</li>
-          <li>Comprendre les comptages et le fonctionnement du systÃ¨me Linky</li>
-        </ul>
-        <p class="tip"><strong>Conseil pÃ©dagogique :</strong> la formation en rÃ©alitÃ© virtuelle du CAD Auvergne rend le rÃ©seau Ã©lectrique tangible ; planifiez cette session en dÃ©but d'Ã©tape.</p>
+        <h2 id="h-s2">Les bases techniques de l'électricité</h2>
       </div>
     </div>
-    <div class="step-bar" role="progressbar" aria-labelledby="h-s2" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+
+    <div class="block objectifs-block">
+      <div class="block-head">
+        <h3 class="block-title">Objectifs de l'étape 2</h3>
+      </div>
+      <ul class="objectifs" aria-label="Objectifs pédagogiques de l'étape 2">
+          <li>Expliquer le chemin de l'électricité : production → transport → distribution → soutirage / injection</li>
+          <li>Identifier les ouvrages de réseau et de branchement : branchement, compteur, disjoncteur</li>
+          <li>Comprendre les comptages et le fonctionnement du système Linky</li>
+        </ul>
+    </div>
 
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">2.1</span>
-        <h3 class="block-title">Informer sur le chemin de l'Ã©lectricitÃ©</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Informer sur le chemin de l'électricité</h3><a class="block-up" href="#etape-2">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">DÃ©couverte de l'Ã©lectricitÃ©</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Formation Ã©lectrotechnique Ã©lÃ©mentaire</span></label><div class="card-tags"><span class="tag t-pres">PrÃ©sentiel</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le chemin de l'Ã©lectricitÃ©</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Module de formation en rÃ©alitÃ© virtuelle (CAD Auvergne)</span></label><div class="card-tags"><span class="tag t-pres">PrÃ©sentiel</span></div></div>
+      <div class="card"><span class="card-title">Découverte de l'électricité</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNDECWATT</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=25487933440">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Formation électrotechnique élémentaire</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNBASELEC</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=10807279616">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Le chemin de l'électricité</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">2.2</span>
-        <h3 class="block-title">Informer sur les comptages</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Validation des acquis</h3><a class="block-up" href="#etape-2">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le fonctionnement du systÃ¨me Linky</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Quelles prestations Linky pour le client ?</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Les services de la chaÃ®ne communicante Linky</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Comptage BT supÃ©rieur Ã  36 kVA</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
     </div>
     </div>
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">2.3</span>
-        <h3 class="block-title">Informer sur les ouvrages de rÃ©seau et de branchement</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Informer sur les ouvrages de réseau et de branchement</h3><a class="block-up" href="#etape-2">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">LumiÃ¨re sur les PNT</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Fondamentaux des raccordements</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Bilan QualitÃ© de Fourniture</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Fondamentaux des raccordements</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNBRC</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=26782859264">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">EVISIA : module de formation en réalité virtuelle (CAD Auvergne)</span><div class="card-tags"><span class="tag t-pres">Présentiel / RV</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">2.4</span>
-        <h3 class="block-title">Informer sur le MarchÃ© d'Affaires</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Validation des acquis</h3><a class="block-up" href="#etape-2">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">MarchÃ© d'Affaires</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
     </div>
     </div>
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">2.5</span>
-        <h3 class="block-title">Validation des acquis â Ãtape 2</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Informer sur les comptages</h3><a class="block-up" href="#etape-2">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis â Ãtape 2</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+      <div class="card"><span class="card-title">Comptage BT supérieur à 36 kVA</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNT530E01</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=20968996869">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Bilan Qualité de Fourniture</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO18D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28455305220">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Le fonctionnement du système Linky</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNLYCFONC</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21526282240">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Les services de la chaîne communicante Linky</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNLYCSERV</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21545680896">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Quelles prestations Linky pour le client ?</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNLYCPRES</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21604794371">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Lumière sur les PNT</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNDECOUVPNTD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=29912203264">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">2.6</span>
+        <h3 class="block-title">Validation des acquis</h3><a class="block-up" href="#etape-2">↑ début de l'étape</a>
+      </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
     </div>
     </div>
 
-    <a class="next-step" href="#etape-3">
-      <span><span class="next-state" data-nextstate>Une fois cette Ã©tape terminÃ©e, poursuivez votre parcours :</span>Ãtape 3 â Les bases de la Relation Clients</span>
-      <span class="next-arrow" aria-hidden="true">â</span>
-    </a>
+<div class="back-top"><a class="card-link" href="#top">↑ Revenir en haut de la page</a></div>
+
   </section>
 
   <!-- ================= ETAPE 3 ================= -->
-  <section class="step" id="etape-3" data-step="s3" aria-labelledby="h-s3">
+  <section class="step" id="etape-3" data-step="s3" data-nav="Relation Clients" aria-labelledby="h-s3">
     <div class="step-head">
       <div class="step-num" aria-hidden="true">3</div>
       <div>
-        <h2 id="h-s3">Les bases de la Relation Clients â MarchÃ© de Masse <span class="status-chip" data-chip data-state="todo">Ã venir</span></h2>
-        <ul class="objectifs" aria-label="Objectifs pÃ©dagogiques de l'Ã©tape 3">
-          <li>Comprendre le marchÃ© de l'Ã©lectricitÃ© : fournisseurs, responsables d'Ã©quilibre, acheteurs, CRE</li>
-          <li>ConnaÃ®tre la politique client et la segmentation (consommateurs, producteurs)</li>
-          <li>MaÃ®triser les fondamentaux de la relation client et tÃ©lÃ©phonique</li>
-          <li>DÃ©couvrir les outils SI de la relation client</li>
-        </ul>
-        <p class="tip"><strong>Conseil pÃ©dagogique :</strong> les outils SI se maÃ®trisent par la pratique ; aprÃ¨s chaque module, demandez un accÃ¨s Ã  l'environnement d'exercice avec votre manager.</p>
+        <h2 id="h-s3">Les bases de la Relation Clients — Marché de Masse</h2>
       </div>
     </div>
-    <div class="step-bar" role="progressbar" aria-labelledby="h-s3" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+
+    <div class="block objectifs-block">
+      <div class="block-head">
+        <h3 class="block-title">Objectifs de l'étape 3</h3>
+      </div>
+      <ul class="objectifs" aria-label="Objectifs pédagogiques de l'étape 3">
+          <li>Comprendre le marché de l'électricité : fournisseurs, responsables d'équilibre, acheteurs, CRE</li>
+          <li>Connaître la politique client et la segmentation (consommateurs, producteurs)</li>
+          <li>Maîtriser les fondamentaux de la relation client et téléphonique</li>
+          <li>Découvrir les outils SI de la relation client</li>
+        </ul>
+    </div>
 
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">3.1</span>
-        <h3 class="block-title">Informer sur les fondamentaux de la relation client</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Informer sur le marché de l'électricité</h3><a class="block-up" href="#etape-3">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Les fondamentaux de la relation client â module 1</span></label><div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Les fondamentaux de la relation client â module 2</span></label><div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div></div>
+      <div class="card"><span class="card-title">Le marché de l'électricité</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">3.2</span>
-        <h3 class="block-title">Informer sur la politique client, tous segments clients</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Validation des acquis</h3><a class="block-up" href="#etape-3">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">La segmentation consommateur</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">La segmentation producteur</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">La Politique Clients</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
     </div>
     </div>
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">3.3</span>
-        <h3 class="block-title">Informer sur le marchÃ© de l'Ã©lectricitÃ©</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Informer sur la politique client</h3><a class="block-up" href="#etape-3">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le RIVA, de quoi parle-t-on ?</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">La segmentation consommateur</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNSEGCONS</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=26615578627">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">La segmentation producteur</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNSEGPROD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=26615578628">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">3.4</span>
-        <h3 class="block-title">MaÃ®triser la relation client tÃ©lÃ©phonique</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Validation des acquis</h3><a class="block-up" href="#etape-3">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Guide mÃ©tier Relations clients</span></label><div class="card-tags"><span class="tag t-doc">Document Ã  lire</span></div></div>
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">MaÃ®triser la relation client tÃ©lÃ©phonique</span></label><div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div></div>
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
     </div>
     </div>
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">3.5</span>
-        <h3 class="block-title">Informer sur les outils SI de la relation client</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Informer sur les fondamentaux de la relation client</h3><a class="block-up" href="#etape-3">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Les outils SI de la relation client</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+      <div class="card"><span class="card-title">Les fondamentaux de la relation client — module 1</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNCRCMRC1D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28516286464">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Les fondamentaux de la relation client — module 2</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNCRCMRC2D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28516286465">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Maîtriser la relation client téléphonique</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNRCTEL</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Le RIVA, de quoi parle-t-on ?</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNPSSRIVAD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27596783617">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
     </div>
     </div>
     <div class="block">
       <div class="block-head">
         <span class="block-num" aria-hidden="true">3.6</span>
-        <h3 class="block-title">Validation des acquis â Ãtape 3</h3>
-        <span class="block-count" data-blockcount>0/0</span>
+        <h3 class="block-title">Validation des acquis</h3><a class="block-up" href="#etape-3">↑ début de l'étape</a>
       </div>
     <div class="grid">
-      <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis â Ãtape 3</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">3.7</span>
+        <h3 class="block-title">Les outils SI de la relation client</h3><a class="block-up" href="#etape-3">↑ début de l'étape</a>
+      </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Tout savoir sur CAPELLA</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNCAPELLA</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=25750437888">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Illico</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNILLICO</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=26730332161">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Culture Ginko</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNCULTGINKO</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28880371712">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Utiliser VERINT — pour les CRC et Opérateurs CAD</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNCRCVERINT</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=30648172545">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">L'outil Kiamo pour les conseillers et opérateurs téléphoniques</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNKIAMOCONS</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=23624024064">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">SGE : découverte du nouveau Portail SGE V.2</span><div class="card-tags"><span class="tag t-video">Vidéo / Cotuto</span></div><a class="card-link" target="_blank" rel="noopener" href="https://cotuto.enedis.fr/playlist/PUB/01a69456-720c-43ee-ae98-5cce9e8e8b39">Regarder la vidéo ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Débuter sur les fondamentaux Ginko tous métiers</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNTSGINKOD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Guide métier Relations clients</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">GRC-Harmonie</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">3.8</span>
+        <h3 class="block-title">Validation des acquis</h3><a class="block-up" href="#etape-3">↑ début de l'étape</a>
+      </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
     </div>
     </div>
 
-    <a class="next-step" href="#etape-4">
-      <span><span class="next-state" data-nextstate>Une fois cette Ã©tape terminÃ©e, poursuivez votre parcours :</span>Ãtape 4 â SpÃ©cifique mÃ©tier (choix de votre parcours avec votre manager)</span>
-      <span class="next-arrow" aria-hidden="true">â</span>
-    </a>
+<div class="back-top"><a class="card-link" href="#top">↑ Revenir en haut de la page</a></div>
+
   </section>
 
   <!-- ================= ETAPE 4 ================= -->
@@ -680,358 +759,337 @@
     <div class="step-head">
       <div class="step-num" aria-hidden="true">4</div>
       <div>
-        <h2 id="h-s4">Ãtape 4 : SpÃ©cifique mÃ©tier <span class="status-chip" data-chip data-state="todo">Ã venir</span></h2>
-        <ul class="objectifs" aria-label="Objectifs pÃ©dagogiques de l'Ã©tape 4">
-          <li>Choisir votre parcours mÃ©tier en accord avec votre manager</li>
-          <li>DÃ©velopper les compÃ©tences spÃ©cifiques Ã  votre poste : CRC ACH C5/AD ou Petits Producteurs</li>
-          <li>Traiter de bout en bout les affaires clients de votre pÃ©rimÃ¨tre</li>
-          <li>PrÃ©parer la validation des acquis de votre parcours</li>
-        </ul>
-        <p class="tip"><strong>Conseil pÃ©dagogique :</strong> validez le choix du parcours lors du RDV manager de l'Ã©tape 3 ; il correspond Ã  votre fiche de poste et Ã  votre Ã©quipe d'affectation.</p>
+        <h2 id="h-s4">Étape 4 : Spécifique métier</h2>
       </div>
     </div>
-    <div class="step-bar" role="progressbar" aria-labelledby="h-s4" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
 
-    <details class="help">
-      <summary>Comment utiliser cette Ã©tape ?</summary>
-      <p>Choisissez, avec votre manager, le parcours correspondant Ã  votre poste : seul le parcours sÃ©lectionnÃ© est affichÃ© et pris en compte dans votre progression. Un changement de parcours conserve vos acquisitions dÃ©jÃ  cochÃ©es.</p>
-    </details>
-
-    <fieldset class="chooser">
-      <legend>Choisissez votre parcours mÃ©tier (en accord avec votre manager)</legend>
-      <div class="chooser-grid">
-        <button type="button" class="choice" id="track-A" aria-pressed="false">
-          <span class="choice-title">Parcours A â ChargÃ© de Relations Clients ACH C5 et AD</span>
-          <span class="choice-desc">Affaires de correction de factures C5 (ACF), prestations et interventions C5, relevÃ© et facturation C5, fiches F120 Ã  F920, prise en charge des demandes clients (ligne AD + L1).</span>
-          <span class="pick" aria-hidden="false"></span>
-        </button>
-        <button type="button" class="choice" id="track-B" aria-pressed="false">
-          <span class="choice-title">Parcours B â CRC Gestion et Raccordement Petits Producteurs</span>
-          <span class="choice-desc">Raccordement Petits Producteurs (avec et sans travaux), CAE, CACSI, Contrat Unique en injection, obligations d'achat, gestion des contrats et impayÃ©s P4.</span>
-          <span class="pick" aria-hidden="false"></span>
-        </button>
+    <div class="block objectifs-block">
+      <div class="block-head">
+        <h3 class="block-title">Objectifs de l'étape 4</h3>
       </div>
-      <p class="chooser-note" id="chooser-note" role="status">Aucun parcours sÃ©lectionnÃ© â l'Ã©tape 4 sera activÃ©e aprÃ¨s le choix effectuÃ© avec votre manager.</p>
+      <ul class="objectifs" aria-label="Objectifs pédagogiques de l'étape 4">
+          <li>Choisir votre parcours métier en accord avec votre manager</li>
+          <li>Développer les compétences spécifiques à votre poste : CRC ACH C5/AD ou Petits Producteurs</li>
+          <li>Traiter de bout en bout les affaires clients de votre périmètre</li>
+          <li>Préparer la validation des acquis de votre parcours</li>
+        </ul>
+    </div>
+
+    <fieldset class="chooser" id="choix-parcours">
+      <legend>Choisissez votre parcours métier (en accord avec votre manager)</legend>
+      <div class="chooser-grid">
+        <a class="choice" id="track-A" href="#parcours-a">
+          <span class="choice-title">Parcours A — Chargé de Relations Clients ACH C5 et AD</span>
+          <span class="choice-desc">Relevé et facturation C5, affaires de correction de factures C5 (ACF), prestations et interventions C5, fiches F120 à F920, prise en charge des demandes clients (ligne AD + L1).</span>
+          <span class="pick">Choisir ce parcours</span>
+        </a>
+        <a class="choice" id="track-B" href="#parcours-b">
+          <span class="choice-title">Parcours B — CRC Gestion et Raccordement Petits Producteurs</span>
+          <span class="choice-desc">Acteurs de la production, raccordement Petits Producteurs (avec et sans travaux), CAE, CACSI, Contrat Unique en injection, obligations d'achat, prestations et facturation P4, impayés et recouvrement, gestion des contrats.</span>
+          <span class="pick">Choisir ce parcours</span>
+        </a>
+      </div>
     </fieldset>
 
     <!-- 4A CRC ACH C5 et AD -->
-    <div class="subtrack" data-track="A">
-      <h3>Parcours A â ChargÃ© de Relations Clients ACH C5 et AD</h3>
-      <div class="block">
-        <div class="block-head">
-          <span class="block-num" aria-hidden="true">A.1</span>
-          <h4 class="block-title">DÃ©couvrir les outils du conseiller</h4>
-          <span class="block-count" data-blockcount>0/0</span>
-        </div>
-      <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">DÃ©buter sur les fondamentaux Ginko tous mÃ©tiers</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">SGE : dÃ©couverte du nouveau Portail SGE V.2</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">L'outil Kiamo pour les conseillers et opÃ©rateurs tÃ©lÃ©phoniques</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Utiliser VERINT (CRC et OpÃ©rateurs CAD)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Tout savoir sur CAPELLA</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+    <div class="subtrack" id="parcours-a" data-track="A">
+      <h3>Parcours A — Chargé de Relations Clients ACH C5 et AD</h3>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">A.1</span>
+        <h4 class="block-title">Débuter sur le relevé et la facturation C5</h4><a class="block-up" href="#parcours-a">↑ début de l'étape</a>
       </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Débuter sur le relevé et la facturation C5</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDC5REFAD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Micro-learning PNT</span><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">A.2</span>
+        <h4 class="block-title">Débuter sur les affaires de correction de factures C5</h4><a class="block-up" href="#parcours-a">↑ début de l'étape</a>
       </div>
-      <div class="block">
-        <div class="block-head">
-          <span class="block-num" aria-hidden="true">A.2</span>
-          <h4 class="block-title">DÃ©buter sur les affaires de correction de factures C5 (ACF)</h4>
-          <span class="block-count" data-blockcount>0/0</span>
-        </div>
-      <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">DÃ©buter sur les affaires de correction de factures C5 (ACF)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Débuter sur le traitement des Affaires de Corrections de factures C5 (ACF)</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDC5ACFD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">A.3</span>
+        <h4 class="block-title">Débuter le traitement des prestations et interventions C5</h4><a class="block-up" href="#parcours-a">↑ début de l'étape</a>
       </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Débuter sur le traitement des prestations C5 et le solde des interventions</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDC5PRID</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">HAPe — tous utilisateurs</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNHAPETU</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=34220951270">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">F120 Mise en service sur raccordement existant</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO4D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27705901059">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">F130 Changement de fournisseur</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO5D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27705901060">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">F140 Résiliation à l'initiative du client</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO3D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27705901058">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">F180 Modification contractuelle hors optimisation TURPE C5</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO6D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27705901061">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">F200B Intervention manquement contractuel — réduction de puissance et coupure</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO7D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27705901062">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">F360 Relevé spécial</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO8D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27705901063">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">F920-F420C2 Enquête et vérification visuelle</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO2D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27705901057">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">M002</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">A.4</span>
+        <h4 class="block-title">Prendre en charge les demandes clients (ligne AD + L1)</h4><a class="block-up" href="#parcours-a">↑ début de l'étape</a>
       </div>
-      <div class="block">
-        <div class="block-head">
-          <span class="block-num" aria-hidden="true">A.3</span>
-          <h4 class="block-title">DÃ©buter sur le traitement des prestations et interventions C5</h4>
-          <span class="block-count" data-blockcount>0/0</span>
-        </div>
-      <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">DÃ©buter sur le traitement des prestations et interventions C5</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">DÃ©buter sur le traitement des prestations C5 et le solde des interventions</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">F120 Mise en service sur raccordement existant</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">F130 Changement de fournisseur</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">F140 RÃ©siliation Ã  l'initiative du client</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">F180 Modification contractuelle hors optimisation TURPE C5</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">F360 RelevÃ© spÃ©cial</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">F200B Intervention manquement contractuel â rÃ©duction de puissance et coupure</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">F920-F420C2 EnquÃªte et vÃ©rification visuelle</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Micro-learning PNT</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">HAPe â tous utilisateurs</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Demandes directes</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO11D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27705901066">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Maintenance C</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO13D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27705901068">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Pose en rebond</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO12D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=27705901067">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Ligne 1 HO</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO17D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28455305219">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Guide métier AD</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Compte client PARTICULIER</span><div class="card-tags"><span class="tag t-cen">Animation CEN</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Compte client ENTREPRISE</span><div class="card-tags"><span class="tag t-lean">LeanApp</span></div><a class="card-link" target="_blank" rel="noopener" href="https://lzm0ra.axshare.com/?code=0347619ae4ae9f755e6c9f05f6d0b6df&amp;id=r6q84o&amp;p=accueil">Ouvrir l'application ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Perturbations LAN niveau 1</span><div class="card-tags"><span class="tag t-el">E-learning</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">A.5</span>
+        <h4 class="block-title">Validation des acquis</h4><a class="block-up" href="#parcours-a">↑ début de l'étape</a>
       </div>
-      </div>
-      <div class="block">
-        <div class="block-head">
-          <span class="block-num" aria-hidden="true">A.4</span>
-          <h4 class="block-title">DÃ©buter sur le relevÃ© et la facturation C5</h4>
-          <span class="block-count" data-blockcount>0/0</span>
-        </div>
-      <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">DÃ©buter sur le relevÃ© et la facturation C5</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-      </div>
-      </div>
-      <div class="block">
-        <div class="block-head">
-          <span class="block-num" aria-hidden="true">A.5</span>
-          <h4 class="block-title">Prendre en charge les demandes clients</h4>
-          <span class="block-count" data-blockcount>0/0</span>
-        </div>
-      <div class="grid">
-        <div class="card">
-          <label class="chk"><input type="checkbox"><span class="card-title">Prendre en charge les demandes clients (ligne AD + L1)</span></label>
-          <div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div>
-          <p class="card-note">Demandes directes Â· Compte client PARTICULIER Â· Compte client ENTREPRISE Â· Perturbations LAN niveau 1.</p>
-        </div>
-      </div>
-      </div>
-      <div class="block">
-        <div class="block-head">
-          <span class="block-num" aria-hidden="true">A.6</span>
-          <h4 class="block-title">Validation des acquis â Parcours A</h4>
-          <span class="block-count" data-blockcount>0/0</span>
-        </div>
-      <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis â Parcours A</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
-      </div>
-      </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+    </div>
+    </div>
+     <p class="next-step fin"><span class="next-state">Vous avez atteint la fin du parcours :</span>Félicitations, votre professionnalisation est complète !</p>
     </div>
 
-    <!-- 4B Petits Producteurs -->
-    <div class="subtrack" data-track="B">
-      <h3>Parcours B â CRC Gestion et Raccordement Petits Producteurs</h3>
-      <div class="block">
-        <div class="block-head">
-          <span class="block-num" aria-hidden="true">B.1</span>
-          <h4 class="block-title">Informer sur les acteurs de la production du marchÃ© de l'Ã©lectricitÃ©</h4>
-          <span class="block-count" data-blockcount>0/0</span>
-        </div>
-      <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">FiliÃ¨res de production d'Ã©lectricitÃ© en France</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Les acteurs de la production du marchÃ© de l'Ã©lectricitÃ©</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Transition Ã©nergÃ©tique</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">[OA PV] DÃ©couverte des obligations d'achat</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">[OA PV] Le contrat d'achat S21</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+    <!-- 4B CRC Gestion et Raccordement Petits Producteurs -->
+    <div class="subtrack" id="parcours-b" data-track="B">
+      <h3>Parcours B — CRC Gestion et Raccordement Petits Producteurs</h3>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">B.1</span>
+        <h4 class="block-title">Informer sur les acteurs de la production du marché de l'électricité</h4><a class="block-up" href="#parcours-b">↑ début de l'étape</a>
       </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Les acteurs de la production du marché de l'électricité</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNACTEURSPROD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=21510094848">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Filières de production d'électricité en France</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNFILPRODUC</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=30441996293">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Transition énergétique</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNENERG01CAPS</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=30439112705">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">[OA PV] Découverte des obligations d'achat</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">LS1-DECOA</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=22408069121">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">[OA PV] Le contrat d'achat S21</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">LS1-DECS21</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=23459921920">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">B.2</span>
+        <h4 class="block-title">Validation des acquis</h4><a class="block-up" href="#parcours-b">↑ début de l'étape</a>
       </div>
-      <div class="block">
-        <div class="block-head">
-          <span class="block-num" aria-hidden="true">B.2</span>
-          <h4 class="block-title">DÃ©couvrir le raccordement Petits Producteurs</h4>
-          <span class="block-count" data-blockcount>0/0</span>
-        </div>
-      <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Raccordement Petits Producteurs â demandes sans travaux</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Raccordement Petits Producteurs â avec travaux</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">BarÃ¨me de raccordement et rÃ©gime SRRRER</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card">
-          <label class="chk"><input type="checkbox"><span class="card-title">Explication des piÃ¨ces justificatives</span></label>
-          <div class="card-tags"><span class="tag t-doc">Document Ã  lire</span></div>
-          <p class="card-note">Mandat de reprÃ©sentation, autorisation d'urbanisme, CONSUELâ¦</p>
-        </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">B.3</span>
+        <h4 class="block-title">Découvrir le raccordement petits producteurs</h4><a class="block-up" href="#parcours-b">↑ début de l'étape</a>
       </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Raccordement Petits Producteurs — demandes sans travaux</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO28DV1</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/Learner/Home.aspx?idTraining=28455305230&amp;idTrainee=33956725473&amp;idTrainingSession=31218532356">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Barème de raccordement et régime SRRRER</span><div class="card-tags"></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Raccordement Petits Producteurs — avec travaux</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">B.4</span>
+        <h4 class="block-title">Validation des acquis</h4><a class="block-up" href="#parcours-b">↑ début de l'étape</a>
       </div>
-      <div class="block">
-        <div class="block-head">
-          <span class="block-num" aria-hidden="true">B.3</span>
-          <h4 class="block-title">Saisir les demandes sur Enedis-Connect</h4>
-          <span class="block-count" data-blockcount>0/0</span>
-        </div>
-      <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Saisie d'une demande CAE sur Enedis-Connect</span></label><div class="card-tags"><span class="tag t-libre">Libre-service</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Saisie d'une demande CACSI sur Enedis-Connect</span></label><div class="card-tags"><span class="tag t-libre">Libre-service</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Saisie d'une demande CU-I sur Enedis-Connect</span></label><div class="card-tags"><span class="tag t-libre">Libre-service</span></div></div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">B.5</span>
+        <h4 class="block-title">Découvrir le Contrat d'Accès et d'Exploitation, le Contrat Unique en injection et la Convention d'Auto-Consommation Sans Injection</h4><a class="block-up" href="#parcours-b">↑ début de l'étape</a>
       </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Le Contrat d'Accès et d'Exploitation</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNP4CAE</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=24005771264">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Débuter sur le Contrat d'Accès et d'Exploitation (CAE) et sa mise en œuvre dans les activités P4</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDP4CAED</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Débuter sur le Contrat Unique en injection</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Débuter sur la CACSI</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">B.6</span>
+        <h4 class="block-title">Accompagner un client dans son projet</h4><a class="block-up" href="#parcours-b">↑ début de l'étape</a>
       </div>
-      <div class="block">
-        <div class="block-head">
-          <span class="block-num" aria-hidden="true">B.4</span>
-          <h4 class="block-title">DÃ©couvrir le Contrat d'AccÃ¨s et d'Exploitation, le Contrat Unique en injection et la Convention d'Auto-Consommation Sans Injection</h4>
-          <span class="block-count" data-blockcount>0/0</span>
-        </div>
-      <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Le Contrat d'AccÃ¨s et d'Exploitation (CAE)</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">DÃ©buter sur le CAE et sa mise en Åuvre dans les activitÃ©s P4</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">DÃ©buter sur le Contrat Unique en injection</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">DÃ©buter sur la CACSI et la Convention d'Auto-Consommation Sans Injection</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Traitement du Back Office Raccordement P4</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Explication des pièces justificatives (mandat de représentation, autorisation d'urbanisme, CONSUEL…)</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Saisie d'une demande CAE sur Enedis-Connect</span><div class="card-tags"><span class="tag t-video">Vidéo / Cotuto</span></div><a class="card-link" target="_blank" rel="noopener" href="https://distributionelectricite.sharepoint.com.mcas.ms/teams/Enedis-TeamRaccoC5-DCT-130016078/_layouts/15/AccessDenied.aspx?Source=https%3A%2F%2Fdistributionelectricite.sharepoint.com%2F%3Av%3A%2Fr%2Fteams%2FEnedis-TeamRaccoC5-DCT-130016078%2FDocuments+partages%2FGeneral%2FRacco+P4%2FRacco+P4+BO%2FBACK+OFFICE+P4%2FVid%C3%A9os+CAEST+CONNECT+PRAC+OSR+OLIVIER+GINKO%2FCAEST+ENEDIS+Connect.mp4%3Freferrer%3DOutlook.Win32%26referrerScenario%3Demail-linkwithoutembed%26e%3D1zAzYG%26web%3D1%26csf%3D1&amp;correlation=9dfb3da2-703f-3001-4ae4-8a0496d18b4f&amp;Type=item&amp;name=16683ab5-75ef-4e35-bbc3-ce169980112a&amp;listItemId=1580&amp;listItemUniqueId=52bddb1e-fcf0-4098-aeb6-495ba1cbe273&amp;allowautoredirecttosource=true">Regarder la vidéo ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Saisie d'une demande CU-I sur Enedis-Connect</span><div class="card-tags"><span class="tag t-video">Vidéo / Cotuto</span></div><a class="card-link" target="_blank" rel="noopener" href="https://distributionelectricite.sharepoint.com.mcas.ms/teams/Enedis-TeamRaccoC5-DCT-130016078/_layouts/15/AccessDenied.aspx?Source=https%3A%2F%2Fdistributionelectricite.sharepoint.com%2F%3Av%3A%2Fr%2Fteams%2FEnedis-TeamRaccoC5-DCT-130016078%2FDocuments+partages%2FGeneral%2FRacco+P4%2FRacco+P4+BO%2FBACK+OFFICE+P4%2FVid%C3%A9os+CAEST+CONNECT+PRAC+OSR+OLIVIER+GINKO%2FCAEST+ENEDIS+Connect.mp4%3Freferrer%3DOutlook.Win32%26referrerScenario%3Demail-linkwithoutembed%26e%3D1zAzYG%26web%3D1%26csf%3D1&amp;correlation=9dfb3da2-703f-3001-4ae4-8a0496d18b4f&amp;Type=item&amp;name=16683ab5-75ef-4e35-bbc3-ce169980112a&amp;listItemId=1580&amp;listItemUniqueId=52bddb1e-fcf0-4098-aeb6-495ba1cbe273&amp;allowautoredirecttosource=true">Regarder la vidéo ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Saisie d'une demande CACSI sur Enedis-Connect</span><div class="card-tags"><span class="tag t-video">Vidéo / Cotuto</span></div><a class="card-link" target="_blank" rel="noopener" href="https://distributionelectricite.sharepoint.com.mcas.ms/teams/Enedis-TeamRaccoC5-DCT-130016078/_layouts/15/AccessDenied.aspx?Source=https%3A%2F%2Fdistributionelectricite.sharepoint.com%2F%3Av%3A%2Fr%2Fteams%2FEnedis-TeamRaccoC5-DCT-130016078%2FDocuments+partages%2FGeneral%2FRacco+P4%2FRacco+P4+BO%2FBACK+OFFICE+P4%2FVid%C3%A9os+CAEST+CONNECT+PRAC+OSR+OLIVIER+GINKO%2FCAEST+ENEDIS+Connect.mp4%3Freferrer%3DOutlook.Win32%26referrerScenario%3Demail-linkwithoutembed%26e%3D1zAzYG%26web%3D1%26csf%3D1&amp;correlation=9dfb3da2-703f-3001-4ae4-8a0496d18b4f&amp;Type=item&amp;name=16683ab5-75ef-4e35-bbc3-ce169980112a&amp;listItemId=1580&amp;listItemUniqueId=52bddb1e-fcf0-4098-aeb6-495ba1cbe273&amp;allowautoredirecttosource=true">Regarder la vidéo ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">B.7</span>
+        <h4 class="block-title">Validation des acquis</h4><a class="block-up" href="#parcours-b">↑ début de l'étape</a>
       </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">B.8</span>
+        <h4 class="block-title">Débuter le traitement des prestations P4 et le solde des interventions</h4><a class="block-up" href="#parcours-b">↑ début de l'étape</a>
       </div>
-      <div class="block">
-        <div class="block-head">
-          <span class="block-num" aria-hidden="true">B.5</span>
-          <h4 class="block-title">Accompagner un client dans son projet et dans la gestion de son contrat</h4>
-          <span class="block-count" data-blockcount>0/0</span>
-        </div>
-      <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Accompagner un client dans la gestion de son contrat</span></label><div class="card-tags"><span class="tag t-cv">Classe virtuelle</span></div></div>
-        <div class="card">
-          <label class="chk"><input type="checkbox"><span class="card-title">Gestion des comptes clients</span></label>
-          <div class="card-tags"><span class="tag t-el">E-learning</span></div>
-          <p class="card-note">Comptes PARTICULIER, ENTREPRISE, COLL LOC Â· Changement de propriÃ©taire Â· Modification de donnÃ©es contractuelles.</p>
-        </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Débuter sur le traitement des prestations P4 et le solde des interventions</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDP4PRID</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Changement de propriétaire</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO25D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28455305229">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Signedis</span><div class="card-tags"><span class="tag t-cen">Animation CEN</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Modification de données contractuelles</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO24D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28455305228">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Changement de RE / sortie de périmètre</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Résiliation</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO23D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28455305227">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">B.9</span>
+        <h4 class="block-title">Validation des acquis</h4><a class="block-up" href="#parcours-b">↑ début de l'étape</a>
       </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">B.10</span>
+        <h4 class="block-title">Débuter sur le relevé et la facturation P4</h4><a class="block-up" href="#parcours-b">↑ début de l'étape</a>
       </div>
-      <div class="block">
-        <div class="block-head">
-          <span class="block-num" aria-hidden="true">B.6</span>
-          <h4 class="block-title">DÃ©buter le traitement des prestations P4, le solde des interventions, la facturation et le recouvrement</h4>
-          <span class="block-count" data-blockcount>0/0</span>
-        </div>
-      <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Traitement du Back Office Raccordement P4</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">DÃ©buter le traitement des prestations P4 et le solde des interventions</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">DÃ©buter sur le relevÃ© et la facturation P4</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Suivi des impayÃ©s et recouvrement P4</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Facturation Recouvrement Â· E-facture / AES Â· Chorus Pro</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Changement de RE / sortie de pÃ©rimÃ¨tre</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">DÃ©buter sur les Affaires de Corrections de Factures P4</span></label><div class="card-tags"><span class="tag t-el">E-learning</span></div></div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Débuter sur le relevé et la facturation P4</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDP4REFAD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Débuter sur les Affaires de Corrections de Factures P4</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDP4ACFD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">B.11</span>
+        <h4 class="block-title">Validation des acquis</h4><a class="block-up" href="#parcours-b">↑ début de l'étape</a>
       </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">B.12</span>
+        <h4 class="block-title">Suivi des impayés et recouvrement P4</h4><a class="block-up" href="#parcours-b">↑ début de l'étape</a>
       </div>
-      <div class="block">
-        <div class="block-head">
-          <span class="block-num" aria-hidden="true">B.7</span>
-          <h4 class="block-title">Validation des acquis â Parcours B</h4>
-          <span class="block-count" data-blockcount>0/0</span>
-        </div>
-      <div class="grid">
-        <div class="card"><label class="chk"><input type="checkbox"><span class="card-title">Validation des acquis â Parcours B</span></label><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Suivi des impayés et recouvrements P4</span><div class="card-tags"><span class="tag t-myhr">Parcours MY HR</span><span class="card-code">PDNCCDP4RECD</span></div><a class="card-link" target="_blank" rel="noopener" href="https://myhr.talent-soft.com/MyTalentsoft#/Me">Ouvrir le parcours MY HR ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Facturation Recouvrement</span><div class="card-tags"><span class="tag t-el">E-learning</span><span class="card-code">ADNTSHARMO22D</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog/TrainingShops/TrainingView.aspx?idTraining=28455305224">Ouvrir la formation ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">B.13</span>
+        <h4 class="block-title">Validation des acquis</h4><a class="block-up" href="#parcours-b">↑ début de l'étape</a>
       </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">B.14</span>
+        <h4 class="block-title">Accompagner un client dans la gestion de son contrat</h4><a class="block-up" href="#parcours-b">↑ début de l'étape</a>
       </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Compte client PARTICULIER</span><div class="card-tags"><span class="tag t-cen">Animation CEN</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Compte client ENTREPRISE</span><div class="card-tags"><span class="tag t-lean">LeanApp</span></div><a class="card-link" target="_blank" rel="noopener" href="https://lzm0ra.axshare.com/?code=0347619ae4ae9f755e6c9f05f6d0b6df&amp;id=r6q84o&amp;p=accueil">Ouvrir l'application ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">Compte client COLL LOC</span><div class="card-tags"><span class="tag t-doc">Document à lire</span></div><a class="card-link" target="_blank" rel="noopener" href="https://guidemetier-accueil.enedis.fr/accueil/">Accéder au document ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+      <div class="card"><span class="card-title">E-facture / AES / Chorus Pro</span><div class="card-tags"><span class="tag t-cen">Animation CEN</span></div><a class="card-link" target="_blank" rel="noopener" href="https://experience-enedis.syfadis.com/Catalog">Accéder au catalogue ↗<span class="sr-only"> (nouvelle fenêtre)</span></a></div>
+    </div>
+    </div>
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num" aria-hidden="true">B.15</span>
+        <h4 class="block-title">Validation des acquis</h4><a class="block-up" href="#parcours-b">↑ début de l'étape</a>
+      </div>
+    <div class="grid">
+      <div class="card"><span class="card-title">Quiz de validation des acquis</span><div class="card-tags"><span class="tag t-val">Validation / Quiz</span></div></div>
+    </div>
     </div>
 
-    <p class="next-step fin"><span class="next-state" data-nextstate>Vous avez atteint la fin du parcours :</span>FÃ©licitations, votre professionnalisation est complÃ¨te !</p>
+     <p class="next-step fin"><span class="next-state">Vous avez atteint la fin du parcours :</span>Félicitations, votre professionnalisation est complète !</p>
+   </div>
   </section>
 </main>
 
 <footer>
-  <p>Parcours de professionnalisation Ã  l'entrÃ©e en poste â Enedis Â· Socle MarchÃ© de Masse. Votre progression est enregistrÃ©e localement sur votre navigateur.</p>
+  <p><a class="card-link" href="#top">↑ Revenir en haut de la page</a></p>
+  <p>Enedis · Socle Marché de Masse</p>
 </footer>
 
-<canvas id="confetti" aria-hidden="true"></canvas>
 <div id="toast" role="status" aria-live="polite"></div>
 
+<!-- ============================================================
+     SECTION 5 : SCRIPT (automatisation)
+     Role : memoriser le parcours choisi (A ou B), afficher ou
+     masquer les sous-parcours, faire apparaitre les blocs au
+     defilement et gerer le bouton de retour en haut de page.
+     Ne modifiez cette section que si vous maitrisez le JavaScript.
+     ============================================================ -->
 <script>
 (function(){
   "use strict";
-  var STORAGE_KEY = "enedis-parcours-marche-masse-v2";
-  var state = { checks:{}, track:null };
+  var STORAGE_KEY = "enedis-parcours-mm-v3";
+  var state = { track:null };
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* Menage : suppression de l'ancienne sauvegarde (obsolète) si présente */
+  try{ localStorage.removeItem("enedis-parcours-marche-masse-v2"); }catch(e){}
+
+  /* Stockage local : facultatif — si le navigateur ou le LMS le bloque,
+     le choix de parcours reste actif durant la session. */
   try{
-    var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || JSON.stringify({checks:{},mode:"apprenant",track:null}));
-    if(saved && typeof saved === "object"){ state.checks = saved.checks || {}; state.track = saved.track || null; }
+    var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    if(saved && typeof saved === "object" && (saved.track === "A" || saved.track === "B")){ state.track = saved.track; }
   }catch(e){}
 
-  var boxes = Array.prototype.slice.call(document.querySelectorAll('.card input[type="checkbox"]'));
-  var trackOf = {};
-  function boxActive(box){ return trackOf[box.id] === null || trackOf[box.id] === state.track; }
-  boxes.forEach(function(box,i){
-    if(!box.id){ box.id = "chk-" + i; }
-    var holder = box.closest("[data-track]");
-    trackOf[box.id] = holder ? holder.dataset.track : null;
-    var label = box.closest("label.chk");
-    if(label && !label.hasAttribute("for")) label.setAttribute("for", box.id);
-    var card = box.closest(".card");
-    var title = card.querySelector(".card-title");
-    if(title && !title.id) title.id = box.id + "-t";
-    if(title) box.setAttribute("aria-labelledby", title.id);
-    var step = box.closest(".step");
-    var stepTitle = step.querySelector("h2");
-    box.setAttribute("aria-label", (stepTitle ? stepTitle.textContent.trim() + " â " : "") + (title ? title.textContent.trim() : ""));
-    box.addEventListener("change", function(){
-      if(box.checked) state.checks[box.id] = true; else delete state.checks[box.id];
-      save(); refresh();
-      if(box.checked){
-        var ring = document.getElementById("ring");
-        ring.classList.remove("pop"); void ring.offsetWidth; ring.classList.add("pop");
-        toast("Bravo ! Ãtape franchie : " + (title ? title.textContent.trim() : "module validÃ©"));
-      }
-    });
-  });
+  /* Lien direct : ?parcours=A ou ?parcours=B (ou l'ancre #parcours-a / #parcours-b)
+     ouvre directement le parcours voulu (utile sur un LMS).
+     Ajoutez aussi ?etape=1 a 4 (ou les deux : ?etape=4&parcours=A)
+     pour ouvrir directement une etape precise. */
+  var gotoStep = null;
+  (function(){
+    var s = location.search + "|" + location.hash;
+    var m = s.match(/parcours[-=](a|b)/i);
+    if(m){
+      state.track = m[1].toUpperCase();
+      try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+    }
+    var e = s.match(/etape=([1-4])/i);
+    if(e){ gotoStep = "etape-" + e[1]; }
+  })();
 
   function save(){
     try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
   }
 
-  function pct(stepEl){
-    var list = Array.prototype.slice.call(stepEl.querySelectorAll('.card input[type="checkbox"]')).filter(boxActive);
-    if(!list.length) return 0;
-    var done = list.filter(function(b){ return state.checks[b.id]; }).length;
-    return Math.round(done / list.length * 100);
-  }
-
   function refresh(){
-    boxes.forEach(function(b){
-      b.checked = !!state.checks[b.id];
-      b.closest(".card").classList.toggle("checked", !!state.checks[b.id]);
-    });
-
     document.querySelectorAll(".subtrack").forEach(function(el){
-      el.classList.toggle("locked", el.dataset.track !== state.track);
-    });
-
-    var activeBoxes = boxes.filter(boxActive);
-    var totalDone = activeBoxes.filter(function(b){ return state.checks[b.id]; }).length;
-    var global = activeBoxes.length ? Math.round(totalDone / activeBoxes.length * 100) : 0;
-
-    document.getElementById("ring").style.setProperty("--p", global);
-    animatePct(global);
-    document.getElementById("ring").setAttribute("aria-label", "Progression globale : " + global + "%");
-    document.getElementById("prog-done").textContent = totalDone;
-    document.getElementById("prog-total").textContent = activeBoxes.length;
-    document.getElementById("prog-title").textContent = "Votre progression";
-
-    var completedSteps = 0;
-    document.querySelectorAll(".step").forEach(function(stepEl){
-      var p = pct(stepEl);
-      var bar = stepEl.querySelector(".step-bar");
-      bar.querySelector("i").style.width = p + "%";
-      bar.setAttribute("aria-valuenow", p);
-      bar.setAttribute("aria-valuetext", p + "% de l'Ã©tape rÃ©alisÃ©e");
-      var complete = p === 100;
-      stepEl.classList.toggle("done", complete);
-      if(complete) completedSteps++;
-      var chip = stepEl.querySelector("[data-chip]");
-      if(chip){
-        chip.textContent = complete ? "TerminÃ©e" : (p > 0 ? "En cours" : "Ã venir");
-        chip.dataset.state = complete ? "done" : (p > 0 ? "doing" : "todo");
-      }
-      var nextState = stepEl.querySelector("[data-nextstate]");
-      if(nextState && !stepEl.querySelector(".next-step.fin")){
-        nextState.textContent = complete
-          ? "Ãtape terminÃ©e â poursuivez votre parcours :"
-          : (p > 0 ? "Ãtape en cours, terminez vos modules puis poursuivez :" : "Une fois cette Ã©tape terminÃ©e, poursuivez votre parcours :");
-      }
-      stepEl.querySelectorAll(".block").forEach(function(bEl){
-        var bBoxes = Array.prototype.slice.call(bEl.querySelectorAll('.card input[type="checkbox"]')).filter(boxActive);
-        var bDone = bBoxes.filter(function(b){ return state.checks[b.id]; }).length;
-        var cnt = bEl.querySelector("[data-blockcount]");
-        if(cnt){
-          cnt.textContent = bDone + "/" + bBoxes.length;
-          cnt.setAttribute("aria-label", bDone + " module(s) rÃ©alisÃ©(s) sur " + bBoxes.length);
-        }
-        bEl.classList.toggle("done", bBoxes.length > 0 && bDone === bBoxes.length);
-      });
-      if(complete && !prevDone[stepEl.dataset.step] && !firstRefresh) celebrate(stepEl.querySelector("h2").textContent.replace(/\s*Ã venir|\s*En cours|\s*TerminÃ©e/g, "").trim());
-      prevDone[stepEl.dataset.step] = complete;
-      var nav = document.querySelector('[data-nav="' + stepEl.dataset.step + '"]');
-      if(nav) nav.textContent = p + "%";
+      el.style.display = (el.dataset.track === state.track) ? "block" : "none";
     });
 
     ["A","B"].forEach(function(t){
       var btn = document.getElementById("track-" + t);
       var selected = state.track === t;
-      btn.setAttribute("aria-pressed", selected ? "true" : "false");
-      btn.querySelector(".pick").textContent = selected ? "â Parcours sÃ©lectionnÃ©" : "Choisir ce parcours";
+      btn.classList.toggle("selected", selected);
+      btn.querySelector(".pick").textContent = selected ? "✓ Parcours sélectionné" : "Choisir ce parcours";
     });
-    var note = document.getElementById("chooser-note");
-    if(state.track){
-      var tName = document.querySelector('.subtrack[data-track="' + state.track + '"] h3').textContent.trim();
-      note.textContent = "Parcours actif : " + tName + ". Seuls les modules de ce parcours comptent dans votre progression.";
-    } else {
-      note.textContent = "Aucun parcours sÃ©lectionnÃ© â l'Ã©tape 4 sera activÃ©e aprÃ¨s le choix effectuÃ© avec votre manager.";
-    }
-    firstRefresh = false;
   }
 
   function toast(msg){
@@ -1042,66 +1100,35 @@
     t._timer = setTimeout(function(){ t.classList.remove("show"); }, 2600);
   }
 
-  /* Compteur animÃ© de l'anneau de progression */
-  var shownPct = 0;
-  function animatePct(target){
-    var el = document.getElementById("ring-txt");
-    var ring = document.getElementById("ring");
-    if(reduceMotion){ shownPct = target; el.textContent = target + "%"; return; }
-    var start = shownPct, t0 = null, dur = 550;
-    function stepFn(ts){
-      if(!t0) t0 = ts;
-      var k = Math.min(1, (ts - t0) / dur);
-      var v = Math.round(start + (target - start) * (1 - Math.pow(1 - k, 3)));
-      el.textContent = v + "%";
-      ring.style.setProperty("--p", v);
-      if(k < 1) requestAnimationFrame(stepFn); else shownPct = target;
-    }
-    requestAnimationFrame(stepFn);
-  }
+  /* Lien catalogue prepare sur chaque activite, sauf les Rdv manager */
+  var CATALOG_URL = "https://experience-enedis.syfadis.com/Catalog";
+  var MYHR_URL = "https://myhr.talent-soft.com/MyTalentsoft#/Me";
+  document.querySelectorAll(".card").forEach(function(card){
+    if(card.querySelector("a.card-link")) return;
+    if(card.querySelector(".tag.t-manager")) return;
+    if(card.querySelector(".tag.t-val")) return;
+    var a = document.createElement("a");
+    a.className = "card-link";
+    a.target = "_blank";
+    a.rel = "noopener";
+    var isMyhr = !!card.querySelector(".tag.t-myhr");
+    a.href = isMyhr ? MYHR_URL : CATALOG_URL;
+    a.textContent = isMyhr ? "Ouvrir le parcours MY HR ↗" : "Accéder au catalogue ↗";
+    var sr = document.createElement("span");
+    sr.className = "sr-only";
+    sr.textContent = " (nouvelle fenêtre)";
+    a.appendChild(sr);
+    card.appendChild(a);
+  });
 
-  /* Confettis de cÃ©lÃ©bration Ã  la validation d'une Ã©tape */
-  var prevDone = {};
-  var firstRefresh = true;
-  function celebrate(title){
-    toast("FÃ©licitations ! Ãtape terminÃ©e : " + title);
-    var canvas = document.getElementById("confetti");
-    if(reduceMotion || !canvas || !canvas.getContext) return;
-    var ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    var colors = ["#1423DC", "#96CD32", "#7A6BD6", "#E27BA6", "#C99700"];
-    var parts = [];
-    for(var i = 0; i < 110; i++){
-      parts.push({ x: canvas.width / 2, y: canvas.height * 0.35, vx: (Math.random() - 0.5) * 12, vy: Math.random() * -10 - 3, s: Math.random() * 8 + 4, c: colors[i % colors.length], r: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.3, life: 90 + Math.random() * 40 });
-    }
-    var t0 = null;
-    function frame(ts){
-      if(!t0) t0 = ts;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      var alive = false;
-      parts.forEach(function(p){
-        p.x += p.vx; p.y += p.vy; p.vy += 0.25; p.r += p.vr; p.life--;
-        if(p.life > 0 && p.y < canvas.height + 20){
-          alive = true;
-          ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r);
-          ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * 0.6);
-          ctx.restore();
-        }
-      });
-      if(alive && ts - t0 < 3500) requestAnimationFrame(frame);
-      else ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-    requestAnimationFrame(frame);
-  }
-
-  /* Apparition progressive des cartes au dÃ©filement */
+  /* Apparition progressive des cartes au défilement */
   if(!reduceMotion && "IntersectionObserver" in window){
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(en){
         if(en.isIntersecting){ en.target.classList.add("visible"); io.unobserve(en.target); }
       });
     }, { threshold: 0.12 });
-    document.querySelectorAll(".card, .step-head, .legend-box, .chooser-grid, .tip, .objectifs").forEach(function(el){
+    document.querySelectorAll(".card, .step-head, .chooser-grid, .objectifs, .block").forEach(function(el){
       el.classList.add("reveal"); io.observe(el);
     });
   }
@@ -1110,20 +1137,27 @@
     document.getElementById("track-" + t).addEventListener("click", function(){
       state.track = t; save(); refresh();
       var tName = document.querySelector('.subtrack[data-track="' + t + '"] h3').textContent.trim();
-      toast("Parcours sÃ©lectionnÃ© : " + tName);
+      toast("Parcours sélectionné : " + tName);
+    });
+    var navLink = document.querySelector('nav.steps a[data-navtrack="' + t + '"]');
+    navLink.addEventListener("click", function(){
+      state.track = t; save(); refresh();
     });
   });
 
-  document.getElementById("btn-reset").addEventListener("click", function(){
-    state.checks = {}; save(); refresh(); toast("Progression rÃ©initialisÃ©e");
-  });
-
   refresh();
-})();
 
-  refresh();
+  /* Si un lien direct ?etape=N est present, deroule jusqu'a l'etape demandee */
+  if(gotoStep){
+    var target = document.getElementById(gotoStep);
+    if(target){
+      setTimeout(function(){
+        target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      }, reduceMotion ? 0 : 300);
+    }
+  }
+
 })();
 </script>
 </body>
 </html>
-
